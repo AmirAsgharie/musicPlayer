@@ -1,0 +1,122 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.amirasghari.musicplayer"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="24"
+8-->C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml
+9        android:targetSdkVersion="32" />
+9-->C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+11-->C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:6:5-80
+11-->C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:6:22-77
+12    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+12-->C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:7:5-77
+12-->C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:7:22-74
+13    <uses-permission android:name="android.permission.INTERNET" />
+13-->C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:8:5-67
+13-->C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:8:22-64
+14
+15    <permission
+15-->[androidx.core:core:1.9.0] C:\Users\amirr\.gradle\caches\transforms-3\1dc78716db08b6d1dcc8971c4e5a0ce8\transformed\core-1.9.0\AndroidManifest.xml:22:5-24:47
+16        android:name="com.amirasghari.musicplayer.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+16-->[androidx.core:core:1.9.0] C:\Users\amirr\.gradle\caches\transforms-3\1dc78716db08b6d1dcc8971c4e5a0ce8\transformed\core-1.9.0\AndroidManifest.xml:23:9-81
+17        android:protectionLevel="signature" />
+17-->[androidx.core:core:1.9.0] C:\Users\amirr\.gradle\caches\transforms-3\1dc78716db08b6d1dcc8971c4e5a0ce8\transformed\core-1.9.0\AndroidManifest.xml:24:9-44
+18
+19    <uses-permission android:name="com.amirasghari.musicplayer.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+19-->[androidx.core:core:1.9.0] C:\Users\amirr\.gradle\caches\transforms-3\1dc78716db08b6d1dcc8971c4e5a0ce8\transformed\core-1.9.0\AndroidManifest.xml:26:5-97
+19-->[androidx.core:core:1.9.0] C:\Users\amirr\.gradle\caches\transforms-3\1dc78716db08b6d1dcc8971c4e5a0ce8\transformed\core-1.9.0\AndroidManifest.xml:26:22-94
+20
+21    <application
+21-->C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:10:5-41:19
+22        android:name="com.amirasghari.musicplayer.ApplicationClass"
+22-->C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:11:9-41
+23        android:allowBackup="true"
+23-->C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:12:9-35
+24        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+24-->[androidx.core:core:1.9.0] C:\Users\amirr\.gradle\caches\transforms-3\1dc78716db08b6d1dcc8971c4e5a0ce8\transformed\core-1.9.0\AndroidManifest.xml:28:18-86
+25        android:dataExtractionRules="@xml/data_extraction_rules"
+25-->C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:13:9-65
+26        android:debuggable="true"
+27        android:extractNativeLibs="false"
+28        android:fullBackupContent="@xml/backup_rules"
+28-->C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:14:9-54
+29        android:icon="@mipmap/ic_launcher"
+29-->C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:15:9-43
+30        android:label="@string/app_name"
+30-->C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:16:9-41
+31        android:roundIcon="@mipmap/ic_launcher_round"
+31-->C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:17:9-54
+32        android:supportsRtl="true"
+32-->C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:18:9-35
+33        android:testOnly="true"
+34        android:theme="@style/Theme.MusicPlayer" >
+34-->C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:19:9-49
+35        <activity
+35-->C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:21:9-23:40
+36            android:name="com.amirasghari.musicplayer.Activity.PlaylistActivity"
+36-->C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:22:13-54
+37            android:exported="false" />
+37-->C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:23:13-37
+38        <activity
+38-->C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:24:9-26:40
+39            android:name="com.amirasghari.musicplayer.Activity.SearchActivity"
+39-->C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:25:13-52
+40            android:exported="false" />
+40-->C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:26:13-37
+41        <activity
+41-->C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:27:9-29:39
+42            android:name="com.amirasghari.musicplayer.Activity.ShowMusicActivity"
+42-->C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:28:13-55
+43            android:exported="true" />
+43-->C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:29:13-36
+44        <activity
+44-->C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:30:9-38:20
+45            android:name="com.amirasghari.musicplayer.Activity.MainActivity"
+45-->C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:31:13-50
+46            android:exported="true" >
+46-->C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:32:13-36
+47            <intent-filter>
+47-->C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:33:13-37:29
+48                <action android:name="android.intent.action.MAIN" />
+48-->C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:34:17-69
+48-->C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:34:25-66
+49
+50                <category android:name="android.intent.category.LAUNCHER" />
+50-->C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:36:17-77
+50-->C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:36:27-74
+51            </intent-filter>
+52        </activity>
+53
+54        <service android:name="com.amirasghari.musicplayer.Service.Service" />
+54-->C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:40:9-52
+54-->C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:40:18-49
+55
+56        <provider
+56-->[androidx.emoji2:emoji2:1.2.0] C:\Users\amirr\.gradle\caches\transforms-3\06dcc0fd0740a7535cfd9436fb1ea28d\transformed\emoji2-1.2.0\AndroidManifest.xml:24:9-32:20
+57            android:name="androidx.startup.InitializationProvider"
+57-->[androidx.emoji2:emoji2:1.2.0] C:\Users\amirr\.gradle\caches\transforms-3\06dcc0fd0740a7535cfd9436fb1ea28d\transformed\emoji2-1.2.0\AndroidManifest.xml:25:13-67
+58            android:authorities="com.amirasghari.musicplayer.androidx-startup"
+58-->[androidx.emoji2:emoji2:1.2.0] C:\Users\amirr\.gradle\caches\transforms-3\06dcc0fd0740a7535cfd9436fb1ea28d\transformed\emoji2-1.2.0\AndroidManifest.xml:26:13-68
+59            android:exported="false" >
+59-->[androidx.emoji2:emoji2:1.2.0] C:\Users\amirr\.gradle\caches\transforms-3\06dcc0fd0740a7535cfd9436fb1ea28d\transformed\emoji2-1.2.0\AndroidManifest.xml:27:13-37
+60            <meta-data
+60-->[androidx.emoji2:emoji2:1.2.0] C:\Users\amirr\.gradle\caches\transforms-3\06dcc0fd0740a7535cfd9436fb1ea28d\transformed\emoji2-1.2.0\AndroidManifest.xml:29:13-31:52
+61                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+61-->[androidx.emoji2:emoji2:1.2.0] C:\Users\amirr\.gradle\caches\transforms-3\06dcc0fd0740a7535cfd9436fb1ea28d\transformed\emoji2-1.2.0\AndroidManifest.xml:30:17-75
+62                android:value="androidx.startup" />
+62-->[androidx.emoji2:emoji2:1.2.0] C:\Users\amirr\.gradle\caches\transforms-3\06dcc0fd0740a7535cfd9436fb1ea28d\transformed\emoji2-1.2.0\AndroidManifest.xml:31:17-49
+63            <meta-data
+63-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\amirr\.gradle\caches\transforms-3\e2871e472712e457ebe3804eee0b073c\transformed\lifecycle-process-2.4.1\AndroidManifest.xml:31:13-33:52
+64                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+64-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\amirr\.gradle\caches\transforms-3\e2871e472712e457ebe3804eee0b073c\transformed\lifecycle-process-2.4.1\AndroidManifest.xml:32:17-78
+65                android:value="androidx.startup" />
+65-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\amirr\.gradle\caches\transforms-3\e2871e472712e457ebe3804eee0b073c\transformed\lifecycle-process-2.4.1\AndroidManifest.xml:33:17-49
+66        </provider>
+67    </application>
+68
+69</manifest>
