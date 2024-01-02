@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".Fragment.ShowMusicFragment"
+        android:background="@color/white">
+
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/currentMusicImgCard"
+            android:layout_width="@dimen/_200sdp"
+            android:layout_height="@dimen/_200sdp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:cardCornerRadius="@dimen/_400sdp"
+            app:layout_constraintBottom_toTopOf="@+id/musicController"
+            app:cardBackgroundColor="@color/white"
+            android:foregroundGravity="center"
+            android:elevation="@dimen/_40sdp"
+            >
+
+            <ImageView
+                android:id="@+id/musicImg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"
+                />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            app:cardBackgroundColor="@color/lightBlue"
+            app:layout_constraintLeft_toLeftOf="@id/currentMusicImgCard"
+            app:layout_constraintRight_toRightOf="@id/currentMusicImgCard"
+            app:layout_constraintBottom_toBottomOf="@id/currentMusicImgCard"
+            app:layout_constraintTop_toTopOf="@id/currentMusicImgCard"
+            app:cardCornerRadius="@dimen/_100sdp"
+            >
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                app:cardCornerRadius="@dimen/_100sdp"
+                app:cardBackgroundColor="@color/blueBackgroundColor"
+                android:layout_gravity="center"
+                app:cardElevation="0dp"
+                />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="@id/backCard"
+            app:layout_constraintBottom_toBottomOf="@id/backCard"
+            android:text="Now Playing"
+            android:textSize="@dimen/_15sdp"
+            android:textColor="@color/black"/>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/backCard"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/_20sdp"
+            app:cardCornerRadius="@dimen/_30sdp"
+            android:shadowRadius="@dimen/_20sdp"
+            android:shadowColor="@android:color/black"
+            android:backgroundTint="@android:color/white"
+            android:layout_marginLeft="@dimen/_20sdp">
+
+            <ImageView
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:src="@drawable/left"
+                android:background="@drawable/round_bg"
+                android:layout_gravity="center"/>
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/musicTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toLeftOf="@+id/addBtn"
+            app:layout_constraintLeft_toRightOf="@+id/favoriteBtn"
+            app:layout_constraintBottom_toTopOf="@id/musicController"
+            android:layout_marginBottom="@dimen/_30sdp"
+            android:layout_marginHorizontal="@dimen/_4sdp"
+            android:text="laghzesh"
+            android:textSize="@dimen/_15sdp"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/musicArtist"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@+id/favoriteBtn"
+            app:layout_constraintRight_toLeftOf="@+id/addBtn"
+            app:layout_constraintTop_toBottomOf="@id/musicTitle"
+            app:layout_constraintBottom_toTopOf="@id/musicController"
+            android:text="ali sorena"
+            android:gravity="center"
+            android:textSize="@dimen/_12sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:textColor="@color/black"
+            />
+
+        <ImageView
+            android:id="@+id/addBtn"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:src="@drawable/plus1"
+            android:background="@android:color/transparent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/musicArtist"
+            android:layout_marginRight="@dimen/_20sdp"
+            />
+
+        <ImageView
+            android:id="@+id/favoriteBtn"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:src="@drawable/plus1"
+            android:background="@android:color/transparent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/musicArtist"
+            android:layout_marginLeft="@dimen/_20sdp"
+            />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/musicController"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_220sdp"
+            android:background="@drawable/current_music_bg"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <rm.com.audiowave.AudioWaveView
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                app:animateExpansion="false"
+                app:chunkHeight="24dp"
+                app:chunkRadius="1dp"
+                app:chunkSpacing="1dp"
+                app:chunkWidth="3dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:minChunkHeight="2dp"
+                app:touchable="true"
+                app:waveColor="@android:color/white" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/controlBtn"
+                android:layout_width="@dimen/_55sdp"
+                android:layout_height="@dimen/_55sdp"
+                android:elevation="@dimen/_40sdp"
+                android:shadowColor="@color/white"
+                android:foregroundGravity="center"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/_400sdp"
+                android:layout_marginTop="@dimen/_80sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageButton
+                    android:id="@+id/controlMusicImg"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@android:color/transparent"
+                    android:scaleType="center"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:src="@drawable/pause2" />
+            </androidx.cardview.widget.CardView>
+
+            <!--<ImageButton
+                android:id="@+id/controlMusicImg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:scaleType="center"
+                android:background="@android:color/transparent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="@dimen/_80sdp"
+                android:foreground="?android:attr/selectable"
+                android:src="@drawable/ic_materialicons_24px" />-->
+
+            <!--<ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/controlBtn"
+                android:src="@drawable/next"
+                />-->
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
