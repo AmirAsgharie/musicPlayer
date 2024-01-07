@@ -9,13 +9,17 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.amirasghari.musicplayer.Adapter.PlaylistAdapter
+import com.amirasghari.musicplayer.Interface.PlaylistListener
+import com.amirasghari.musicplayer.Interface.PlaylistMenuListener
 import com.amirasghari.musicplayer.R
 import com.amirasghari.musicplayer.databinding.ActivityPlaylistBinding
 import com.amirasghari.musicplayer.realm.PlaylistsInfo
 import com.amirasghari.musicplayer.realm.RealmDAO
 import com.amirasghari.musicplayer.realm.SinglePlaylistInfo
 
-class PlaylistActivity : AppCompatActivity() {
+class PlaylistActivity : AppCompatActivity() ,PlaylistListener , PlaylistMenuListener{
     lateinit var binding: ActivityPlaylistBinding
     lateinit var shared: SharedPreferences
 
@@ -40,6 +44,7 @@ class PlaylistActivity : AppCompatActivity() {
 
 
         val data = RealmDAO().playlistReadAll()
+        recyclerView()
 
 
 
@@ -96,6 +101,19 @@ class PlaylistActivity : AppCompatActivity() {
 
     }
 
+    private fun recyclerView(){
+        val realm =RealmDAO()
+        val playlistsInfo =realm.playlistReadAll()
+        val data = ArrayList<PlaylistsInfo>()
+        playlistsInfo.forEach {
+            data.add(it)
+        }
+
+        val adapter =PlaylistAdapter(this , data , this , this)
+        binding.playlistRec.layoutManager = LinearLayoutManager(this , LinearLayoutManager.VERTICAL , false)
+        binding.playlistRec.adapter=adapter
+    }
+
     private fun addToPlayList(playListName: String) {
         val realmDAO = RealmDAO()
         val singlePlaylistInfo = SinglePlaylistInfo()
@@ -126,4 +144,11 @@ class PlaylistActivity : AppCompatActivity() {
         realmDAO.playlistUpdate(playlistsInfo)
         Log.i("playList" ,realmDAO.playlistReadAll().toString())
     }
+
+    override fun onclickListener(data: PlaylistsInfo, position: Int) {
+        Toast.makeText(this, "click", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onMenuClickListener(data: PlaylistsInfo, position: Int, view: View) {
+        Toast.makeText(this, "long", Toast.LENGTH_SHORT).show()    }
 }

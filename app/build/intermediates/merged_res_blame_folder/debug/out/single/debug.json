@@ -20,20 +20,12 @@
         "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\mipmap-xxxhdpi\\ic_launcher.webp"
     },
     {
-        "merged": "com.amirasghari.musicplayer.app-merged_res-5:/layout_fragment_main.xml.flat",
-        "source": "com.amirasghari.musicplayer.app-main-7:/layout/fragment_main.xml"
-    },
-    {
         "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\mipmap-xhdpi_ic_launcher.webp.flat",
         "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\mipmap-xhdpi\\ic_launcher.webp"
     },
     {
         "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\drawable_favorite.xml.flat",
         "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\drawable\\favorite.xml"
-    },
-    {
-        "merged": "com.amirasghari.musicplayer.app-merged_res-5:/layout_activity_show_music.xml.flat",
-        "source": "com.amirasghari.musicplayer.app-main-7:/layout/activity_show_music.xml"
     },
     {
         "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\mipmap-mdpi_ic_launcher_round.webp.flat",
@@ -66,6 +58,10 @@
     {
         "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\layout_activity_main.xml.flat",
         "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "com.amirasghari.musicplayer.app-merged_res-5:/layout_activity_playlist.xml.flat",
+        "source": "com.amirasghari.musicplayer.app-main-7:/layout/activity_playlist.xml"
     },
     {
         "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\drawable_plusss.png.flat",

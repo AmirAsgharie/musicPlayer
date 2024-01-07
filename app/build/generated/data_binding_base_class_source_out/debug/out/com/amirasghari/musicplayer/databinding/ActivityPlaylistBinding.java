@@ -13,6 +13,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.Guideline;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
+import androidx.recyclerview.widget.RecyclerView;
 import com.amirasghari.musicplayer.R;
 import java.lang.Deprecated;
 import java.lang.Object;
@@ -36,9 +37,12 @@ public abstract class ActivityPlaylistBinding extends ViewDataBinding {
   @NonNull
   public final TextView musicText;
 
+  @NonNull
+  public final RecyclerView playlistRec;
+
   protected ActivityPlaylistBinding(Object _bindingComponent, View _root, int _localFieldCount,
       CardView addCard, Guideline guid50Hor, ConstraintLayout musicCons, ImageView musicImg,
-      CardView musicImgCard, TextView musicText) {
+      CardView musicImgCard, TextView musicText, RecyclerView playlistRec) {
     super(_bindingComponent, _root, _localFieldCount);
     this.addCard = addCard;
     this.guid50Hor = guid50Hor;
@@ -46,6 +50,7 @@ public abstract class ActivityPlaylistBinding extends ViewDataBinding {
     this.musicImg = musicImg;
     this.musicImgCard = musicImgCard;
     this.musicText = musicText;
+    this.playlistRec = playlistRec;
   }
 
   @NonNull

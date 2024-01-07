@@ -60,7 +60,7 @@ class PlaylistAdapter(
             //}else{
             binding.musicText.text = playlistsInfo.playListName
             //}
-            //binding.artistText.text = audioModel.Artist
+            binding.artistText.text =playlistsInfo.musicNumber.toString()
         }
 
     }

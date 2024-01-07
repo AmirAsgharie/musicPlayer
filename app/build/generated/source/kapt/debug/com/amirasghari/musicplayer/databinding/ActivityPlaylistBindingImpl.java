@@ -20,6 +20,7 @@ public class ActivityPlaylistBindingImpl extends ActivityPlaylistBinding  {
         sViewsWithIds.put(R.id.musicImg, 4);
         sViewsWithIds.put(R.id.musicText, 5);
         sViewsWithIds.put(R.id.guid50Hor, 6);
+        sViewsWithIds.put(R.id.playlistRec, 7);
     }
     // views
     @NonNull
@@ -30,7 +31,7 @@ public class ActivityPlaylistBindingImpl extends ActivityPlaylistBinding  {
     // Inverse Binding Event Handlers
 
     public ActivityPlaylistBindingImpl(@Nullable androidx.databinding.DataBindingComponent bindingComponent, @NonNull View root) {
-        this(bindingComponent, root, mapBindings(bindingComponent, root, 7, sIncludes, sViewsWithIds));
+        this(bindingComponent, root, mapBindings(bindingComponent, root, 8, sIncludes, sViewsWithIds));
     }
     private ActivityPlaylistBindingImpl(androidx.databinding.DataBindingComponent bindingComponent, View root, Object[] bindings) {
         super(bindingComponent, root, 0
@@ -40,6 +41,7 @@ public class ActivityPlaylistBindingImpl extends ActivityPlaylistBinding  {
             , (android.widget.ImageView) bindings[4]
             , (androidx.cardview.widget.CardView) bindings[3]
             , (android.widget.TextView) bindings[5]
+            , (androidx.recyclerview.widget.RecyclerView) bindings[7]
             );
         this.mboundView0 = (androidx.constraintlayout.widget.ConstraintLayout) bindings[0];
         this.mboundView0.setTag(null);

@@ -4153,6 +4153,7 @@ id peekHeight
 id percent
 id pin
 id playlist
+id playlistRec
 id position
 id postLayout
 id pressed

@@ -80,6 +80,7 @@ id musicTitle
 id nav_graph
 id nextBtn
 id playlist
+id playlistRec
 id rec
 id repeatBtn
 id searchCard
