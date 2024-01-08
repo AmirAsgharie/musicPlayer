@@ -14,13 +14,15 @@ public class ActivityPlaylistBindingImpl extends ActivityPlaylistBinding  {
     static {
         sIncludes = null;
         sViewsWithIds = new android.util.SparseIntArray();
-        sViewsWithIds.put(R.id.addCard, 1);
-        sViewsWithIds.put(R.id.musicCons, 2);
-        sViewsWithIds.put(R.id.musicImgCard, 3);
-        sViewsWithIds.put(R.id.musicImg, 4);
-        sViewsWithIds.put(R.id.musicText, 5);
-        sViewsWithIds.put(R.id.guid50Hor, 6);
-        sViewsWithIds.put(R.id.playlistRec, 7);
+        sViewsWithIds.put(R.id.backCard, 1);
+        sViewsWithIds.put(R.id.searchCard, 2);
+        sViewsWithIds.put(R.id.addCard, 3);
+        sViewsWithIds.put(R.id.musicCons, 4);
+        sViewsWithIds.put(R.id.musicImgCard, 5);
+        sViewsWithIds.put(R.id.musicImg, 6);
+        sViewsWithIds.put(R.id.musicText, 7);
+        sViewsWithIds.put(R.id.guid50Hor, 8);
+        sViewsWithIds.put(R.id.playlistRec, 9);
     }
     // views
     @NonNull
@@ -31,17 +33,19 @@ public class ActivityPlaylistBindingImpl extends ActivityPlaylistBinding  {
     // Inverse Binding Event Handlers
 
     public ActivityPlaylistBindingImpl(@Nullable androidx.databinding.DataBindingComponent bindingComponent, @NonNull View root) {
-        this(bindingComponent, root, mapBindings(bindingComponent, root, 8, sIncludes, sViewsWithIds));
+        this(bindingComponent, root, mapBindings(bindingComponent, root, 10, sIncludes, sViewsWithIds));
     }
     private ActivityPlaylistBindingImpl(androidx.databinding.DataBindingComponent bindingComponent, View root, Object[] bindings) {
         super(bindingComponent, root, 0
-            , (androidx.cardview.widget.CardView) bindings[1]
-            , (androidx.constraintlayout.widget.Guideline) bindings[6]
-            , (androidx.constraintlayout.widget.ConstraintLayout) bindings[2]
-            , (android.widget.ImageView) bindings[4]
             , (androidx.cardview.widget.CardView) bindings[3]
-            , (android.widget.TextView) bindings[5]
-            , (androidx.recyclerview.widget.RecyclerView) bindings[7]
+            , (androidx.cardview.widget.CardView) bindings[1]
+            , (androidx.constraintlayout.widget.Guideline) bindings[8]
+            , (androidx.constraintlayout.widget.ConstraintLayout) bindings[4]
+            , (android.widget.ImageView) bindings[6]
+            , (androidx.cardview.widget.CardView) bindings[5]
+            , (android.widget.TextView) bindings[7]
+            , (androidx.recyclerview.widget.RecyclerView) bindings[9]
+            , (androidx.cardview.widget.CardView) bindings[2]
             );
         this.mboundView0 = (androidx.constraintlayout.widget.ConstraintLayout) bindings[0];
         this.mboundView0.setTag(null);

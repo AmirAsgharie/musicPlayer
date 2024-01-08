@@ -10,6 +10,7 @@ import com.amirasghari.musicplayer.databinding.ActivityMainBindingImpl;
 import com.amirasghari.musicplayer.databinding.ActivityPlaylistBindingImpl;
 import com.amirasghari.musicplayer.databinding.ActivitySearchBindingImpl;
 import com.amirasghari.musicplayer.databinding.ActivityShowMusicBindingImpl;
+import com.amirasghari.musicplayer.databinding.ActivitySinglePlaylistBindingImpl;
 import com.amirasghari.musicplayer.databinding.FragmentFavoriteBindingImpl;
 import com.amirasghari.musicplayer.databinding.FragmentMainBindingImpl;
 import com.amirasghari.musicplayer.databinding.FragmentPlayListBindingImpl;
@@ -36,27 +37,30 @@ public class DataBinderMapperImpl extends DataBinderMapper {
 
   private static final int LAYOUT_ACTIVITYSHOWMUSIC = 4;
 
-  private static final int LAYOUT_FRAGMENTFAVORITE = 5;
+  private static final int LAYOUT_ACTIVITYSINGLEPLAYLIST = 5;
 
-  private static final int LAYOUT_FRAGMENTMAIN = 6;
+  private static final int LAYOUT_FRAGMENTFAVORITE = 6;
 
-  private static final int LAYOUT_FRAGMENTPLAYLIST = 7;
+  private static final int LAYOUT_FRAGMENTMAIN = 7;
 
-  private static final int LAYOUT_FRAGMENTSHOWMUSIC = 8;
+  private static final int LAYOUT_FRAGMENTPLAYLIST = 8;
 
-  private static final int LAYOUT_MUSICROW = 9;
+  private static final int LAYOUT_FRAGMENTSHOWMUSIC = 9;
 
-  private static final int LAYOUT_PLAYLLISTDIALOG = 10;
+  private static final int LAYOUT_MUSICROW = 10;
 
-  private static final int LAYOUT_SEARCHROW = 11;
+  private static final int LAYOUT_PLAYLLISTDIALOG = 11;
 
-  private static final SparseIntArray INTERNAL_LAYOUT_ID_LOOKUP = new SparseIntArray(11);
+  private static final int LAYOUT_SEARCHROW = 12;
+
+  private static final SparseIntArray INTERNAL_LAYOUT_ID_LOOKUP = new SparseIntArray(12);
 
   static {
     INTERNAL_LAYOUT_ID_LOOKUP.put(com.amirasghari.musicplayer.R.layout.activity_main, LAYOUT_ACTIVITYMAIN);
     INTERNAL_LAYOUT_ID_LOOKUP.put(com.amirasghari.musicplayer.R.layout.activity_playlist, LAYOUT_ACTIVITYPLAYLIST);
     INTERNAL_LAYOUT_ID_LOOKUP.put(com.amirasghari.musicplayer.R.layout.activity_search, LAYOUT_ACTIVITYSEARCH);
     INTERNAL_LAYOUT_ID_LOOKUP.put(com.amirasghari.musicplayer.R.layout.activity_show_music, LAYOUT_ACTIVITYSHOWMUSIC);
+    INTERNAL_LAYOUT_ID_LOOKUP.put(com.amirasghari.musicplayer.R.layout.activity_single_playlist, LAYOUT_ACTIVITYSINGLEPLAYLIST);
     INTERNAL_LAYOUT_ID_LOOKUP.put(com.amirasghari.musicplayer.R.layout.fragment_favorite, LAYOUT_FRAGMENTFAVORITE);
     INTERNAL_LAYOUT_ID_LOOKUP.put(com.amirasghari.musicplayer.R.layout.fragment_main, LAYOUT_FRAGMENTMAIN);
     INTERNAL_LAYOUT_ID_LOOKUP.put(com.amirasghari.musicplayer.R.layout.fragment_play_list, LAYOUT_FRAGMENTPLAYLIST);
@@ -98,6 +102,12 @@ public class DataBinderMapperImpl extends DataBinderMapper {
             return new ActivityShowMusicBindingImpl(component, view);
           }
           throw new IllegalArgumentException("The tag for activity_show_music is invalid. Received: " + tag);
+        }
+        case  LAYOUT_ACTIVITYSINGLEPLAYLIST: {
+          if ("layout/activity_single_playlist_0".equals(tag)) {
+            return new ActivitySinglePlaylistBindingImpl(component, view);
+          }
+          throw new IllegalArgumentException("The tag for activity_single_playlist is invalid. Received: " + tag);
         }
         case  LAYOUT_FRAGMENTFAVORITE: {
           if ("layout/fragment_favorite_0".equals(tag)) {
@@ -194,13 +204,14 @@ public class DataBinderMapperImpl extends DataBinderMapper {
   }
 
   private static class InnerLayoutIdLookup {
-    static final HashMap<String, Integer> sKeys = new HashMap<String, Integer>(11);
+    static final HashMap<String, Integer> sKeys = new HashMap<String, Integer>(12);
 
     static {
       sKeys.put("layout/activity_main_0", com.amirasghari.musicplayer.R.layout.activity_main);
       sKeys.put("layout/activity_playlist_0", com.amirasghari.musicplayer.R.layout.activity_playlist);
       sKeys.put("layout/activity_search_0", com.amirasghari.musicplayer.R.layout.activity_search);
       sKeys.put("layout/activity_show_music_0", com.amirasghari.musicplayer.R.layout.activity_show_music);
+      sKeys.put("layout/activity_single_playlist_0", com.amirasghari.musicplayer.R.layout.activity_single_playlist);
       sKeys.put("layout/fragment_favorite_0", com.amirasghari.musicplayer.R.layout.fragment_favorite);
       sKeys.put("layout/fragment_main_0", com.amirasghari.musicplayer.R.layout.fragment_main);
       sKeys.put("layout/fragment_play_list_0", com.amirasghari.musicplayer.R.layout.fragment_play_list);

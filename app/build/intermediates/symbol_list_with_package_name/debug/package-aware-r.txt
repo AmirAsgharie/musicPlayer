@@ -4152,6 +4152,7 @@ id pathRelative
 id peekHeight
 id percent
 id pin
+id playListName
 id playlist
 id playlistRec
 id position
@@ -4163,6 +4164,7 @@ id radio
 id ratio
 id rec
 id rectangles
+id recycler
 id repeatBtn
 id reverseSawtooth
 id right
@@ -4442,6 +4444,7 @@ layout activity_main
 layout activity_playlist
 layout activity_search
 layout activity_show_music
+layout activity_single_playlist
 layout custom_dialog
 layout design_bottom_navigation_item
 layout design_bottom_sheet_dialog

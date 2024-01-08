@@ -33,6 +33,9 @@
         android:testOnly="true"
         android:theme="@style/Theme.MusicPlayer" >
         <activity
+            android:name="com.amirasghari.musicplayer.Activity.SinglePlaylistActivity"
+            android:exported="false" />
+        <activity
             android:name="com.amirasghari.musicplayer.Activity.PlaylistActivity"
             android:exported="false" />
         <activity

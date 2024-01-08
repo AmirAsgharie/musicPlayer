@@ -79,9 +79,11 @@ id musicText
 id musicTitle
 id nav_graph
 id nextBtn
+id playListName
 id playlist
 id playlistRec
 id rec
+id recycler
 id repeatBtn
 id searchCard
 id searchEdt
@@ -93,6 +95,7 @@ layout activity_main
 layout activity_playlist
 layout activity_search
 layout activity_show_music
+layout activity_single_playlist
 layout fragment_favorite
 layout fragment_main
 layout fragment_play_list

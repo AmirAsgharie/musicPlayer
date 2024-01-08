@@ -23,6 +23,9 @@ public abstract class ActivityPlaylistBinding extends ViewDataBinding {
   public final CardView addCard;
 
   @NonNull
+  public final CardView backCard;
+
+  @NonNull
   public final Guideline guid50Hor;
 
   @NonNull
@@ -40,17 +43,23 @@ public abstract class ActivityPlaylistBinding extends ViewDataBinding {
   @NonNull
   public final RecyclerView playlistRec;
 
+  @NonNull
+  public final CardView searchCard;
+
   protected ActivityPlaylistBinding(Object _bindingComponent, View _root, int _localFieldCount,
-      CardView addCard, Guideline guid50Hor, ConstraintLayout musicCons, ImageView musicImg,
-      CardView musicImgCard, TextView musicText, RecyclerView playlistRec) {
+      CardView addCard, CardView backCard, Guideline guid50Hor, ConstraintLayout musicCons,
+      ImageView musicImg, CardView musicImgCard, TextView musicText, RecyclerView playlistRec,
+      CardView searchCard) {
     super(_bindingComponent, _root, _localFieldCount);
     this.addCard = addCard;
+    this.backCard = backCard;
     this.guid50Hor = guid50Hor;
     this.musicCons = musicCons;
     this.musicImg = musicImg;
     this.musicImgCard = musicImgCard;
     this.musicText = musicText;
     this.playlistRec = playlistRec;
+    this.searchCard = searchCard;
   }
 
   @NonNull

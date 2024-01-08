@@ -40,6 +40,10 @@
         "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\mipmap-hdpi\\ic_launcher.webp"
     },
     {
+        "merged": "com.amirasghari.musicplayer.app-merged_res-5:/layout_activity_single_playlist.xml.flat",
+        "source": "com.amirasghari.musicplayer.app-main-7:/layout/activity_single_playlist.xml"
+    },
+    {
         "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\layout_fragment_main.xml.flat",
         "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\layout\\fragment_main.xml"
     },
@@ -58,10 +62,6 @@
     {
         "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\layout_activity_main.xml.flat",
         "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\layout\\activity_main.xml"
-    },
-    {
-        "merged": "com.amirasghari.musicplayer.app-merged_res-5:/layout_activity_playlist.xml.flat",
-        "source": "com.amirasghari.musicplayer.app-main-7:/layout/activity_playlist.xml"
     },
     {
         "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\drawable_plusss.png.flat",
@@ -146,6 +146,10 @@
     {
         "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\drawable_ic_launcher_background.xml.flat",
         "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\drawable\\ic_launcher_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\layout_activity_single_playlist.xml.flat",
+        "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\layout\\activity_single_playlist.xml"
     },
     {
         "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\layout_search_row.xml.flat",

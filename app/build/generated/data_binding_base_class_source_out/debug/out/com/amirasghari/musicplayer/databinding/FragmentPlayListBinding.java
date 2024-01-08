@@ -8,13 +8,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
+import androidx.recyclerview.widget.RecyclerView;
 import com.amirasghari.musicplayer.R;
 import java.lang.Deprecated;
 import java.lang.Object;
 
 public abstract class FragmentPlayListBinding extends ViewDataBinding {
-  protected FragmentPlayListBinding(Object _bindingComponent, View _root, int _localFieldCount) {
+  @NonNull
+  public final RecyclerView rec;
+
+  protected FragmentPlayListBinding(Object _bindingComponent, View _root, int _localFieldCount,
+      RecyclerView rec) {
     super(_bindingComponent, _root, _localFieldCount);
+    this.rec = rec;
   }
 
   @NonNull
