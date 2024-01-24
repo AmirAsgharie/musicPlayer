@@ -66,10 +66,6 @@ class PlaylistActivity : AppCompatActivity() ,PlaylistListener , PlaylistMenuLis
             val dialog = alertDialog.create()
             dialog.show()
         }
-
-        binding.backCard.setOnClickListener {
-            finish()
-        }
     }
 
     private fun createNewPlaylist(playListName: String) {
@@ -121,7 +117,6 @@ class PlaylistActivity : AppCompatActivity() ,PlaylistListener , PlaylistMenuLis
     private fun addToPlayList(playListName: String) {
         val realmDAO = RealmDAO()
         val singlePlaylistInfo = SinglePlaylistInfo()
-        singlePlaylistInfo.playList_music = "${playListName}_${title}"
         singlePlaylistInfo.playListName = playListName
         singlePlaylistInfo.musicName = title
         singlePlaylistInfo.artist = artist
@@ -144,14 +139,14 @@ class PlaylistActivity : AppCompatActivity() ,PlaylistListener , PlaylistMenuLis
         val playlistsInfo =PlaylistsInfo()
         playlistsInfo.playListName = playlist!!.playListName
         playlistsInfo.musicNumber = playlist.musicNumber + 1
-        playlistsInfo.playListMainImagePath = image
+        playlistsInfo.playListMainImagePath = playlist.playListMainImagePath
 
         realmDAO.playlistUpdate(playlistsInfo)
         Log.i("playList" ,realmDAO.playlistReadAll().toString())
     }
 
     override fun onclickListener(data: PlaylistsInfo, position: Int) {
-        addToPlayList(data.playListName)
+        Toast.makeText(this, "click", Toast.LENGTH_SHORT).show()
     }
 
     override fun onMenuClickListener(data: PlaylistsInfo, position: Int, view: View) {

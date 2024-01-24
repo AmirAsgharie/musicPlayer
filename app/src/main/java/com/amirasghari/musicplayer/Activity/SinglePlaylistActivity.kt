@@ -34,10 +34,6 @@ class SinglePlaylistActivity : AppCompatActivity() , SinglePlayListListener , Si
             }
         }
 
-        binding.backCard.setOnClickListener {
-            onBackPressed()
-        }
-
         recyclerView(data)
         Log.i("single1" , data.toString())
     }
