@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.widget.PopupMenu
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amirasghari.musicplayer.Activity.SinglePlaylistActivity
@@ -35,6 +36,11 @@ class PlayListFragment : Fragment() , PlaylistListener , PlaylistMenuListener{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+    }
+
+    override fun onResume() {
+        super.onResume()
         recyclerView()
     }
 
@@ -58,7 +64,19 @@ class PlayListFragment : Fragment() , PlaylistListener , PlaylistMenuListener{
     }
 
     override fun onMenuClickListener(data: PlaylistsInfo, position: Int, view: View) {
-        Toast.makeText(requireContext(), "2", Toast.LENGTH_SHORT).show()
+
+        val popupMenu = PopupMenu(requireContext() , view)
+        // add the menu
+        popupMenu.inflate(R.menu.playlist_menu)
+        popupMenu.show()
+
+        popupMenu.setOnMenuItemClickListener { item ->
+            when(item.title){
+                "delete"->{true}
+                else->{false}
+            }}
+
+
     }
 
 }

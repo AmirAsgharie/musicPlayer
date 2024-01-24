@@ -10,6 +10,8 @@ public interface com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxyI
     public void realmSet$artist(String value);
     public String realmGet$imagePath();
     public void realmSet$imagePath(String value);
+    public String realmGet$playList_music();
+    public void realmSet$playList_music(String value);
     public String realmGet$musicPath();
     public void realmSet$musicPath(String value);
     public String realmGet$duration();

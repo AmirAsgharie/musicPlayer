@@ -47,16 +47,18 @@ public class com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxy exte
         long musicNameColKey;
         long artistColKey;
         long imagePathColKey;
+        long playList_musicColKey;
         long musicPathColKey;
         long durationColKey;
 
         SinglePlaylistInfoColumnInfo(OsSchemaInfo schemaInfo) {
-            super(6);
+            super(7);
             OsObjectSchemaInfo objectSchemaInfo = schemaInfo.getObjectSchemaInfo("SinglePlaylistInfo");
             this.playListNameColKey = addColumnDetails("playListName", "playListName", objectSchemaInfo);
             this.musicNameColKey = addColumnDetails("musicName", "musicName", objectSchemaInfo);
             this.artistColKey = addColumnDetails("artist", "artist", objectSchemaInfo);
             this.imagePathColKey = addColumnDetails("imagePath", "imagePath", objectSchemaInfo);
+            this.playList_musicColKey = addColumnDetails("playList_music", "playList_music", objectSchemaInfo);
             this.musicPathColKey = addColumnDetails("musicPath", "musicPath", objectSchemaInfo);
             this.durationColKey = addColumnDetails("duration", "duration", objectSchemaInfo);
         }
@@ -79,6 +81,7 @@ public class com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxy exte
             dst.musicNameColKey = src.musicNameColKey;
             dst.artistColKey = src.artistColKey;
             dst.imagePathColKey = src.imagePathColKey;
+            dst.playList_musicColKey = src.playList_musicColKey;
             dst.musicPathColKey = src.musicPathColKey;
             dst.durationColKey = src.durationColKey;
         }
@@ -230,6 +233,24 @@ public class com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxy exte
 
     @Override
     @SuppressWarnings("cast")
+    public String realmGet$playList_music() {
+        proxyState.getRealm$realm().checkIfValid();
+        return (java.lang.String) proxyState.getRow$realm().getString(columnInfo.playList_musicColKey);
+    }
+
+    @Override
+    public void realmSet$playList_music(String value) {
+        if (proxyState.isUnderConstruction()) {
+            // default value of the primary key is always ignored.
+            return;
+        }
+
+        proxyState.getRealm$realm().checkIfValid();
+        throw new io.realm.exceptions.RealmException("Primary key field 'playList_music' cannot be changed after object was created.");
+    }
+
+    @Override
+    @SuppressWarnings("cast")
     public String realmGet$musicPath() {
         proxyState.getRealm$realm().checkIfValid();
         return (java.lang.String) proxyState.getRow$realm().getString(columnInfo.musicPathColKey);
@@ -238,12 +259,24 @@ public class com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxy exte
     @Override
     public void realmSet$musicPath(String value) {
         if (proxyState.isUnderConstruction()) {
-            // default value of the primary key is always ignored.
+            if (!proxyState.getAcceptDefaultValue$realm()) {
+                return;
+            }
+            final Row row = proxyState.getRow$realm();
+            if (value == null) {
+                row.getTable().setNull(columnInfo.musicPathColKey, row.getObjectKey(), true);
+                return;
+            }
+            row.getTable().setString(columnInfo.musicPathColKey, row.getObjectKey(), value, true);
             return;
         }
 
         proxyState.getRealm$realm().checkIfValid();
-        throw new io.realm.exceptions.RealmException("Primary key field 'musicPath' cannot be changed after object was created.");
+        if (value == null) {
+            proxyState.getRow$realm().setNull(columnInfo.musicPathColKey);
+            return;
+        }
+        proxyState.getRow$realm().setString(columnInfo.musicPathColKey, value);
     }
 
     @Override
@@ -277,12 +310,13 @@ public class com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxy exte
     }
 
     private static OsObjectSchemaInfo createExpectedObjectSchemaInfo() {
-        OsObjectSchemaInfo.Builder builder = new OsObjectSchemaInfo.Builder(NO_ALIAS, "SinglePlaylistInfo", false, 6, 0);
+        OsObjectSchemaInfo.Builder builder = new OsObjectSchemaInfo.Builder(NO_ALIAS, "SinglePlaylistInfo", false, 7, 0);
         builder.addPersistedProperty(NO_ALIAS, "playListName", RealmFieldType.STRING, !Property.PRIMARY_KEY, !Property.INDEXED, !Property.REQUIRED);
         builder.addPersistedProperty(NO_ALIAS, "musicName", RealmFieldType.STRING, !Property.PRIMARY_KEY, !Property.INDEXED, !Property.REQUIRED);
         builder.addPersistedProperty(NO_ALIAS, "artist", RealmFieldType.STRING, !Property.PRIMARY_KEY, !Property.INDEXED, !Property.REQUIRED);
         builder.addPersistedProperty(NO_ALIAS, "imagePath", RealmFieldType.STRING, !Property.PRIMARY_KEY, !Property.INDEXED, !Property.REQUIRED);
-        builder.addPersistedProperty(NO_ALIAS, "musicPath", RealmFieldType.STRING, Property.PRIMARY_KEY, !Property.INDEXED, !Property.REQUIRED);
+        builder.addPersistedProperty(NO_ALIAS, "playList_music", RealmFieldType.STRING, Property.PRIMARY_KEY, !Property.INDEXED, !Property.REQUIRED);
+        builder.addPersistedProperty(NO_ALIAS, "musicPath", RealmFieldType.STRING, !Property.PRIMARY_KEY, !Property.INDEXED, !Property.REQUIRED);
         builder.addPersistedProperty(NO_ALIAS, "duration", RealmFieldType.STRING, !Property.PRIMARY_KEY, !Property.INDEXED, !Property.REQUIRED);
         return builder.build();
     }
@@ -311,12 +345,12 @@ public class com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxy exte
         if (update) {
             Table table = realm.getTable(com.amirasghari.musicplayer.realm.SinglePlaylistInfo.class);
             SinglePlaylistInfoColumnInfo columnInfo = (SinglePlaylistInfoColumnInfo) realm.getSchema().getColumnInfo(com.amirasghari.musicplayer.realm.SinglePlaylistInfo.class);
-            long pkColumnKey = columnInfo.musicPathColKey;
+            long pkColumnKey = columnInfo.playList_musicColKey;
             long objKey = Table.NO_MATCH;
-            if (json.isNull("musicPath")) {
+            if (json.isNull("playList_music")) {
                 objKey = table.findFirstNull(pkColumnKey);
             } else {
-                objKey = table.findFirstString(pkColumnKey, json.getString("musicPath"));
+                objKey = table.findFirstString(pkColumnKey, json.getString("playList_music"));
             }
             if (objKey != Table.NO_MATCH) {
                 final BaseRealm.RealmObjectContext objectContext = BaseRealm.objectContext.get();
@@ -329,14 +363,14 @@ public class com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxy exte
             }
         }
         if (obj == null) {
-            if (json.has("musicPath")) {
-                if (json.isNull("musicPath")) {
+            if (json.has("playList_music")) {
+                if (json.isNull("playList_music")) {
                     obj = (io.realm.com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxy) realm.createObjectInternal(com.amirasghari.musicplayer.realm.SinglePlaylistInfo.class, null, true, excludeFields);
                 } else {
-                    obj = (io.realm.com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxy) realm.createObjectInternal(com.amirasghari.musicplayer.realm.SinglePlaylistInfo.class, json.getString("musicPath"), true, excludeFields);
+                    obj = (io.realm.com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxy) realm.createObjectInternal(com.amirasghari.musicplayer.realm.SinglePlaylistInfo.class, json.getString("playList_music"), true, excludeFields);
                 }
             } else {
-                throw new IllegalArgumentException("JSON object doesn't have the primary key field 'musicPath'.");
+                throw new IllegalArgumentException("JSON object doesn't have the primary key field 'playList_music'.");
             }
         }
 
@@ -367,6 +401,13 @@ public class com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxy exte
                 objProxy.realmSet$imagePath(null);
             } else {
                 objProxy.realmSet$imagePath((String) json.getString("imagePath"));
+            }
+        }
+        if (json.has("musicPath")) {
+            if (json.isNull("musicPath")) {
+                objProxy.realmSet$musicPath(null);
+            } else {
+                objProxy.realmSet$musicPath((String) json.getString("musicPath"));
             }
         }
         if (json.has("duration")) {
@@ -418,6 +459,14 @@ public class com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxy exte
                     reader.skipValue();
                     objProxy.realmSet$imagePath(null);
                 }
+            } else if (name.equals("playList_music")) {
+                if (reader.peek() != JsonToken.NULL) {
+                    objProxy.realmSet$playList_music((String) reader.nextString());
+                } else {
+                    reader.skipValue();
+                    objProxy.realmSet$playList_music(null);
+                }
+                jsonHasPrimaryKey = true;
             } else if (name.equals("musicPath")) {
                 if (reader.peek() != JsonToken.NULL) {
                     objProxy.realmSet$musicPath((String) reader.nextString());
@@ -425,7 +474,6 @@ public class com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxy exte
                     reader.skipValue();
                     objProxy.realmSet$musicPath(null);
                 }
-                jsonHasPrimaryKey = true;
             } else if (name.equals("duration")) {
                 if (reader.peek() != JsonToken.NULL) {
                     objProxy.realmSet$duration((String) reader.nextString());
@@ -439,7 +487,7 @@ public class com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxy exte
         }
         reader.endObject();
         if (!jsonHasPrimaryKey) {
-            throw new IllegalArgumentException("JSON object doesn't have the primary key field 'musicPath'.");
+            throw new IllegalArgumentException("JSON object doesn't have the primary key field 'playList_music'.");
         }
         return realm.copyToRealmOrUpdate(obj);
     }
@@ -473,8 +521,8 @@ public class com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxy exte
         boolean canUpdate = update;
         if (canUpdate) {
             Table table = realm.getTable(com.amirasghari.musicplayer.realm.SinglePlaylistInfo.class);
-            long pkColumnKey = columnInfo.musicPathColKey;
-            String value = ((com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxyInterface) object).realmGet$musicPath();
+            long pkColumnKey = columnInfo.playList_musicColKey;
+            String value = ((com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxyInterface) object).realmGet$playList_music();
             long objKey = Table.NO_MATCH;
             if (value == null) {
                 objKey = table.findFirstNull(pkColumnKey);
@@ -513,6 +561,7 @@ public class com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxy exte
         builder.addString(columnInfo.musicNameColKey, unmanagedSource.realmGet$musicName());
         builder.addString(columnInfo.artistColKey, unmanagedSource.realmGet$artist());
         builder.addString(columnInfo.imagePathColKey, unmanagedSource.realmGet$imagePath());
+        builder.addString(columnInfo.playList_musicColKey, unmanagedSource.realmGet$playList_music());
         builder.addString(columnInfo.musicPathColKey, unmanagedSource.realmGet$musicPath());
         builder.addString(columnInfo.durationColKey, unmanagedSource.realmGet$duration());
 
@@ -532,8 +581,8 @@ public class com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxy exte
         Table table = realm.getTable(com.amirasghari.musicplayer.realm.SinglePlaylistInfo.class);
         long tableNativePtr = table.getNativePtr();
         SinglePlaylistInfoColumnInfo columnInfo = (SinglePlaylistInfoColumnInfo) realm.getSchema().getColumnInfo(com.amirasghari.musicplayer.realm.SinglePlaylistInfo.class);
-        long pkColumnKey = columnInfo.musicPathColKey;
-        String primaryKeyValue = ((com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxyInterface) object).realmGet$musicPath();
+        long pkColumnKey = columnInfo.playList_musicColKey;
+        String primaryKeyValue = ((com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxyInterface) object).realmGet$playList_music();
         long objKey = Table.NO_MATCH;
         if (primaryKeyValue == null) {
             objKey = Table.nativeFindFirstNull(tableNativePtr, pkColumnKey);
@@ -562,6 +611,10 @@ public class com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxy exte
         if (realmGet$imagePath != null) {
             Table.nativeSetString(tableNativePtr, columnInfo.imagePathColKey, objKey, realmGet$imagePath, false);
         }
+        String realmGet$musicPath = ((com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxyInterface) object).realmGet$musicPath();
+        if (realmGet$musicPath != null) {
+            Table.nativeSetString(tableNativePtr, columnInfo.musicPathColKey, objKey, realmGet$musicPath, false);
+        }
         String realmGet$duration = ((com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxyInterface) object).realmGet$duration();
         if (realmGet$duration != null) {
             Table.nativeSetString(tableNativePtr, columnInfo.durationColKey, objKey, realmGet$duration, false);
@@ -573,7 +626,7 @@ public class com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxy exte
         Table table = realm.getTable(com.amirasghari.musicplayer.realm.SinglePlaylistInfo.class);
         long tableNativePtr = table.getNativePtr();
         SinglePlaylistInfoColumnInfo columnInfo = (SinglePlaylistInfoColumnInfo) realm.getSchema().getColumnInfo(com.amirasghari.musicplayer.realm.SinglePlaylistInfo.class);
-        long pkColumnKey = columnInfo.musicPathColKey;
+        long pkColumnKey = columnInfo.playList_musicColKey;
         com.amirasghari.musicplayer.realm.SinglePlaylistInfo object = null;
         while (objects.hasNext()) {
             object = (com.amirasghari.musicplayer.realm.SinglePlaylistInfo) objects.next();
@@ -584,7 +637,7 @@ public class com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxy exte
                 cache.put(object, ((RealmObjectProxy) object).realmGet$proxyState().getRow$realm().getObjectKey());
                 continue;
             }
-            String primaryKeyValue = ((com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxyInterface) object).realmGet$musicPath();
+            String primaryKeyValue = ((com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxyInterface) object).realmGet$playList_music();
             long objKey = Table.NO_MATCH;
             if (primaryKeyValue == null) {
                 objKey = Table.nativeFindFirstNull(tableNativePtr, pkColumnKey);
@@ -613,6 +666,10 @@ public class com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxy exte
             if (realmGet$imagePath != null) {
                 Table.nativeSetString(tableNativePtr, columnInfo.imagePathColKey, objKey, realmGet$imagePath, false);
             }
+            String realmGet$musicPath = ((com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxyInterface) object).realmGet$musicPath();
+            if (realmGet$musicPath != null) {
+                Table.nativeSetString(tableNativePtr, columnInfo.musicPathColKey, objKey, realmGet$musicPath, false);
+            }
             String realmGet$duration = ((com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxyInterface) object).realmGet$duration();
             if (realmGet$duration != null) {
                 Table.nativeSetString(tableNativePtr, columnInfo.durationColKey, objKey, realmGet$duration, false);
@@ -627,8 +684,8 @@ public class com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxy exte
         Table table = realm.getTable(com.amirasghari.musicplayer.realm.SinglePlaylistInfo.class);
         long tableNativePtr = table.getNativePtr();
         SinglePlaylistInfoColumnInfo columnInfo = (SinglePlaylistInfoColumnInfo) realm.getSchema().getColumnInfo(com.amirasghari.musicplayer.realm.SinglePlaylistInfo.class);
-        long pkColumnKey = columnInfo.musicPathColKey;
-        String primaryKeyValue = ((com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxyInterface) object).realmGet$musicPath();
+        long pkColumnKey = columnInfo.playList_musicColKey;
+        String primaryKeyValue = ((com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxyInterface) object).realmGet$playList_music();
         long objKey = Table.NO_MATCH;
         if (primaryKeyValue == null) {
             objKey = Table.nativeFindFirstNull(tableNativePtr, pkColumnKey);
@@ -663,6 +720,12 @@ public class com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxy exte
         } else {
             Table.nativeSetNull(tableNativePtr, columnInfo.imagePathColKey, objKey, false);
         }
+        String realmGet$musicPath = ((com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxyInterface) object).realmGet$musicPath();
+        if (realmGet$musicPath != null) {
+            Table.nativeSetString(tableNativePtr, columnInfo.musicPathColKey, objKey, realmGet$musicPath, false);
+        } else {
+            Table.nativeSetNull(tableNativePtr, columnInfo.musicPathColKey, objKey, false);
+        }
         String realmGet$duration = ((com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxyInterface) object).realmGet$duration();
         if (realmGet$duration != null) {
             Table.nativeSetString(tableNativePtr, columnInfo.durationColKey, objKey, realmGet$duration, false);
@@ -676,7 +739,7 @@ public class com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxy exte
         Table table = realm.getTable(com.amirasghari.musicplayer.realm.SinglePlaylistInfo.class);
         long tableNativePtr = table.getNativePtr();
         SinglePlaylistInfoColumnInfo columnInfo = (SinglePlaylistInfoColumnInfo) realm.getSchema().getColumnInfo(com.amirasghari.musicplayer.realm.SinglePlaylistInfo.class);
-        long pkColumnKey = columnInfo.musicPathColKey;
+        long pkColumnKey = columnInfo.playList_musicColKey;
         com.amirasghari.musicplayer.realm.SinglePlaylistInfo object = null;
         while (objects.hasNext()) {
             object = (com.amirasghari.musicplayer.realm.SinglePlaylistInfo) objects.next();
@@ -687,7 +750,7 @@ public class com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxy exte
                 cache.put(object, ((RealmObjectProxy) object).realmGet$proxyState().getRow$realm().getObjectKey());
                 continue;
             }
-            String primaryKeyValue = ((com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxyInterface) object).realmGet$musicPath();
+            String primaryKeyValue = ((com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxyInterface) object).realmGet$playList_music();
             long objKey = Table.NO_MATCH;
             if (primaryKeyValue == null) {
                 objKey = Table.nativeFindFirstNull(tableNativePtr, pkColumnKey);
@@ -722,6 +785,12 @@ public class com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxy exte
             } else {
                 Table.nativeSetNull(tableNativePtr, columnInfo.imagePathColKey, objKey, false);
             }
+            String realmGet$musicPath = ((com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxyInterface) object).realmGet$musicPath();
+            if (realmGet$musicPath != null) {
+                Table.nativeSetString(tableNativePtr, columnInfo.musicPathColKey, objKey, realmGet$musicPath, false);
+            } else {
+                Table.nativeSetNull(tableNativePtr, columnInfo.musicPathColKey, objKey, false);
+            }
             String realmGet$duration = ((com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxyInterface) object).realmGet$duration();
             if (realmGet$duration != null) {
                 Table.nativeSetString(tableNativePtr, columnInfo.durationColKey, objKey, realmGet$duration, false);
@@ -755,6 +824,7 @@ public class com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxy exte
         unmanagedCopy.realmSet$musicName(realmSource.realmGet$musicName());
         unmanagedCopy.realmSet$artist(realmSource.realmGet$artist());
         unmanagedCopy.realmSet$imagePath(realmSource.realmGet$imagePath());
+        unmanagedCopy.realmSet$playList_music(realmSource.realmGet$playList_music());
         unmanagedCopy.realmSet$musicPath(realmSource.realmGet$musicPath());
         unmanagedCopy.realmSet$duration(realmSource.realmGet$duration());
 
@@ -770,6 +840,7 @@ public class com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxy exte
         builder.addString(columnInfo.musicNameColKey, realmObjectSource.realmGet$musicName());
         builder.addString(columnInfo.artistColKey, realmObjectSource.realmGet$artist());
         builder.addString(columnInfo.imagePathColKey, realmObjectSource.realmGet$imagePath());
+        builder.addString(columnInfo.playList_musicColKey, realmObjectSource.realmGet$playList_music());
         builder.addString(columnInfo.musicPathColKey, realmObjectSource.realmGet$musicPath());
         builder.addString(columnInfo.durationColKey, realmObjectSource.realmGet$duration());
 
@@ -798,6 +869,10 @@ public class com_amirasghari_musicplayer_realm_SinglePlaylistInfoRealmProxy exte
         stringBuilder.append(",");
         stringBuilder.append("{imagePath:");
         stringBuilder.append(realmGet$imagePath() != null ? realmGet$imagePath() : "null");
+        stringBuilder.append("}");
+        stringBuilder.append(",");
+        stringBuilder.append("{playList_music:");
+        stringBuilder.append(realmGet$playList_music() != null ? realmGet$playList_music() : "null");
         stringBuilder.append("}");
         stringBuilder.append(",");
         stringBuilder.append("{musicPath:");

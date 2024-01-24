@@ -131,6 +131,7 @@ class MainActivity : AppCompatActivity(), ServiceConnection {
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun play(path:String) {
+
         if (shared.getBoolean("favorite" ,false)){
             val favoriteMusic =ArrayList<AudioModel>()
             val data = RealmDAO().favoriteReadAll()
@@ -193,23 +194,10 @@ class MainActivity : AppCompatActivity(), ServiceConnection {
                 editor.putString("musicArtist" , musicArtist)
                 editor.putString("imagePath" , imagePath)
             }
-
-            //Glide.with(this).load(imagePath).into(binding.currentMusicImg)
-
-
-            //editor.putInt("position" , pos+1)
             editor.apply()
             musicService!!.play()
         }
 
-       /* musicService!!.musicPlayer!!.setOnCompletionListener {
-            val pos = shared.getInt("position" , 0)
-            val list = viewModel.observeSongsList()
-            play(list.value!![pos+1].Path)
-        }*/
-        //Toast.makeText(this, "3", Toast.LENGTH_SHORT).show()
-        //Toast.makeText(this, musicService!!.musicPlayer!!.duration.toString(), Toast.LENGTH_SHORT).show()
-        //Toast.makeText(this, musicService!!.position.toString(), Toast.LENGTH_SHORT).show()
     }
 
     override fun onServiceDisconnected(p0: ComponentName?) {
