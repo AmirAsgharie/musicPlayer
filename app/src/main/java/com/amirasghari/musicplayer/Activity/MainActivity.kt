@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity(), ServiceConnection {
     lateinit var path:String
     lateinit var musicName:String
     lateinit var musicArtist:String
-    private var first = true
+
 
 
     @RequiresApi(Build.VERSION_CODES.O)

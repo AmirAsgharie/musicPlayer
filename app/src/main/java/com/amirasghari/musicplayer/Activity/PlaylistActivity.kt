@@ -117,6 +117,7 @@ class PlaylistActivity : AppCompatActivity() ,PlaylistListener , PlaylistMenuLis
     private fun addToPlayList(playListName: String) {
         val realmDAO = RealmDAO()
         val singlePlaylistInfo = SinglePlaylistInfo()
+        singlePlaylistInfo.musicName_PlayList = "$title$playListName"
         singlePlaylistInfo.playListName = playListName
         singlePlaylistInfo.musicName = title
         singlePlaylistInfo.artist = artist
@@ -146,7 +147,7 @@ class PlaylistActivity : AppCompatActivity() ,PlaylistListener , PlaylistMenuLis
     }
 
     override fun onclickListener(data: PlaylistsInfo, position: Int) {
-        Toast.makeText(this, "click", Toast.LENGTH_SHORT).show()
+        addToPlayList(data.playListName)
     }
 
     override fun onMenuClickListener(data: PlaylistsInfo, position: Int, view: View) {

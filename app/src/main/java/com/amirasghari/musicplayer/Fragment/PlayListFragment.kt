@@ -35,6 +35,11 @@ class PlayListFragment : Fragment() , PlaylistListener , PlaylistMenuListener{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+    }
+
+    override fun onResume() {
+        super.onResume()
         recyclerView()
     }
 

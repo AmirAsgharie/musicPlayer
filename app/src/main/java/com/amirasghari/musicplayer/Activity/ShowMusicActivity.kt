@@ -13,6 +13,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import com.amirasghari.musicplayer.Model.AudioModel
@@ -348,7 +349,7 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection {
     }
 
     override fun onServiceDisconnected(name: ComponentName?) {
-        TODO("Not yet implemented")
+        Toast.makeText(this, "disconnect", Toast.LENGTH_SHORT).show()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

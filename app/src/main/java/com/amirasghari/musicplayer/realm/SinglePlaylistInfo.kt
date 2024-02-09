@@ -9,6 +9,7 @@ open class SinglePlaylistInfo:RealmObject() {
     lateinit var artist:String
     lateinit var imagePath:String
     @PrimaryKey
+    lateinit var musicName_PlayList:String
     lateinit var musicPath:String
     lateinit var duration:String
 
