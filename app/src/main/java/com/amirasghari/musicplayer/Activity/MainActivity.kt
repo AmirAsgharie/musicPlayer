@@ -83,6 +83,11 @@ class MainActivity : AppCompatActivity(), ServiceConnection {
         startActivity(intent)
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+
+    }
+
     private fun setUpTabLayout() {
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Favorite"))
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Song"))

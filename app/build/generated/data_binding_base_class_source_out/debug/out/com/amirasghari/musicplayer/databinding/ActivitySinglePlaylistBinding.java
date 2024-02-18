@@ -4,11 +4,13 @@ package com.amirasghari.musicplayer.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.Guideline;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,6 +21,27 @@ import java.lang.Object;
 public abstract class ActivitySinglePlaylistBinding extends ViewDataBinding {
   @NonNull
   public final CardView backCard;
+
+  @NonNull
+  public final TextView currentMusicArtistTxt;
+
+  @NonNull
+  public final CardView currentMusicCard;
+
+  @NonNull
+  public final ConstraintLayout currentMusicCons;
+
+  @NonNull
+  public final ImageView currentMusicImg;
+
+  @NonNull
+  public final CardView currentMusicImgCard;
+
+  @NonNull
+  public final TextView currentMusicTxt;
+
+  @NonNull
+  public final Guideline guid50Hor;
 
   @NonNull
   public final ConstraintLayout headerCons;
@@ -33,10 +56,20 @@ public abstract class ActivitySinglePlaylistBinding extends ViewDataBinding {
   public final CardView searchCard;
 
   protected ActivitySinglePlaylistBinding(Object _bindingComponent, View _root,
-      int _localFieldCount, CardView backCard, ConstraintLayout headerCons, TextView playListName,
-      RecyclerView recycler, CardView searchCard) {
+      int _localFieldCount, CardView backCard, TextView currentMusicArtistTxt,
+      CardView currentMusicCard, ConstraintLayout currentMusicCons, ImageView currentMusicImg,
+      CardView currentMusicImgCard, TextView currentMusicTxt, Guideline guid50Hor,
+      ConstraintLayout headerCons, TextView playListName, RecyclerView recycler,
+      CardView searchCard) {
     super(_bindingComponent, _root, _localFieldCount);
     this.backCard = backCard;
+    this.currentMusicArtistTxt = currentMusicArtistTxt;
+    this.currentMusicCard = currentMusicCard;
+    this.currentMusicCons = currentMusicCons;
+    this.currentMusicImg = currentMusicImg;
+    this.currentMusicImgCard = currentMusicImgCard;
+    this.currentMusicTxt = currentMusicTxt;
+    this.guid50Hor = guid50Hor;
     this.headerCons = headerCons;
     this.playListName = playListName;
     this.recycler = recycler;

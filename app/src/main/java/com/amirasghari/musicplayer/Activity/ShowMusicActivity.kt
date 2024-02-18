@@ -280,7 +280,7 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection {
             musicService!!.songList = favoriteMusic
 
         } else {
-            musicService!!.songList = musicService!!.mainSongList
+            //musicService!!.songList = musicService!!.mainSongList
         }
 
         if (musicService!!.musicPlayer == null) {

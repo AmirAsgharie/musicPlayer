@@ -46,6 +46,10 @@ class PlaylistActivity : AppCompatActivity() ,PlaylistListener , PlaylistMenuLis
         val data = RealmDAO().playlistReadAll()
         recyclerView()
 
+        binding.backCard.setOnClickListener {
+            onBackPressed()
+        }
+
 
 
         binding.musicCons.setOnClickListener {
@@ -60,12 +64,15 @@ class PlaylistActivity : AppCompatActivity() ,PlaylistListener , PlaylistMenuLis
                     val playListName = customLayout.findViewById<EditText>(R.id.dialogEdt).text
 
                     createNewPlaylist(playListName.toString())
-
                     Log.i("playlist", data.toString())
                 })
             val dialog = alertDialog.create()
             dialog.show()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
     }
 
     private fun createNewPlaylist(playListName: String) {
@@ -144,6 +151,11 @@ class PlaylistActivity : AppCompatActivity() ,PlaylistListener , PlaylistMenuLis
 
         realmDAO.playlistUpdate(playlistsInfo)
         Log.i("playList" ,realmDAO.playlistReadAll().toString())
+
+        Toast.makeText(this, "1 song add", Toast.LENGTH_SHORT).show()
+
+        val data = RealmDAO().playlistReadAll()
+        recyclerView()
     }
 
     override fun onclickListener(data: PlaylistsInfo, position: Int) {

@@ -1,50 +1,54 @@
 [
     {
-        "merged": "com.amirasghari.musicplayer.app-mergeDebugResources-4:/layout/search_row.xml",
-        "source": "com.amirasghari.musicplayer.app-main-7:/layout/search_row.xml"
+        "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-mergeDebugResources-4:\\layout\\music_row.xml",
+        "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\layout\\music_row.xml"
     },
     {
-        "merged": "com.amirasghari.musicplayer.app-mergeDebugResources-4:/layout/activity_playlist.xml",
-        "source": "com.amirasghari.musicplayer.app-main-7:/layout/activity_playlist.xml"
+        "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-mergeDebugResources-4:\\layout\\activity_main.xml",
+        "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-mergeDebugResources-4:\\layout\\activity_playlist.xml",
+        "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\layout\\activity_playlist.xml"
+    },
+    {
+        "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-mergeDebugResources-4:\\layout\\fragment_favorite.xml",
+        "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\layout\\fragment_favorite.xml"
     },
     {
         "merged": "com.amirasghari.musicplayer.app-mergeDebugResources-4:/layout/activity_single_playlist.xml",
         "source": "com.amirasghari.musicplayer.app-main-7:/layout/activity_single_playlist.xml"
     },
     {
-        "merged": "com.amirasghari.musicplayer.app-mergeDebugResources-4:/layout/activity_main.xml",
-        "source": "com.amirasghari.musicplayer.app-main-7:/layout/activity_main.xml"
+        "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-mergeDebugResources-4:\\layout\\activity_single_playlist.xml",
+        "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\layout\\activity_single_playlist.xml"
     },
     {
-        "merged": "com.amirasghari.musicplayer.app-mergeDebugResources-4:/layout/playllist_dialog.xml",
-        "source": "com.amirasghari.musicplayer.app-main-7:/layout/playllist_dialog.xml"
+        "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-mergeDebugResources-4:\\layout\\fragment_main.xml",
+        "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\layout\\fragment_main.xml"
     },
     {
-        "merged": "com.amirasghari.musicplayer.app-mergeDebugResources-4:/layout/music_row.xml",
-        "source": "com.amirasghari.musicplayer.app-main-7:/layout/music_row.xml"
+        "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-mergeDebugResources-4:\\layout\\fragment_play_list.xml",
+        "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\layout\\fragment_play_list.xml"
     },
     {
-        "merged": "com.amirasghari.musicplayer.app-mergeDebugResources-4:/layout/fragment_show_music.xml",
-        "source": "com.amirasghari.musicplayer.app-main-7:/layout/fragment_show_music.xml"
+        "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-mergeDebugResources-4:\\layout\\playllist_dialog.xml",
+        "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\layout\\playllist_dialog.xml"
     },
     {
-        "merged": "com.amirasghari.musicplayer.app-mergeDebugResources-4:/layout/activity_show_music.xml",
-        "source": "com.amirasghari.musicplayer.app-main-7:/layout/activity_show_music.xml"
+        "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-mergeDebugResources-4:\\layout\\activity_search.xml",
+        "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\layout\\activity_search.xml"
     },
     {
-        "merged": "com.amirasghari.musicplayer.app-mergeDebugResources-4:/layout/fragment_favorite.xml",
-        "source": "com.amirasghari.musicplayer.app-main-7:/layout/fragment_favorite.xml"
+        "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-mergeDebugResources-4:\\layout\\search_row.xml",
+        "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\layout\\search_row.xml"
     },
     {
-        "merged": "com.amirasghari.musicplayer.app-mergeDebugResources-4:/layout/fragment_main.xml",
-        "source": "com.amirasghari.musicplayer.app-main-7:/layout/fragment_main.xml"
+        "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-mergeDebugResources-4:\\layout\\activity_show_music.xml",
+        "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\layout\\activity_show_music.xml"
     },
     {
-        "merged": "com.amirasghari.musicplayer.app-mergeDebugResources-4:/layout/fragment_play_list.xml",
-        "source": "com.amirasghari.musicplayer.app-main-7:/layout/fragment_play_list.xml"
-    },
-    {
-        "merged": "com.amirasghari.musicplayer.app-mergeDebugResources-4:/layout/activity_search.xml",
-        "source": "com.amirasghari.musicplayer.app-main-7:/layout/activity_search.xml"
+        "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-mergeDebugResources-4:\\layout\\fragment_show_music.xml",
+        "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\layout\\fragment_show_music.xml"
     }
 ]

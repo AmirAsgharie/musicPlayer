@@ -19,6 +19,13 @@ public class ActivitySinglePlaylistBindingImpl extends ActivitySinglePlaylistBin
         sViewsWithIds.put(R.id.searchCard, 3);
         sViewsWithIds.put(R.id.playListName, 4);
         sViewsWithIds.put(R.id.recycler, 5);
+        sViewsWithIds.put(R.id.currentMusicCard, 6);
+        sViewsWithIds.put(R.id.currentMusicCons, 7);
+        sViewsWithIds.put(R.id.currentMusicImgCard, 8);
+        sViewsWithIds.put(R.id.currentMusicImg, 9);
+        sViewsWithIds.put(R.id.currentMusicTxt, 10);
+        sViewsWithIds.put(R.id.currentMusicArtistTxt, 11);
+        sViewsWithIds.put(R.id.guid50Hor, 12);
     }
     // views
     @NonNull
@@ -29,11 +36,18 @@ public class ActivitySinglePlaylistBindingImpl extends ActivitySinglePlaylistBin
     // Inverse Binding Event Handlers
 
     public ActivitySinglePlaylistBindingImpl(@Nullable androidx.databinding.DataBindingComponent bindingComponent, @NonNull View root) {
-        this(bindingComponent, root, mapBindings(bindingComponent, root, 6, sIncludes, sViewsWithIds));
+        this(bindingComponent, root, mapBindings(bindingComponent, root, 13, sIncludes, sViewsWithIds));
     }
     private ActivitySinglePlaylistBindingImpl(androidx.databinding.DataBindingComponent bindingComponent, View root, Object[] bindings) {
         super(bindingComponent, root, 0
             , (androidx.cardview.widget.CardView) bindings[2]
+            , (android.widget.TextView) bindings[11]
+            , (androidx.cardview.widget.CardView) bindings[6]
+            , (androidx.constraintlayout.widget.ConstraintLayout) bindings[7]
+            , (android.widget.ImageView) bindings[9]
+            , (androidx.cardview.widget.CardView) bindings[8]
+            , (android.widget.TextView) bindings[10]
+            , (androidx.constraintlayout.widget.Guideline) bindings[12]
             , (androidx.constraintlayout.widget.ConstraintLayout) bindings[1]
             , (android.widget.TextView) bindings[4]
             , (androidx.recyclerview.widget.RecyclerView) bindings[5]
