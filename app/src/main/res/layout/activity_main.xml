@@ -12,235 +12,215 @@
         android:layout_height="match_parent"
         android:background="@color/white"
         tools:context=".Activity.MainActivity">
-        
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/headerCons"
             android:layout_width="0dp"
             android:layout_height="@dimen/_200sdp"
-            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/backCard"
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="@dimen/_30sdp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginLeft="@dimen/_20sdp"
                 android:layout_marginTop="@dimen/_20sdp"
-                app:cardCornerRadius="@dimen/_30sdp"
-                android:shadowRadius="@dimen/_20sdp"
-                android:shadowColor="@android:color/black"
                 android:backgroundTint="@android:color/white"
-                android:layout_marginLeft="@dimen/_20sdp">
+                android:shadowColor="@android:color/black"
+                android:shadowRadius="@dimen/_20sdp"
+                app:cardCornerRadius="@dimen/_30sdp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:layout_width="@dimen/_30sdp"
                     android:layout_height="@dimen/_30sdp"
-                    android:src="@drawable/left"
+                    android:layout_gravity="center"
                     android:background="@drawable/round_bg"
-                    android:layout_gravity="center"/>
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/left" />
             </androidx.cardview.widget.CardView>
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintRight_toLeftOf="@id/searchCard"
-                app:layout_constraintLeft_toRightOf="@id/backCard"
-                app:layout_constraintTop_toTopOf="@id/backCard"
-                app:layout_constraintBottom_toBottomOf="@id/backCard"
-                android:text="Categories"
                 android:gravity="center"
-                android:textSize="@dimen/_18sdp"
+                android:text="Categories"
                 android:textColor="@color/black"
-                android:textStyle="bold" />
+                android:textSize="@dimen/_18sdp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/backCard"
+                app:layout_constraintLeft_toRightOf="@id/backCard"
+                app:layout_constraintRight_toLeftOf="@id/searchCard"
+                app:layout_constraintTop_toTopOf="@id/backCard" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/searchCard"
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="@dimen/_30sdp"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginTop="@dimen/_20sdp"
-                android:shadowRadius="@dimen/_20sdp"
-                android:shadowColor="@android:color/black"
-                app:cardCornerRadius="@dimen/_30sdp"
+                android:layout_marginRight="@dimen/_20sdp"
                 android:backgroundTint="@android:color/white"
-                android:layout_marginRight="@dimen/_20sdp">
+                android:shadowColor="@android:color/black"
+                android:shadowRadius="@dimen/_20sdp"
+                app:cardCornerRadius="@dimen/_30sdp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:layout_width="@dimen/_30sdp"
                     android:layout_height="@dimen/_30sdp"
-                    android:src="@drawable/search"
+                    android:layout_gravity="center"
                     android:background="@drawable/round_bg"
-                    android:layout_gravity="center"/>
+                    android:src="@drawable/search" />
             </androidx.cardview.widget.CardView>
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_50sdp"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintLeft_toLeftOf="@id/backCard"
-                android:text="FIND YOUR MUSIC"
-                android:gravity="center|left"
-                android:textStyle="bold"
                 android:layout_marginBottom="@dimen/_15sdp"
+                android:gravity="center|left"
+                android:text="FIND YOUR MUSIC"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_28sdp"
-                app:layout_constraintTop_toBottomOf="@id/backCard"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="@id/backCard"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/backCard" />
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabLayout"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/_40sdp"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:tabSelectedTextColor="@color/black"
-                app:tabIndicatorAnimationMode="linear"
-                app:tabMode="fixed"
                 android:background="@color/white"
                 android:textSize="@dimen/_25sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 app:tabIndicatorAnimationDuration="100"
+                app:tabIndicatorAnimationMode="linear"
                 app:tabIndicatorColor="@color/black"
                 app:tabIndicatorFullWidth="@dimen/_25sdp"
-                app:tabTextColor="@color/artistName"/>
+                app:tabMode="fixed"
+                app:tabSelectedTextColor="@color/black"
+                app:tabTextColor="@color/artistName" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-       <!-- <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/nav_host_fragment"
-            android:name="androidx.navigation.fragment.NavHostFragment"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:defaultNavHost="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/headerCons"
-            app:navGraph="@navigation/nav_graph" />-->
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewPager"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/headerCons"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-        
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/headerCons" />
 
 
+        <androidx.cardview.widget.CardView
+            android:id="@+id/currentMusicCard"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_90sdp"
+            android:layout_marginHorizontal="@dimen/_2sdp"
+            android:layout_marginBottom="@dimen/_2sdp"
+            app:cardBackgroundColor="@color/black"
+            app:cardCornerRadius="@dimen/_20sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/currentMusicCons"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/currentMusicCard"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_90sdp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:cardCornerRadius="@dimen/_20sdp"
-                app:cardBackgroundColor="@color/black"
-                android:layout_marginHorizontal="@dimen/_2sdp"
-                android:layout_marginBottom="@dimen/_2sdp"
-                >
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/currentMusicImgCard"
+                    android:layout_width="@dimen/_75sdp"
+                    android:layout_height="@dimen/_75sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:elevation="@dimen/_40sdp"
+                    android:foregroundGravity="center"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="@dimen/_40sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/currentMusicCons"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    >
+                    <ImageView
+                        android:id="@+id/currentMusicImg"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop" />
+                </androidx.cardview.widget.CardView>
 
+                <androidx.cardview.widget.CardView
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"
+                    app:cardBackgroundColor="@color/lightBlue"
+                    app:cardCornerRadius="@dimen/_100sdp"
+                    app:layout_constraintBottom_toBottomOf="@id/currentMusicImgCard"
+                    app:layout_constraintLeft_toLeftOf="@id/currentMusicImgCard"
+                    app:layout_constraintRight_toRightOf="@id/currentMusicImgCard"
+                    app:layout_constraintTop_toTopOf="@id/currentMusicImgCard">
 
                     <androidx.cardview.widget.CardView
-                        android:id="@+id/currentMusicImgCard"
-                        android:layout_width="@dimen/_75sdp"
-                        android:layout_height="@dimen/_75sdp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:layout_marginLeft="@dimen/_10sdp"
-                        app:cardCornerRadius="@dimen/_40sdp"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:layout_marginBottom="@dimen/_5sdp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:cardBackgroundColor="@color/white"
-                        android:foregroundGravity="center"
-                        android:elevation="@dimen/_40sdp"
-                        >
-
-                        <ImageView
-                            android:id="@+id/currentMusicImg"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="centerCrop"
-                            android:layout_gravity="center"
-                            android:adjustViewBounds="true"
-                            />
-                    </androidx.cardview.widget.CardView>
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="@dimen/_18sdp"
-                        android:layout_height="@dimen/_18sdp"
-                        app:cardBackgroundColor="@color/lightBlue"
-                        app:layout_constraintLeft_toLeftOf="@id/currentMusicImgCard"
-                        app:layout_constraintRight_toRightOf="@id/currentMusicImgCard"
-                        app:layout_constraintBottom_toBottomOf="@id/currentMusicImgCard"
-                        app:layout_constraintTop_toTopOf="@id/currentMusicImgCard"
-                        app:cardCornerRadius="@dimen/_100sdp"
-                        >
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="@dimen/_12sdp"
-                            android:layout_height="@dimen/_12sdp"
-                            app:cardCornerRadius="@dimen/_100sdp"
-                            app:cardBackgroundColor="@color/blueBackgroundColor"
-                            android:layout_gravity="center"
-                            />
-                    </androidx.cardview.widget.CardView>
+                        android:layout_width="@dimen/_12sdp"
+                        android:layout_height="@dimen/_12sdp"
+                        android:layout_gravity="center"
+                        app:cardBackgroundColor="@color/blueBackgroundColor"
+                        app:cardCornerRadius="@dimen/_100sdp" />
+                </androidx.cardview.widget.CardView>
 
 
+                <TextView
+                    android:id="@+id/currentMusicTxt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:gravity="left"
+                    android:singleLine="true"
+                    android:text="xxx"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_13sdp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@id/guid50Hor"
+                    app:layout_constraintLeft_toRightOf="@id/currentMusicImgCard"
+                    app:layout_constraintRight_toRightOf="parent" />
 
-                    <TextView
-                        android:id="@+id/currentMusicTxt"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="xxx"
-                        android:textSize="@dimen/_13sdp"
-                        android:textStyle="bold"
-                        android:textColor="@color/white"
-                        android:layout_marginLeft="@dimen/_5sdp"
-                        android:gravity="left"
-                        android:singleLine="true"
-                        app:layout_constraintBottom_toTopOf="@id/guid50Hor"
-                        app:layout_constraintLeft_toRightOf="@id/currentMusicImgCard"
-                        app:layout_constraintRight_toRightOf="parent" />
+                <TextView
+                    android:id="@+id/currentMusicArtistTxt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_8sdp"
+                    android:gravity="left"
+                    android:singleLine="true"
+                    android:text="xxx"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_9sdp"
+                    app:layout_constraintLeft_toRightOf="@id/currentMusicImgCard"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/guid50Hor" />
 
-                    <TextView
-                        android:id="@+id/currentMusicArtistTxt"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="xxx"
-                        android:layout_marginLeft="@dimen/_8sdp"
-                        android:textSize="@dimen/_9sdp"
-                        android:textColor="@color/white"
-                        android:gravity="left"
-                        android:singleLine="true"
-                        app:layout_constraintTop_toBottomOf="@id/guid50Hor"
-                        app:layout_constraintLeft_toRightOf="@id/currentMusicImgCard"
-                        app:layout_constraintRight_toRightOf="parent" />
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guid50Hor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_percent="0.5" />
 
-                    <androidx.constraintlayout.widget.Guideline
-                        android:id="@+id/guid50Hor"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        app:layout_constraintGuide_percent="0.5" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

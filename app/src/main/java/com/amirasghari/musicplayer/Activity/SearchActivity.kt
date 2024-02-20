@@ -66,7 +66,7 @@ class SearchActivity : AppCompatActivity(), ServiceConnection ,  MusicListener{
         binding.rec.layoutManager = LinearLayoutManager(this , LinearLayoutManager.VERTICAL , false)
         if (data.size >5){
             val data2 =ArrayList<AudioModel>()
-            for (i in 0..4){
+            for (i in 0..10){
                 data2.add(data[i])
                 //binding.moreBtn.visibility = View.VISIBLE
             }
@@ -117,6 +117,10 @@ class SearchActivity : AppCompatActivity(), ServiceConnection ,  MusicListener{
         musicService!!.musicPlayer!!.prepare()
         musicService!!.musicPlayer!!.start()
         musicService!!.showNotification()
+
+        musicService!!.musicPlayer!!.setOnCompletionListener {
+            musicService!!.repeat()
+        }
     }
 
 }

@@ -75,6 +75,7 @@ class FavoriteFragment : Fragment() , MusicListener{
             ))
         }
 
+
         val adapter = FavoriteAdapter(requireContext() , favoriteMusic , this)
         binding.rec.adapter =adapter
         binding.rec.layoutManager = LinearLayoutManager(requireContext() , LinearLayoutManager.VERTICAL , false)

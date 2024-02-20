@@ -14,6 +14,7 @@ import com.amirasghari.musicplayer.databinding.ActivitySinglePlaylistBindingImpl
 import com.amirasghari.musicplayer.databinding.FragmentFavoriteBindingImpl;
 import com.amirasghari.musicplayer.databinding.FragmentMainBindingImpl;
 import com.amirasghari.musicplayer.databinding.FragmentPlayListBindingImpl;
+import com.amirasghari.musicplayer.databinding.FragmentRecentlyBindingImpl;
 import com.amirasghari.musicplayer.databinding.FragmentShowMusicBindingImpl;
 import com.amirasghari.musicplayer.databinding.MusicRowBindingImpl;
 import com.amirasghari.musicplayer.databinding.PlayllistDialogBindingImpl;
@@ -45,15 +46,17 @@ public class DataBinderMapperImpl extends DataBinderMapper {
 
   private static final int LAYOUT_FRAGMENTPLAYLIST = 8;
 
-  private static final int LAYOUT_FRAGMENTSHOWMUSIC = 9;
+  private static final int LAYOUT_FRAGMENTRECENTLY = 9;
 
-  private static final int LAYOUT_MUSICROW = 10;
+  private static final int LAYOUT_FRAGMENTSHOWMUSIC = 10;
 
-  private static final int LAYOUT_PLAYLLISTDIALOG = 11;
+  private static final int LAYOUT_MUSICROW = 11;
 
-  private static final int LAYOUT_SEARCHROW = 12;
+  private static final int LAYOUT_PLAYLLISTDIALOG = 12;
 
-  private static final SparseIntArray INTERNAL_LAYOUT_ID_LOOKUP = new SparseIntArray(12);
+  private static final int LAYOUT_SEARCHROW = 13;
+
+  private static final SparseIntArray INTERNAL_LAYOUT_ID_LOOKUP = new SparseIntArray(13);
 
   static {
     INTERNAL_LAYOUT_ID_LOOKUP.put(com.amirasghari.musicplayer.R.layout.activity_main, LAYOUT_ACTIVITYMAIN);
@@ -64,6 +67,7 @@ public class DataBinderMapperImpl extends DataBinderMapper {
     INTERNAL_LAYOUT_ID_LOOKUP.put(com.amirasghari.musicplayer.R.layout.fragment_favorite, LAYOUT_FRAGMENTFAVORITE);
     INTERNAL_LAYOUT_ID_LOOKUP.put(com.amirasghari.musicplayer.R.layout.fragment_main, LAYOUT_FRAGMENTMAIN);
     INTERNAL_LAYOUT_ID_LOOKUP.put(com.amirasghari.musicplayer.R.layout.fragment_play_list, LAYOUT_FRAGMENTPLAYLIST);
+    INTERNAL_LAYOUT_ID_LOOKUP.put(com.amirasghari.musicplayer.R.layout.fragment_recently, LAYOUT_FRAGMENTRECENTLY);
     INTERNAL_LAYOUT_ID_LOOKUP.put(com.amirasghari.musicplayer.R.layout.fragment_show_music, LAYOUT_FRAGMENTSHOWMUSIC);
     INTERNAL_LAYOUT_ID_LOOKUP.put(com.amirasghari.musicplayer.R.layout.music_row, LAYOUT_MUSICROW);
     INTERNAL_LAYOUT_ID_LOOKUP.put(com.amirasghari.musicplayer.R.layout.playllist_dialog, LAYOUT_PLAYLLISTDIALOG);
@@ -126,6 +130,12 @@ public class DataBinderMapperImpl extends DataBinderMapper {
             return new FragmentPlayListBindingImpl(component, view);
           }
           throw new IllegalArgumentException("The tag for fragment_play_list is invalid. Received: " + tag);
+        }
+        case  LAYOUT_FRAGMENTRECENTLY: {
+          if ("layout/fragment_recently_0".equals(tag)) {
+            return new FragmentRecentlyBindingImpl(component, view);
+          }
+          throw new IllegalArgumentException("The tag for fragment_recently is invalid. Received: " + tag);
         }
         case  LAYOUT_FRAGMENTSHOWMUSIC: {
           if ("layout/fragment_show_music_0".equals(tag)) {
@@ -204,7 +214,7 @@ public class DataBinderMapperImpl extends DataBinderMapper {
   }
 
   private static class InnerLayoutIdLookup {
-    static final HashMap<String, Integer> sKeys = new HashMap<String, Integer>(12);
+    static final HashMap<String, Integer> sKeys = new HashMap<String, Integer>(13);
 
     static {
       sKeys.put("layout/activity_main_0", com.amirasghari.musicplayer.R.layout.activity_main);
@@ -215,6 +225,7 @@ public class DataBinderMapperImpl extends DataBinderMapper {
       sKeys.put("layout/fragment_favorite_0", com.amirasghari.musicplayer.R.layout.fragment_favorite);
       sKeys.put("layout/fragment_main_0", com.amirasghari.musicplayer.R.layout.fragment_main);
       sKeys.put("layout/fragment_play_list_0", com.amirasghari.musicplayer.R.layout.fragment_play_list);
+      sKeys.put("layout/fragment_recently_0", com.amirasghari.musicplayer.R.layout.fragment_recently);
       sKeys.put("layout/fragment_show_music_0", com.amirasghari.musicplayer.R.layout.fragment_show_music);
       sKeys.put("layout/music_row_0", com.amirasghari.musicplayer.R.layout.music_row);
       sKeys.put("layout/playllist_dialog_0", com.amirasghari.musicplayer.R.layout.playllist_dialog);

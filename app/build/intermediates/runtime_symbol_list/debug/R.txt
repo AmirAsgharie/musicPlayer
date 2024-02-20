@@ -4162,6 +4162,7 @@ int id progress_horizontal 0x7f090188
 int id radio 0x7f090189
 int id ratio 0x7f09018a
 int id rec 0x7f09018b
+int id recentRec 0x7f09022f
 int id rectangles 0x7f09018c
 int id recycler 0x7f09018d
 int id repeatBtn 0x7f09018e
@@ -4464,6 +4465,7 @@ int layout dp_example 0x7f0c0031
 int layout fragment_favorite 0x7f0c0032
 int layout fragment_main 0x7f0c0033
 int layout fragment_play_list 0x7f0c0034
+int layout fragment_recently 0x7f0c0080
 int layout fragment_show_music 0x7f0c0035
 int layout m3_alert_dialog 0x7f0c0036
 int layout m3_alert_dialog_actions 0x7f0c0037

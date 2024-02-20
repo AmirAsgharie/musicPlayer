@@ -8,6 +8,8 @@ open class ViewModel : ViewModel() {
 
     private val songsList = MutableLiveData<ArrayList<AudioModel>>()
     var songs = ArrayList<AudioModel>()
+    var songsRecent = ArrayList<AudioModel>()
+    private var recentSongs = MutableLiveData<ArrayList<AudioModel>>()
     private val currentMusicName=MutableLiveData<String>()
 
 
@@ -18,9 +20,25 @@ open class ViewModel : ViewModel() {
         songsList.value = songs
     }
 
+    fun addToRecent(data: AudioModel){
+        songsRecent.add(data)
+    }
+
+
+
     fun observeSongsList():MutableLiveData<ArrayList<AudioModel>>{
         return songsList
     }
+
+    fun  reverse(){
+        songsRecent.reverse()
+    }
+
+    fun observeRecentSongsList():MutableLiveData<ArrayList<AudioModel>>{
+        recentSongs.value = songsRecent
+        return recentSongs
+    }
+
 
     fun size(): Int {
         return songsList.value!!.size

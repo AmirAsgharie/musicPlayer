@@ -4163,6 +4163,7 @@ id progress_horizontal
 id radio
 id ratio
 id rec
+id recentRec
 id rectangles
 id recycler
 id repeatBtn
@@ -4465,6 +4466,7 @@ layout dp_example
 layout fragment_favorite
 layout fragment_main
 layout fragment_play_list
+layout fragment_recently
 layout fragment_show_music
 layout m3_alert_dialog
 layout m3_alert_dialog_actions

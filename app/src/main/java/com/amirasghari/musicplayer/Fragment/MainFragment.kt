@@ -112,19 +112,7 @@ class MainFragment() : Fragment() , MusicListener , MusicMenuListener {
 
     }
 
-    override fun onCreateContextMenu(
-        menu: ContextMenu,
-        v: View,
-        menuInfo: ContextMenu.ContextMenuInfo?
-    ) {
-        super.onCreateContextMenu(menu, v, menuInfo)
-        Toast.makeText(requireActivity(), "wfwe", Toast.LENGTH_SHORT).show()
-        menu!!.setHeaderTitle("Choose a color")
-        // add menu items
-        menu.add(0, v!!.id, 0, "Yellow")
-        menu.add(0, v.id, 0, "Gray")
-        menu.add(0, v.id, 0, "Cyan")
-    }
+
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
         return super.onContextItemSelected(item)
@@ -197,8 +185,6 @@ class MainFragment() : Fragment() , MusicListener , MusicMenuListener {
                     cursor.getString(2),
                     artUri,
                     cursor.getString(4)
-
-
                 )
 
             viewModel.addToSongList(songsData)

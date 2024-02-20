@@ -83,6 +83,7 @@ id playListName
 id playlist
 id playlistRec
 id rec
+id recentRec
 id recycler
 id repeatBtn
 id searchCard
@@ -99,6 +100,7 @@ layout activity_single_playlist
 layout fragment_favorite
 layout fragment_main
 layout fragment_play_list
+layout fragment_recently
 layout fragment_show_music
 layout music_row
 layout playllist_dialog

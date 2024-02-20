@@ -92,9 +92,10 @@ class MainActivity : AppCompatActivity(), ServiceConnection {
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Favorite"))
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Song"))
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("PlayList"))
+        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Recent"))
 
 
-        val adapter = ViewPagerAdapter(this, supportFragmentManager, 3)
+        val adapter = ViewPagerAdapter(this, supportFragmentManager, 4)
 
         binding.viewPager.adapter = adapter
 

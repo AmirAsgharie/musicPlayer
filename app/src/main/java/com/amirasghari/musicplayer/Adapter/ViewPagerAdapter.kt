@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.amirasghari.musicplayer.Fragment.FavoriteFragment
 import com.amirasghari.musicplayer.Fragment.MainFragment
 import com.amirasghari.musicplayer.Fragment.PlayListFragment
+import com.amirasghari.musicplayer.Fragment.RecentlyFragment
 import com.amirasghari.musicplayer.Fragment.ShowMusicFragment
 
 class ViewPagerAdapter(
@@ -23,6 +24,7 @@ class ViewPagerAdapter(
             0->return FavoriteFragment()
             1->return MainFragment()
             2->return PlayListFragment()
+            3->return RecentlyFragment()
             else->return MainFragment()
         }
     }
