@@ -63,7 +63,9 @@ id currentMusicImgCard
 id currentMusicTxt
 id delete
 id dialogEdt
+id emptyTxt
 id favoriteBtn
+id guid40Hor
 id guid50Hor
 id headerCons
 id mainFragment

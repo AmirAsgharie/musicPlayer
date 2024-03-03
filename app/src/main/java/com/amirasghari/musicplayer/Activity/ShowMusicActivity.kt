@@ -4,9 +4,11 @@ import android.content.ComponentName
 import android.content.Intent
 import android.content.ServiceConnection
 import android.content.SharedPreferences
+import android.database.Cursor
 import android.media.MediaPlayer
+import android.net.Uri
 import android.os.*
-import androidx.appcompat.app.AppCompatActivity
+import android.provider.MediaStore
 import android.util.Log
 import android.view.ContextMenu
 import android.view.MenuItem
@@ -15,19 +17,19 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.amirasghari.musicplayer.Model.AudioModel
 import com.amirasghari.musicplayer.R
 import com.amirasghari.musicplayer.Service.Service
 import com.amirasghari.musicplayer.ViewModel.ViewModel
 import com.amirasghari.musicplayer.databinding.ActivityShowMusicBinding
-import com.amirasghari.musicplayer.realm.RealmDAO
 import com.amirasghari.musicplayer.realm.FavoriteInfo
+import com.amirasghari.musicplayer.realm.RealmDAO
 import com.bumptech.glide.Glide
 import com.masoudss.lib.SeekBarOnProgressChanged
 import com.masoudss.lib.WaveformSeekBar
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
@@ -39,6 +41,7 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection {
     lateinit var mediaPlayer: MediaPlayer
     lateinit var viewModel: ViewModel
     var musicService: Service? = null
+    private var recentSongs = ArrayList<AudioModel>()
     lateinit var mainHandler: Handler
     var time: Int = 0
     var favorite = false
@@ -78,12 +81,12 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection {
         }
 
         binding.addBtn.setOnClickListener {
-            val intent =Intent(this , PlaylistActivity::class.java)
+            val intent = Intent(this, PlaylistActivity::class.java)
             intent.putExtra("title", shared.getString("musicName", "").toString())
             intent.putExtra("artist", shared.getString("musicArtist", "").toString())
             intent.putExtra("image", shared.getString("imagePath", "").toString())
             intent.putExtra("path", shared.getString("musicPath", "").toString())
-            intent.putExtra("duration",  shared.getInt("musicTime", 0).toString())
+            intent.putExtra("duration", shared.getInt("musicTime", 0).toString())
             startActivity(intent)
         }
 
@@ -228,7 +231,6 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection {
         }
 
 
-
     }
 
     private fun setUpBtn() {
@@ -279,8 +281,10 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection {
             }
             musicService!!.songList = favoriteMusic
 
-        } else {
-            //musicService!!.songList = musicService!!.mainSongList
+        } else if(shared.getBoolean("recent" , false)) {
+            getRecentMusicsDetails()
+            musicService!!.songList = recentSongs
+            Log.i("songlist" , musicService!!.songList.toString())
         }
 
         if (musicService!!.musicPlayer == null) {
@@ -352,6 +356,53 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection {
         Toast.makeText(this, "disconnect", Toast.LENGTH_SHORT).show()
     }
 
+    private fun getRecentMusicsDetails() {
+        val projection = arrayOf(
+            MediaStore.Audio.Media.TITLE,
+            MediaStore.Audio.Media.DATA,
+            MediaStore.Audio.Media.DURATION,
+            MediaStore.Audio.Media.ALBUM_ID,
+            MediaStore.Audio.Media.ARTIST
+        )
+
+        val selection = MediaStore.Audio.Media.IS_MUSIC + " != 0"
+        val cursor: Cursor? = contentResolver.query(
+            MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+            projection,
+            selection,
+            null,
+            null
+        )
+
+
+
+        while (cursor!!.moveToNext()) {
+            //Toast.makeText(this, "ttttttt", Toast.LENGTH_SHORT).show()
+            val id = cursor!!.getLong(3).toString()
+            val uri = Uri.parse("content://media/external/audio/albumart")
+            val artUri = Uri.withAppendedPath(uri, id).toString()
+            val songsData =
+                AudioModel(
+                    cursor.getString(1), cursor.getString(0).trim(),
+                    cursor.getString(2),
+                    artUri,
+                    cursor.getString(4)
+                )
+
+
+
+            recentSongs.add(songsData)
+
+
+            //Toast.makeText(this, "tttt", Toast.LENGTH_SHORT).show()
+
+
+        }
+        recentSongs.reverse()
+
+
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     private fun onClickNextBtn() {
 
@@ -360,6 +411,7 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection {
         val editor = shared.edit()
 
         if (shuffle) {
+            musicService!!.playShuffle()
             //Toast.makeText(this, "true", Toast.LENGTH_SHORT).show()
             val shufflePos = shared.getInt("shufflePosition", 0)
             //Toast.makeText(this, shufflePos.toString(), Toast.LENGTH_SHORT).show()
@@ -425,6 +477,7 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection {
                 editor.apply()*/
                 //val intent = Intent(requireActivity(), Service::class.java)
                 //pos = pos!! + 1
+                Log.i("list" , musicService!!.songList.toString())
                 editor.putString("musicName", musicService!!.songList[pos + 1].Title)
                 editor.putString("musicArtist", musicService!!.songList[pos + 1].Artist)
                 editor.putString("imagePath", musicService!!.songList[pos + 1].image)
@@ -591,7 +644,7 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection {
                     val min = ((current / (100000 * 60)) % 60)
                     val sec = (current / 100000) % 60
                     val show = String.format("%02d:%02d", min, sec)
-                    Log.i("timee" , show.toString())
+                    Log.i("timee", show.toString())
                     binding.currentDuration.text = show
                     mainHandler.postDelayed(this, 1000)
                 }

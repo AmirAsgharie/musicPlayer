@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+                                                        
+
+    
+
+           
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="@dimen/_250sdp"
+        android:layout_height="@dimen/_150sdp" android:tag="layout/playllist_dialog_0" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+
+        <EditText
+            android:id="@+id/dialogEdt"
+            android:layout_width="@dimen/_160sdp"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:textSize="@dimen/_18sdp"
+            />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+         

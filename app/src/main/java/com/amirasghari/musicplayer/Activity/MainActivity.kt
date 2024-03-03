@@ -2,11 +2,15 @@ package com.amirasghari.musicplayer.Activity
 
 import android.annotation.SuppressLint
 import android.content.*
+import android.database.Cursor
 import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
+import android.provider.MediaStore
 import android.util.Log
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -28,10 +32,10 @@ class MainActivity : AppCompatActivity(), ServiceConnection {
     lateinit var shared: SharedPreferences
     private lateinit var shuffleList: List<Int>
     var musicService: Service? = null
-    lateinit var path:String
-    lateinit var musicName:String
-    lateinit var musicArtist:String
-
+    lateinit var path: String
+    lateinit var musicName: String
+    lateinit var musicArtist: String
+    var recentSongs = ArrayList<AudioModel>()
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -42,12 +46,12 @@ class MainActivity : AppCompatActivity(), ServiceConnection {
         setContentView(binding.root)
 
         shared = getSharedPreferences("music", 0)
-        val editor =shared.edit()
-        editor.putBoolean("first" , true)
+        val editor = shared.edit()
+        editor.putBoolean("first", true)
         editor.apply()
         viewModel = ViewModelProvider(this)[ViewModel::class.java]
         setUpTabLayout()
-        
+
 
         //viewModel = ViewModelProvider(this)[ViewModel::class.java]
 
@@ -56,21 +60,18 @@ class MainActivity : AppCompatActivity(), ServiceConnection {
         }
 
         binding.searchCard.setOnClickListener {
-            val intent = Intent(this , SearchActivity::class.java)
+            val intent = Intent(this, SearchActivity::class.java)
             startActivity(intent)
         }
-
-
-
 
 
     }
 
     override fun onResume() {
         super.onResume()
-        path = shared.getString("imagePath" , "").toString()
-        musicName = shared.getString("musicName" , "").toString()
-        musicArtist = shared.getString("musicArtist" , "").toString()
+        path = shared.getString("imagePath", "").toString()
+        musicName = shared.getString("musicName", "").toString()
+        musicArtist = shared.getString("musicArtist", "").toString()
         Glide.with(this).load(path).into(binding.currentMusicImg)
         binding.currentMusicTxt.text = musicName
         binding.currentMusicArtistTxt.text = musicArtist
@@ -127,18 +128,36 @@ class MainActivity : AppCompatActivity(), ServiceConnection {
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onServiceConnected(p0: ComponentName?, service: IBinder?) {
+        Toast.makeText(this, "fdvs", Toast.LENGTH_SHORT).show()
         val binder = service as Service.MyBinder
         musicService = binder.currentService()
         //Toast.makeText(this, "2", Toast.LENGTH_SHORT).show()
-        val path =shared.getString("musicPath" , "")
-        play(path!!)
+        val path = shared.getString("musicPath", "")
+        val recent = shared.getBoolean("recent", false)
+        Log.i("Recent", recent.toString())
+        if (!recent) {
+            play(path!!, null)
+        } else {
+            getRecentMusicsDetails()
+            play(path!!, recentSongs)
+        }
+
 
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun play(path:String) {
-        if (shared.getBoolean("favorite" ,false)){
-            val favoriteMusic =ArrayList<AudioModel>()
+    fun play(path: String, recentSongs: ArrayList<AudioModel>? = null) {
+
+        if (recentSongs != null) {
+
+            Log.i("RRRecent", recentSongs.toString())
+            recentSongs.reverse()
+            musicService!!.songList = recentSongs
+            Log.i("musicService" , musicService!!.songList.toString())
+
+
+        } else if (shared.getBoolean("favorite", false)) {
+            val favoriteMusic = ArrayList<AudioModel>()
             val data = RealmDAO().favoriteReadAll()
             data.forEach {
                 favoriteMusic.add(
@@ -154,13 +173,13 @@ class MainActivity : AppCompatActivity(), ServiceConnection {
 
             musicService!!.songList = favoriteMusic
 
-        }else{
+        } else {
             try {
                 musicService!!.songList = musicService!!.mainSongList
-                Log.i("playy" , "here2")
-            }catch (E:Exception){
+                Log.i("playy", "here2")
+            } catch (E: Exception) {
                 musicService!!.getMusicsDetails()
-                Log.i("playy" , "here")
+                Log.i("playy", "here")
                 musicService!!.songList = musicService!!.mainSongList
             }
 
@@ -177,27 +196,30 @@ class MainActivity : AppCompatActivity(), ServiceConnection {
 
 
         musicService!!.musicPlayer!!.setOnCompletionListener {
-            val pos = shared.getInt("position" , 0)
-            val editor =shared.edit()
-            if (shared.getBoolean("shuffle" , false)){
-                val shufflePos = shared.getInt("shufflePosition" , 0)
-                val musicName = musicService!!.songList[musicService!!.shuffleList[shufflePos]].Title
-                val musicArtist = musicService!!.songList[musicService!!.shuffleList[shufflePos]].Artist
+            val pos = shared.getInt("position", 0)
+            val editor = shared.edit()
+            if (shared.getBoolean("shuffle", false)) {
+                val shufflePos = shared.getInt("shufflePosition", 0)
+                val musicName =
+                    musicService!!.songList[musicService!!.shuffleList[shufflePos]].Title
+                val musicArtist =
+                    musicService!!.songList[musicService!!.shuffleList[shufflePos]].Artist
                 binding.currentMusicTxt.text = musicName
                 binding.currentMusicArtistTxt.text = musicArtist
-                val imagePath =musicService!!.songList[musicService!!.shuffleList[shufflePos]].image
-                editor.putString("musicName" , musicName)
-                editor.putString("musicArtist" , musicArtist)
-                editor.putString("imagePath" , imagePath)
-            }else{
-                val musicName = musicService!!.songList[pos+1].Title
-                val musicArtist = musicService!!.songList[pos+1].Artist
+                val imagePath =
+                    musicService!!.songList[musicService!!.shuffleList[shufflePos]].image
+                editor.putString("musicName", musicName)
+                editor.putString("musicArtist", musicArtist)
+                editor.putString("imagePath", imagePath)
+            } else {
+                val musicName = musicService!!.songList[pos + 1].Title
+                val musicArtist = musicService!!.songList[pos + 1].Artist
                 binding.currentMusicTxt.text = musicName
                 binding.currentMusicArtistTxt.text = musicArtist
-                val imagePath =musicService!!.songList[pos+1].image
-                editor.putString("musicName" , musicName)
-                editor.putString("musicArtist" , musicArtist)
-                editor.putString("imagePath" , imagePath)
+                val imagePath = musicService!!.songList[pos + 1].image
+                editor.putString("musicName", musicName)
+                editor.putString("musicArtist", musicArtist)
+                editor.putString("imagePath", imagePath)
             }
 
             //Glide.with(this).load(imagePath).into(binding.currentMusicImg)
@@ -208,11 +230,11 @@ class MainActivity : AppCompatActivity(), ServiceConnection {
             musicService!!.play()
         }
 
-       /* musicService!!.musicPlayer!!.setOnCompletionListener {
-            val pos = shared.getInt("position" , 0)
-            val list = viewModel.observeSongsList()
-            play(list.value!![pos+1].Path)
-        }*/
+        /* musicService!!.musicPlayer!!.setOnCompletionListener {
+             val pos = shared.getInt("position" , 0)
+             val list = viewModel.observeSongsList()
+             play(list.value!![pos+1].Path)
+         }*/
         //Toast.makeText(this, "3", Toast.LENGTH_SHORT).show()
         //Toast.makeText(this, musicService!!.musicPlayer!!.duration.toString(), Toast.LENGTH_SHORT).show()
         //Toast.makeText(this, musicService!!.position.toString(), Toast.LENGTH_SHORT).show()
@@ -221,6 +243,52 @@ class MainActivity : AppCompatActivity(), ServiceConnection {
     override fun onServiceDisconnected(p0: ComponentName?) {
 
         musicService = null
+    }
+
+    private fun getRecentMusicsDetails() {
+        val projection = arrayOf(
+            MediaStore.Audio.Media.TITLE,
+            MediaStore.Audio.Media.DATA,
+            MediaStore.Audio.Media.DURATION,
+            MediaStore.Audio.Media.ALBUM_ID,
+            MediaStore.Audio.Media.ARTIST
+        )
+
+        val selection = MediaStore.Audio.Media.IS_MUSIC + " != 0"
+        val cursor: Cursor? = contentResolver.query(
+            MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+            projection,
+            selection,
+            null,
+            null
+        )
+
+
+
+        while (cursor!!.moveToNext()) {
+            //Toast.makeText(this, "ttttttt", Toast.LENGTH_SHORT).show()
+            val id = cursor!!.getLong(3).toString()
+            val uri = Uri.parse("content://media/external/audio/albumart")
+            val artUri = Uri.withAppendedPath(uri, id).toString()
+            val songsData =
+                AudioModel(
+                    cursor.getString(1), cursor.getString(0).trim(),
+                    cursor.getString(2),
+                    artUri,
+                    cursor.getString(4)
+                )
+
+
+
+            recentSongs.add(songsData)
+
+
+            //Toast.makeText(this, "tttt", Toast.LENGTH_SHORT).show()
+
+
+        }
+
+
     }
 
     override fun onDestroy() {

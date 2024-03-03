@@ -10,7 +10,6 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
@@ -39,7 +38,6 @@ import com.amirasghari.musicplayer.ViewModel.ViewModel
 import com.amirasghari.musicplayer.databinding.ActivityMainBinding
 import com.amirasghari.musicplayer.databinding.FragmentMainBinding
 import com.bumptech.glide.Glide
-import io.realm.Realm.getApplicationContext
 
 
 class MainFragment() : Fragment() , MusicListener , MusicMenuListener {
@@ -130,6 +128,7 @@ class MainFragment() : Fragment() , MusicListener , MusicMenuListener {
         editor.putString("musicName" , data.Title)
         editor.putString("musicArtist" , data.Artist)
         editor.putBoolean("favorite" , false)
+        editor.putBoolean("recent" , false)
         editor.apply()
         viewModel.setCurrentMusicName(data.Title)
 
@@ -149,7 +148,7 @@ class MainFragment() : Fragment() , MusicListener , MusicMenuListener {
             editor.putBoolean("first" , false)
             editor.apply()
         }else{
-            (activity as MainActivity?)!!.play(data.Path)
+            (activity as MainActivity?)!!.play(data.Path  , null)
         }
 
 
@@ -182,7 +181,12 @@ class MainFragment() : Fragment() , MusicListener , MusicMenuListener {
                 AudioModel(
                     cursor.getString(1),
                     cursor.getString(0).trim(),
-                    cursor.getString(2),
+                    if (cursor.getString(3)==null){
+                        "100000"
+                    }else{
+                        cursor.getString(2)
+                    }
+                    ,
                     artUri,
                     cursor.getString(4)
                 )

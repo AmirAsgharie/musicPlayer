@@ -51,9 +51,17 @@ class PlayListFragment : Fragment() , PlaylistListener , PlaylistMenuListener{
             data.add(it)
         }
 
-        val adapter = PlaylistAdapter(requireActivity() , data , this , this)
-        binding.rec.layoutManager = LinearLayoutManager(requireContext() , LinearLayoutManager.VERTICAL , false)
-        binding.rec.adapter=adapter
+        if (data.isEmpty()){
+            binding.emptyTxt.text = "you did'nt create any playList"
+            binding.emptyTxt.visibility = View.VISIBLE
+        }else{
+            binding.emptyTxt.visibility = View.GONE
+            val adapter = PlaylistAdapter(requireActivity() , data , this , this)
+            binding.rec.layoutManager = LinearLayoutManager(requireContext() , LinearLayoutManager.VERTICAL , false)
+            binding.rec.adapter=adapter
+
+        }
+
     }
 
     override fun onclickListener(data: PlaylistsInfo, position: Int) {

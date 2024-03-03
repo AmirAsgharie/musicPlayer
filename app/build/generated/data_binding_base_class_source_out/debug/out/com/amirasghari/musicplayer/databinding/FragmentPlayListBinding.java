@@ -4,8 +4,10 @@ package com.amirasghari.musicplayer.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.Guideline;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,11 +17,19 @@ import java.lang.Object;
 
 public abstract class FragmentPlayListBinding extends ViewDataBinding {
   @NonNull
+  public final TextView emptyTxt;
+
+  @NonNull
+  public final Guideline guid40Hor;
+
+  @NonNull
   public final RecyclerView rec;
 
   protected FragmentPlayListBinding(Object _bindingComponent, View _root, int _localFieldCount,
-      RecyclerView rec) {
+      TextView emptyTxt, Guideline guid40Hor, RecyclerView rec) {
     super(_bindingComponent, _root, _localFieldCount);
+    this.emptyTxt = emptyTxt;
+    this.guid40Hor = guid40Hor;
     this.rec = rec;
   }
 

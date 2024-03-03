@@ -11,7 +11,7 @@ import com.amirasghari.musicplayer.R
 import com.amirasghari.musicplayer.databinding.MusicRowBinding
 import com.bumptech.glide.Glide
 
-class RecentlyAdapter (val context: Context , val data:ArrayList<AudioModel> , private val listener: MusicListener): RecyclerView.Adapter<RecentlyAdapter.RecentlyViewHolder>() {
+class RecentlyAdapter(val context: Context, val data: MutableList<AudioModel>, private val listener: MusicListener): RecyclerView.Adapter<RecentlyAdapter.RecentlyViewHolder>() {
 
     inner class RecentlyViewHolder(val binding: MusicRowBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(data: AudioModel, position: Int, listener: MusicListener){

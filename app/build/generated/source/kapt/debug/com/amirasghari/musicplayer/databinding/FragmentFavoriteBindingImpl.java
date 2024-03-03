@@ -15,6 +15,8 @@ public class FragmentFavoriteBindingImpl extends FragmentFavoriteBinding  {
         sIncludes = null;
         sViewsWithIds = new android.util.SparseIntArray();
         sViewsWithIds.put(R.id.rec, 1);
+        sViewsWithIds.put(R.id.guid40Hor, 2);
+        sViewsWithIds.put(R.id.emptyTxt, 3);
     }
     // views
     @NonNull
@@ -25,10 +27,12 @@ public class FragmentFavoriteBindingImpl extends FragmentFavoriteBinding  {
     // Inverse Binding Event Handlers
 
     public FragmentFavoriteBindingImpl(@Nullable androidx.databinding.DataBindingComponent bindingComponent, @NonNull View root) {
-        this(bindingComponent, root, mapBindings(bindingComponent, root, 2, sIncludes, sViewsWithIds));
+        this(bindingComponent, root, mapBindings(bindingComponent, root, 4, sIncludes, sViewsWithIds));
     }
     private FragmentFavoriteBindingImpl(androidx.databinding.DataBindingComponent bindingComponent, View root, Object[] bindings) {
         super(bindingComponent, root, 0
+            , (android.widget.TextView) bindings[3]
+            , (androidx.constraintlayout.widget.Guideline) bindings[2]
             , (androidx.recyclerview.widget.RecyclerView) bindings[1]
             );
         this.mboundView0 = (androidx.constraintlayout.widget.ConstraintLayout) bindings[0];

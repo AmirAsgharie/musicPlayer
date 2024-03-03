@@ -13,12 +13,8 @@ import android.net.Uri
 import android.os.*
 import android.provider.MediaStore
 import android.support.v4.media.session.MediaSessionCompat
-import android.util.Log
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.amirasghari.musicplayer.Activity.MainActivity
 import com.amirasghari.musicplayer.Activity.ShowMusicActivity
 import com.amirasghari.musicplayer.ApplicationClass
 import com.amirasghari.musicplayer.Model.AudioModel
@@ -27,8 +23,9 @@ import com.amirasghari.musicplayer.R
 
 class Service : Service() {
 
-    var songList = ArrayList<AudioModel>()
+    var songList :ArrayList<AudioModel> = ArrayList<AudioModel>()
     var mainSongList = ArrayList<AudioModel>()
+    var recentSongs = ArrayList<AudioModel>()
     var position: Int = 0
     var shufflePosition: Int = 0
     lateinit var notificationManager: NotificationManager
@@ -82,7 +79,6 @@ class Service : Service() {
         //notification()
 
 
-
         return START_STICKY;
 
     }
@@ -92,22 +88,22 @@ class Service : Service() {
         position = shared.getInt("position", 0)
 
         if (shared.getBoolean("shuffle", false)) {
-            var shufflePos = shared.getInt("shufflePosition" , 0)
+            var shufflePos = shared.getInt("shufflePosition", 0)
             musicPlayer!!.reset()
             musicPlayer!!.setDataSource(songList[shuffleList[shufflePos]].Path)
             musicPlayer!!.prepare()
             musicPlayer!!.start()
             showNotification()
             val editor = shared.edit()
-            editor.putString("musicPath" , songList[shuffleList[shufflePos]].Path)
+            editor.putString("musicPath", songList[shuffleList[shufflePos]].Path)
             editor.putInt("position", shuffleList[shufflePos])
-            editor.putInt("shufflePosition", shufflePos+1)
+            editor.putInt("shufflePosition", shufflePos + 1)
             editor.apply()
         } else {
             position += 1
             val editor = shared.edit()
             editor.putInt("position", position)
-            editor.putString("musicPath" , songList[position].Path)
+            editor.putString("musicPath", songList[position].Path)
             editor.apply()
             musicPlayer!!.reset()
             musicPlayer!!.setDataSource(songList[position].Path)
@@ -121,8 +117,8 @@ class Service : Service() {
 
     }
 
-    fun repeat(){
-        val path = shared.getString("musicPath" , "")
+    fun repeat() {
+        val path = shared.getString("musicPath", "")
         musicPlayer!!.reset()
         musicPlayer!!.setDataSource(path)
         musicPlayer!!.prepare()
@@ -190,7 +186,7 @@ class Service : Service() {
         startForeground(10, builder.build())
     }
 
-     fun getMusicsDetails() {
+    fun getMusicsDetails() {
         val projection = arrayOf(
             MediaStore.Audio.Media.TITLE,
             MediaStore.Audio.Media.DATA,
@@ -233,6 +229,8 @@ class Service : Service() {
         mainSongList.sortWith(compareBy { it.Title })
     }
 
+
+
     fun showNotification() {
 
         val notification = NotificationCompat.Builder(baseContext, ApplicationClass.CHANNEL_ID)
@@ -256,8 +254,8 @@ class Service : Service() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun playShuffle() {
-        val shuffle =shared.getBoolean("shuffle" ,false)
-        val size = songList.size-1
+        val shuffle = shared.getBoolean("shuffle", false)
+        val size = songList.size - 1
 
         shuffleList = (0..size).shuffled()
         //Log.i("shuffle", shuffleList.toString())
