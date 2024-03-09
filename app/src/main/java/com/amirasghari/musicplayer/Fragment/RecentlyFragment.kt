@@ -57,19 +57,19 @@ class RecentlyFragment : Fragment(), MusicListener, MusicMenuListener ,ServiceCo
 
         viewModel = ViewModelProvider(this)[ViewModel::class.java]
         getMusicsDetails()
+        recycler()
     }
 
     override fun onResume() {
         super.onResume()
-        recycler()
-
+        //recycler()
     }
 
     private fun recycler() {
 
         if (recentSongs.size > 100) {
-            val x = recentSongs.subList(0, 100)
-            val adapter = RecentlyAdapter(requireActivity(), x, this)
+            val limitRecent = recentSongs.subList(0, 100)
+            val adapter = RecentlyAdapter(requireActivity(), limitRecent, this)
             binding.recentRec.adapter = adapter
         } else {
             val adapter = RecentlyAdapter(requireActivity(), recentSongs, this)
@@ -84,7 +84,6 @@ class RecentlyFragment : Fragment(), MusicListener, MusicMenuListener ,ServiceCo
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onclickListener(data: AudioModel, position: Int) {
         val editor = shared.edit()
-        Toast.makeText(requireActivity(), position.toString(), Toast.LENGTH_SHORT).show()
         editor.putInt("position", position)
         editor.putString("imagePath", data.image)
         editor.putString("musicPath", data.Path)
@@ -103,6 +102,7 @@ class RecentlyFragment : Fragment(), MusicListener, MusicMenuListener ,ServiceCo
 
         if (shared.getBoolean("first", true)) {
             editor.putBoolean("first", false)
+            editor.putBoolean("favorite", false)
             editor.putBoolean("recent" , true)
             editor.apply()
             (activity as MainActivity?)!!.startService()
@@ -151,12 +151,9 @@ class RecentlyFragment : Fragment(), MusicListener, MusicMenuListener ,ServiceCo
 
             recentSongs.add(songsData)
             //Toast.makeText(this, "tttt", Toast.LENGTH_SHORT).show()
-
-
         }
 
         recentSongs.reverse()
-
     }
 
     override fun onServiceConnected(p0: ComponentName?, p1: IBinder?) {

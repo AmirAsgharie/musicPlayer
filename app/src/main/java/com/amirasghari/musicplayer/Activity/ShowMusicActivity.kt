@@ -281,10 +281,10 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection {
             }
             musicService!!.songList = favoriteMusic
 
-        } else if(shared.getBoolean("recent" , false)) {
+        } else if (shared.getBoolean("recent", false)) {
             getRecentMusicsDetails()
             musicService!!.songList = recentSongs
-            Log.i("songlist" , musicService!!.songList.toString())
+            Log.i("songlist", musicService!!.songList.toString())
         }
 
         if (musicService!!.musicPlayer == null) {
@@ -410,6 +410,12 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection {
         val shuffle = shared.getBoolean("shuffle", false)
         val editor = shared.edit()
 
+        val zoom_in = AnimationUtils.loadAnimation(this, R.anim.zoom_in)
+        val zoom_out = AnimationUtils.loadAnimation(this, R.anim.zoom_out)
+        //binding.nextBtn.startAnimation(zoom_out)
+        //binding.nextBtn.startAnimation(zoom_in)
+
+
         if (shuffle) {
             musicService!!.playShuffle()
             //Toast.makeText(this, "true", Toast.LENGTH_SHORT).show()
@@ -477,7 +483,7 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection {
                 editor.apply()*/
                 //val intent = Intent(requireActivity(), Service::class.java)
                 //pos = pos!! + 1
-                Log.i("list" , musicService!!.songList.toString())
+                Log.i("list", musicService!!.songList.toString())
                 editor.putString("musicName", musicService!!.songList[pos + 1].Title)
                 editor.putString("musicArtist", musicService!!.songList[pos + 1].Artist)
                 editor.putString("imagePath", musicService!!.songList[pos + 1].image)
@@ -644,7 +650,6 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection {
                     val min = ((current / (100000 * 60)) % 60)
                     val sec = (current / 100000) % 60
                     val show = String.format("%02d:%02d", min, sec)
-                    Log.i("timee", show.toString())
                     binding.currentDuration.text = show
                     mainHandler.postDelayed(this, 1000)
                 }

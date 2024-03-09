@@ -46,6 +46,8 @@ int anim nav_default_pop_enter_anim 0x7f01002c
 int anim nav_default_pop_exit_anim 0x7f01002d
 int anim rotate 0x7f01002e
 int anim scale 0x7f01002f
+int anim zoom_in 0x7f010030
+int anim zoom_out 0x7f010031
 int animator design_appbar_state_list_animator 0x7f020000
 int animator design_fab_hide_motion_spec 0x7f020001
 int animator design_fab_show_motion_spec 0x7f020002

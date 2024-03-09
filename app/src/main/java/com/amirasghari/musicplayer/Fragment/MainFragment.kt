@@ -136,7 +136,7 @@ class MainFragment() : Fragment() , MusicListener , MusicMenuListener {
         bindingActivity.currentMusicTxt.text = data.Title
         bindingActivity.currentMusicArtistTxt.text = data.Artist
         Glide.with(requireActivity()).load(data.image).into(bindingActivity.currentMusicImg)
-        val  animation = AnimationUtils.loadAnimation(requireActivity(), R.anim.rotate);
+        val  animation = AnimationUtils.loadAnimation(requireActivity(), R.anim.rotate)
         bindingActivity.currentMusicImg.startAnimation(animation)
 
         /*val intent = Intent(requireActivity(), Service::class.java)

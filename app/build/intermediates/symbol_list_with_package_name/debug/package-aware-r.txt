@@ -47,6 +47,8 @@ anim nav_default_pop_enter_anim
 anim nav_default_pop_exit_anim
 anim rotate
 anim scale
+anim zoom_in
+anim zoom_out
 animator design_appbar_state_list_animator
 animator design_fab_hide_motion_spec
 animator design_fab_show_motion_spec

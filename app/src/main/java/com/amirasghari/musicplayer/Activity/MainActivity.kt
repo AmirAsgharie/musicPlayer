@@ -84,10 +84,7 @@ class MainActivity : AppCompatActivity(), ServiceConnection {
         startActivity(intent)
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
 
-    }
 
     private fun setUpTabLayout() {
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Favorite"))
@@ -128,20 +125,16 @@ class MainActivity : AppCompatActivity(), ServiceConnection {
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onServiceConnected(p0: ComponentName?, service: IBinder?) {
-        Toast.makeText(this, "fdvs", Toast.LENGTH_SHORT).show()
         val binder = service as Service.MyBinder
         musicService = binder.currentService()
-        //Toast.makeText(this, "2", Toast.LENGTH_SHORT).show()
         val path = shared.getString("musicPath", "")
         val recent = shared.getBoolean("recent", false)
-        Log.i("Recent", recent.toString())
         if (!recent) {
             play(path!!, null)
         } else {
             getRecentMusicsDetails()
             play(path!!, recentSongs)
         }
-
 
     }
 
@@ -150,10 +143,8 @@ class MainActivity : AppCompatActivity(), ServiceConnection {
 
         if (recentSongs != null) {
 
-            Log.i("RRRecent", recentSongs.toString())
             recentSongs.reverse()
             musicService!!.songList = recentSongs
-            Log.i("musicService" , musicService!!.songList.toString())
 
 
         } else if (shared.getBoolean("favorite", false)) {
@@ -222,22 +213,10 @@ class MainActivity : AppCompatActivity(), ServiceConnection {
                 editor.putString("imagePath", imagePath)
             }
 
-            //Glide.with(this).load(imagePath).into(binding.currentMusicImg)
-
-
-            //editor.putInt("position" , pos+1)
             editor.apply()
             musicService!!.play()
         }
 
-        /* musicService!!.musicPlayer!!.setOnCompletionListener {
-             val pos = shared.getInt("position" , 0)
-             val list = viewModel.observeSongsList()
-             play(list.value!![pos+1].Path)
-         }*/
-        //Toast.makeText(this, "3", Toast.LENGTH_SHORT).show()
-        //Toast.makeText(this, musicService!!.musicPlayer!!.duration.toString(), Toast.LENGTH_SHORT).show()
-        //Toast.makeText(this, musicService!!.position.toString(), Toast.LENGTH_SHORT).show()
     }
 
     override fun onServiceDisconnected(p0: ComponentName?) {
@@ -291,10 +270,7 @@ class MainActivity : AppCompatActivity(), ServiceConnection {
 
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
 
-    }
 
 }
 
