@@ -48,6 +48,9 @@ public abstract class ActivityMainBinding extends ViewDataBinding {
   public final ConstraintLayout headerCons;
 
   @NonNull
+  public final TextView permissionTxt;
+
+  @NonNull
   public final CardView searchCard;
 
   @NonNull
@@ -60,7 +63,7 @@ public abstract class ActivityMainBinding extends ViewDataBinding {
       CardView backCard, TextView currentMusicArtistTxt, CardView currentMusicCard,
       ConstraintLayout currentMusicCons, ImageView currentMusicImg, CardView currentMusicImgCard,
       TextView currentMusicTxt, Guideline guid50Hor, ConstraintLayout headerCons,
-      CardView searchCard, TabLayout tabLayout, ViewPager viewPager) {
+      TextView permissionTxt, CardView searchCard, TabLayout tabLayout, ViewPager viewPager) {
     super(_bindingComponent, _root, _localFieldCount);
     this.backCard = backCard;
     this.currentMusicArtistTxt = currentMusicArtistTxt;
@@ -71,6 +74,7 @@ public abstract class ActivityMainBinding extends ViewDataBinding {
     this.currentMusicTxt = currentMusicTxt;
     this.guid50Hor = guid50Hor;
     this.headerCons = headerCons;
+    this.permissionTxt = permissionTxt;
     this.searchCard = searchCard;
     this.tabLayout = tabLayout;
     this.viewPager = viewPager;

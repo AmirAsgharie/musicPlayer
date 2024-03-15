@@ -13,6 +13,7 @@ import android.util.Log
 import android.view.ContextMenu
 import android.view.MenuItem
 import android.view.View
+import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageButton
 import android.widget.Toast
@@ -44,7 +45,11 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection {
     private var recentSongs = ArrayList<AudioModel>()
     lateinit var mainHandler: Handler
     var time: Int = 0
+
     var favorite = false
+
+    lateinit var zoom_in: Animation
+    lateinit var zoom_out: Animation
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -56,6 +61,9 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection {
         shared = getSharedPreferences("music", 0)
         viewModel = ViewModelProvider(this)[ViewModel::class.java]
         mainHandler = Handler(Looper.getMainLooper())
+
+        zoom_in = AnimationUtils.loadAnimation(this, R.anim.zoom_in)
+        zoom_out = AnimationUtils.loadAnimation(this, R.anim.zoom_out)
 
         registerForContextMenu(binding.addBtn)
         setUpBtn()
@@ -99,6 +107,7 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection {
         }
 
         binding.shuffleBtn.setOnClickListener {
+            animation(binding.shuffleBtn)
             val editor = shared.edit()
             val shuffle1 = shared.getBoolean("shuffle", false)
             if (shuffle1) {
@@ -115,9 +124,10 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection {
         }
 
         binding.repeatBtn.setOnClickListener {
+            animation(binding.repeatBtn)
             val editor = shared.edit()
-            val shuffle1 = shared.getBoolean("repeat", false)
-            if (shuffle1) {
+            val repeat = shared.getBoolean("repeat", false)
+            if (repeat) {
                 editor.putBoolean("repeat", false)
                 binding.repeatBtn.alpha = 0.5f
             } else {
@@ -406,14 +416,16 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun onClickNextBtn() {
 
+
+        animation(binding.nextBtn)
+
         var pos = shared.getInt("position", 0)
         val shuffle = shared.getBoolean("shuffle", false)
         val editor = shared.edit()
 
-        val zoom_in = AnimationUtils.loadAnimation(this, R.anim.zoom_in)
-        val zoom_out = AnimationUtils.loadAnimation(this, R.anim.zoom_out)
-        //binding.nextBtn.startAnimation(zoom_out)
-        //binding.nextBtn.startAnimation(zoom_in)
+
+
+
 
 
         if (shuffle) {
@@ -508,6 +520,8 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun onClickBackBtn() {
+
+        animation(binding.backBtn)
         var pos = shared.getInt("position", 0)
         val shuffle = shared.getBoolean("shuffle", false)
         val editor = shared.edit()
@@ -661,6 +675,28 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection {
             val sec = (time / 1000) % 60
             val show = String.format("%02d:%02d", min, sec)
             binding.musicDuration.text = show
+        }
+
+    }
+
+    private fun animation(view:View){
+
+        try {
+            runBlocking {
+                coroutineScope {
+                    launch {
+                        // binding.audioWave.setSampleFrom(path!!)
+                        view.startAnimation(zoom_out)
+                        Handler().postDelayed({
+                            view.startAnimation(zoom_in)
+                        },200)
+                    }
+                }
+            }
+
+
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
 
     }

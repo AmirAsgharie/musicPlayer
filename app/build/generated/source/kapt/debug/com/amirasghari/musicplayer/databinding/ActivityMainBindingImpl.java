@@ -19,13 +19,14 @@ public class ActivityMainBindingImpl extends ActivityMainBinding  {
         sViewsWithIds.put(R.id.searchCard, 3);
         sViewsWithIds.put(R.id.tabLayout, 4);
         sViewsWithIds.put(R.id.viewPager, 5);
-        sViewsWithIds.put(R.id.currentMusicCard, 6);
-        sViewsWithIds.put(R.id.currentMusicCons, 7);
-        sViewsWithIds.put(R.id.currentMusicImgCard, 8);
-        sViewsWithIds.put(R.id.currentMusicImg, 9);
-        sViewsWithIds.put(R.id.currentMusicTxt, 10);
-        sViewsWithIds.put(R.id.currentMusicArtistTxt, 11);
-        sViewsWithIds.put(R.id.guid50Hor, 12);
+        sViewsWithIds.put(R.id.permissionTxt, 6);
+        sViewsWithIds.put(R.id.currentMusicCard, 7);
+        sViewsWithIds.put(R.id.currentMusicCons, 8);
+        sViewsWithIds.put(R.id.currentMusicImgCard, 9);
+        sViewsWithIds.put(R.id.currentMusicImg, 10);
+        sViewsWithIds.put(R.id.currentMusicTxt, 11);
+        sViewsWithIds.put(R.id.currentMusicArtistTxt, 12);
+        sViewsWithIds.put(R.id.guid50Hor, 13);
     }
     // views
     @NonNull
@@ -36,19 +37,20 @@ public class ActivityMainBindingImpl extends ActivityMainBinding  {
     // Inverse Binding Event Handlers
 
     public ActivityMainBindingImpl(@Nullable androidx.databinding.DataBindingComponent bindingComponent, @NonNull View root) {
-        this(bindingComponent, root, mapBindings(bindingComponent, root, 13, sIncludes, sViewsWithIds));
+        this(bindingComponent, root, mapBindings(bindingComponent, root, 14, sIncludes, sViewsWithIds));
     }
     private ActivityMainBindingImpl(androidx.databinding.DataBindingComponent bindingComponent, View root, Object[] bindings) {
         super(bindingComponent, root, 0
             , (androidx.cardview.widget.CardView) bindings[2]
+            , (android.widget.TextView) bindings[12]
+            , (androidx.cardview.widget.CardView) bindings[7]
+            , (androidx.constraintlayout.widget.ConstraintLayout) bindings[8]
+            , (android.widget.ImageView) bindings[10]
+            , (androidx.cardview.widget.CardView) bindings[9]
             , (android.widget.TextView) bindings[11]
-            , (androidx.cardview.widget.CardView) bindings[6]
-            , (androidx.constraintlayout.widget.ConstraintLayout) bindings[7]
-            , (android.widget.ImageView) bindings[9]
-            , (androidx.cardview.widget.CardView) bindings[8]
-            , (android.widget.TextView) bindings[10]
-            , (androidx.constraintlayout.widget.Guideline) bindings[12]
+            , (androidx.constraintlayout.widget.Guideline) bindings[13]
             , (androidx.constraintlayout.widget.ConstraintLayout) bindings[1]
+            , (android.widget.TextView) bindings[6]
             , (androidx.cardview.widget.CardView) bindings[3]
             , (com.google.android.material.tabs.TabLayout) bindings[4]
             , (androidx.viewpager.widget.ViewPager) bindings[5]

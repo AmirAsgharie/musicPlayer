@@ -2,6 +2,7 @@ package com.amirasghari.musicplayer.Activity
 
 import android.annotation.SuppressLint
 import android.content.*
+import android.content.pm.PackageManager
 import android.database.Cursor
 import android.media.MediaPlayer
 import android.net.Uri
@@ -10,9 +11,12 @@ import android.os.Bundle
 import android.os.IBinder
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.amirasghari.musicplayer.Adapter.ViewPagerAdapter
 import com.amirasghari.musicplayer.Model.AudioModel
@@ -50,7 +54,14 @@ class MainActivity : AppCompatActivity(), ServiceConnection {
         editor.putBoolean("first", true)
         editor.apply()
         viewModel = ViewModelProvider(this)[ViewModel::class.java]
-        setUpTabLayout()
+
+        if (!checkPermission()) {
+            requestPermission()
+            return
+        }else{
+            setUpTabLayout()
+        }
+
 
 
         //viewModel = ViewModelProvider(this)[ViewModel::class.java]
@@ -183,7 +194,8 @@ class MainActivity : AppCompatActivity(), ServiceConnection {
         musicService!!.musicPlayer!!.setDataSource(path)
         musicService!!.musicPlayer!!.prepare()
         musicService!!.musicPlayer!!.start()
-        musicService!!.showNotification()
+        //musicService!!.showNotification()
+        musicService!!.startNotification()
 
 
         musicService!!.musicPlayer!!.setOnCompletionListener {
@@ -269,6 +281,55 @@ class MainActivity : AppCompatActivity(), ServiceConnection {
 
 
     }
+
+    private fun requestPermission() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(
+                this,
+                android.Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+        ) {
+            Toast.makeText(
+                this,
+                "permission not granted please do it from setting",
+                Toast.LENGTH_SHORT
+            ).show()
+            val permissions = arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+            ActivityCompat.requestPermissions(this, permissions, 100)
+        } else {
+            val permissions = arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+            ActivityCompat.requestPermissions(this, permissions, 100)
+        }
+
+    }
+
+    private fun checkPermission(): Boolean {
+        val result = ContextCompat.checkSelfPermission(
+            this,
+            android.Manifest.permission.READ_EXTERNAL_STORAGE
+        )
+
+        return result == PackageManager.PERMISSION_GRANTED
+
+    }
+
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode==100){
+            if (grantResults[0]==PackageManager.PERMISSION_GRANTED){
+                binding.permissionTxt.visibility = View.GONE
+                setUpTabLayout()
+            }else{
+                binding.permissionTxt.visibility = View.VISIBLE
+            }
+        }
+    }
+
+
 
 
 

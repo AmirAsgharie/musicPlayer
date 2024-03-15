@@ -28,10 +28,6 @@
         "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\drawable\\favorite.xml"
     },
     {
-        "merged": "com.amirasghari.musicplayer.app-merged_res-5:/anim_zoom_out.xml.flat",
-        "source": "com.amirasghari.musicplayer.app-main-7:/anim/zoom_out.xml"
-    },
-    {
         "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\mipmap-mdpi_ic_launcher_round.webp.flat",
         "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\mipmap-mdpi\\ic_launcher_round.webp"
     },
@@ -58,6 +54,10 @@
     {
         "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\drawable_repeat.xml.flat",
         "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\drawable\\repeat.xml"
+    },
+    {
+        "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\anim_zoom_out.xml.flat",
+        "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\anim\\zoom_out.xml"
     },
     {
         "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\drawable_favorite_svgrepo_com__2_.xml.flat",
@@ -242,6 +242,10 @@
     {
         "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\mipmap-xxhdpi_ic_launcher_round.webp.flat",
         "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\mipmap-xxhdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.amirasghari.musicplayer.app-merged_res-5:/layout_activity_main.xml.flat",
+        "source": "com.amirasghari.musicplayer.app-main-7:/layout/activity_main.xml"
     },
     {
         "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\navigation_nav_graph.xml.flat",

@@ -120,6 +120,17 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/headerCons" />
 
+        <TextView
+            android:id="@+id/permissionTxt"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="We need ReadExternal permission manualy"
+            android:textColor="@color/backgroundColor"
+            android:textSize="@dimen/_12sdp"
+            android:visibility="gone"
+            android:fontFamily="@font/iransansx_regular"
+            android:gravity="center"/>
+
 
         <androidx.cardview.widget.CardView
             android:id="@+id/currentMusicCard"

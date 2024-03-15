@@ -52,7 +52,7 @@ class PlayListFragment : Fragment() , PlaylistListener , PlaylistMenuListener{
         }
 
         if (data.isEmpty()){
-            binding.emptyTxt.text = "you did'nt create any playList"
+            binding.emptyTxt.text = "You Have No PlayList"
             binding.emptyTxt.visibility = View.VISIBLE
         }else{
             binding.emptyTxt.visibility = View.GONE

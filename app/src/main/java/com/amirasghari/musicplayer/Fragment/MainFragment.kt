@@ -78,10 +78,7 @@ class MainFragment() : Fragment() , MusicListener , MusicMenuListener {
         //mediaPlayer = MediaPlayer()
         viewModel = ViewModelProvider(this)[ViewModel::class.java]
 
-        if (!checkPermission()) {
-            requestPermission()
-            return
-        }
+
 
 
 
@@ -109,7 +106,6 @@ class MainFragment() : Fragment() , MusicListener , MusicMenuListener {
         binding.rec.adapter = adapter
 
     }
-
 
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
@@ -214,36 +210,6 @@ class MainFragment() : Fragment() , MusicListener , MusicMenuListener {
         val intent = Intent(requireActivity(), Service::class.java)
         intent.putExtra("shuffleList" , shuffleList.toIntArray())
         startForegroundService(requireActivity() , intent)
-
-    }
-
-    private fun requestPermission() {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(
-                requireActivity(),
-                android.Manifest.permission.READ_EXTERNAL_STORAGE
-            )
-        ) {
-            Toast.makeText(
-                requireActivity(),
-                "permission not granted please do it from setting",
-                Toast.LENGTH_SHORT
-            ).show()
-            val permissions = arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE)
-            ActivityCompat.requestPermissions(requireActivity(), permissions, 100)
-        } else {
-            val permissions = arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE)
-            ActivityCompat.requestPermissions(requireActivity(), permissions, 100)
-        }
-
-    }
-
-    private fun checkPermission(): Boolean {
-        val result = ContextCompat.checkSelfPermission(
-            requireActivity(),
-            android.Manifest.permission.READ_EXTERNAL_STORAGE
-        )
-
-        return result == PackageManager.PERMISSION_GRANTED
 
     }
 

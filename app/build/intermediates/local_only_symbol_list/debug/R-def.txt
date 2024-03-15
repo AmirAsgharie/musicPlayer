@@ -83,6 +83,7 @@ id musicText
 id musicTitle
 id nav_graph
 id nextBtn
+id permissionTxt
 id playListName
 id playlist
 id playlistRec

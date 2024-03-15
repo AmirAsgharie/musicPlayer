@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.database.Cursor
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.media.MediaPlayer
@@ -93,7 +94,8 @@ class Service : Service() {
             musicPlayer!!.setDataSource(songList[shuffleList[shufflePos]].Path)
             musicPlayer!!.prepare()
             musicPlayer!!.start()
-            showNotification()
+            //showNotification()
+            startNotification()
             val editor = shared.edit()
             editor.putString("musicPath", songList[shuffleList[shufflePos]].Path)
             editor.putInt("position", shuffleList[shufflePos])
@@ -109,7 +111,8 @@ class Service : Service() {
             musicPlayer!!.setDataSource(songList[position].Path)
             musicPlayer!!.prepare()
             musicPlayer!!.start()
-            showNotification()
+            //showNotification()
+            startNotification()
         }
 
         //notification()
@@ -230,7 +233,6 @@ class Service : Service() {
     }
 
 
-
     fun showNotification() {
 
         val notification = NotificationCompat.Builder(baseContext, ApplicationClass.CHANNEL_ID)
@@ -268,6 +270,59 @@ class Service : Service() {
         editor.apply()
 
 
+    }
+
+    fun startNotification() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val NOTIFICATION_CHANNEL_ID = "123"
+            val channelName = "My Notification Service"
+            var largeIcon: Bitmap? = BitmapFactory.decodeResource(resources, R.drawable.shuffle)
+            if (largeIcon == null) {
+                largeIcon = BitmapFactory.decodeResource(resources, R.drawable.playp)
+            }
+            val drw_previous: Int
+            drw_previous = R.drawable.next
+            val drw_play: Int
+            if (musicPlayer!!.isPlaying) drw_play = R.drawable.pause1 else drw_play = R.drawable.playp
+            val drw_next: Int
+            drw_next = R.drawable.next
+            val mediaSession = MediaSessionCompat(applicationContext, "MusicService")
+            val token = mediaSession.sessionToken
+            val chan = NotificationChannel(
+                NOTIFICATION_CHANNEL_ID,
+                channelName,
+                NotificationManager.IMPORTANCE_HIGH
+            )
+            chan.lightColor = Color.BLUE
+            chan.lockscreenVisibility = Notification.VISIBILITY_PRIVATE
+            notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+            assert(notificationManager != null)
+            notificationManager.createNotificationChannel(chan)
+            val notificationBuilder = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
+            val notification: Notification = notificationBuilder.setOngoing(false)
+                .setSmallIcon(R.drawable.play)
+                .setContentTitle(shared.getString("musicName", ""))
+                .setLargeIcon(largeIcon)
+                .addAction(drw_previous, "Previous", null)
+                .addAction(drw_play, "Play", null)
+                .addAction(drw_next, "Next", null)
+                .setTicker(shared.getString("musicName", ""))
+                .setStyle(
+                    androidx.media.app.NotificationCompat.MediaStyle()
+                        .setShowActionsInCompactView(0, 1, 2)
+                        .setMediaSession(token)
+                )
+                .setContentText("Artist: ${shared.getString("musicArtist", "")}")
+                .setPriority(NotificationManager.IMPORTANCE_HIGH)
+                .setCategory(Notification.CATEGORY_SERVICE)
+                .build()
+            startForeground(2, notification)
+            if (musicPlayer!!.isPlaying === false) {
+                stopForeground(false)
+            }
+        } else {
+            startForeground(1, Notification())
+        }
     }
 
 
