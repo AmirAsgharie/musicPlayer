@@ -2,7 +2,6 @@ package com.amirasghari.musicplayer.Fragment
 
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.pm.PackageManager
 import android.database.Cursor
 import android.media.MediaPlayer
 import android.net.Uri
@@ -19,9 +18,6 @@ import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.PopupMenu
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startForegroundService
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -33,27 +29,24 @@ import com.amirasghari.musicplayer.Interface.MusicListener
 import com.amirasghari.musicplayer.Interface.MusicMenuListener
 import com.amirasghari.musicplayer.Model.AudioModel
 import com.amirasghari.musicplayer.R
-import com.amirasghari.musicplayer.Service.Service
 import com.amirasghari.musicplayer.ViewModel.ViewModel
 import com.amirasghari.musicplayer.databinding.ActivityMainBinding
 import com.amirasghari.musicplayer.databinding.FragmentMainBinding
 import com.bumptech.glide.Glide
 
 
-class MainFragment() : Fragment() , MusicListener , MusicMenuListener {
+class MainFragment() : Fragment(), MusicListener, MusicMenuListener {
 
-    lateinit var binding:FragmentMainBinding
+    lateinit var binding: FragmentMainBinding
     lateinit var mediaPlayer: MediaPlayer
     lateinit var viewModel: ViewModel
     lateinit var shared: SharedPreferences
-    private lateinit var shuffleList:List<Int>
-    lateinit var bindingActivity:ActivityMainBinding
-    lateinit var path:String
-    lateinit var musicName:String
-    lateinit var musicArtist:String
+    private lateinit var shuffleList: List<Int>
+    lateinit var bindingActivity: ActivityMainBinding
+    lateinit var path: String
+    lateinit var musicName: String
+    lateinit var musicArtist: String
     private var first = true
-
-
 
 
     override fun onCreateView(
@@ -61,9 +54,9 @@ class MainFragment() : Fragment() , MusicListener , MusicMenuListener {
         savedInstanceState: Bundle?
     ): View? {
         //bind fragment
-        binding = DataBindingUtil.inflate(inflater , R.layout.fragment_main, container , false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false)
         //bind main activity
-        val main  = requireActivity() as MainActivity
+        val main = requireActivity() as MainActivity
         bindingActivity = main.binding
 
         return binding.root
@@ -73,22 +66,23 @@ class MainFragment() : Fragment() , MusicListener , MusicMenuListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        shared = requireActivity().getSharedPreferences("music" , 0)
+        shared = requireActivity().getSharedPreferences("music", 0)
 
         //mediaPlayer = MediaPlayer()
         viewModel = ViewModelProvider(this)[ViewModel::class.java]
 
 
+        bindingActivity.backCard.setOnClickListener {
+            playShuffle()
+        }
 
 
 
-        if (viewModel.observeSongsList().value==null){
+
+        if (viewModel.observeSongsList().value == null) {
             getMusicsDetails()
         }
         recyclerView()
-
-
-
 
 
     }
@@ -102,7 +96,7 @@ class MainFragment() : Fragment() , MusicListener , MusicMenuListener {
 
         binding.rec.layoutManager = LinearLayoutManager(requireActivity())
         //songsList.sortWith(compareBy { it.Title })
-        val adapter = MusicAdapter(requireActivity(), viewModel.observeSongsList() , this , this)
+        val adapter = MusicAdapter(requireActivity(), viewModel.observeSongsList(), this, this)
         binding.rec.adapter = adapter
 
     }
@@ -118,13 +112,13 @@ class MainFragment() : Fragment() , MusicListener , MusicMenuListener {
 
 
         val editor = shared.edit()
-        editor.putInt("position" , position)
-        editor.putString("imagePath" , data.image)
-        editor.putString("musicPath" , data.Path)
-        editor.putString("musicName" , data.Title)
-        editor.putString("musicArtist" , data.Artist)
-        editor.putBoolean("favorite" , false)
-        editor.putBoolean("recent" , false)
+        editor.putInt("position", position)
+        editor.putString("imagePath", data.image)
+        editor.putString("musicPath", data.Path)
+        editor.putString("musicName", data.Title)
+        editor.putString("musicArtist", data.Artist)
+        editor.putBoolean("favorite", false)
+        editor.putBoolean("recent", false)
         editor.apply()
         viewModel.setCurrentMusicName(data.Title)
 
@@ -132,26 +126,26 @@ class MainFragment() : Fragment() , MusicListener , MusicMenuListener {
         bindingActivity.currentMusicTxt.text = data.Title
         bindingActivity.currentMusicArtistTxt.text = data.Artist
         Glide.with(requireActivity()).load(data.image).into(bindingActivity.currentMusicImg)
-        val  animation = AnimationUtils.loadAnimation(requireActivity(), R.anim.rotate)
+        val animation = AnimationUtils.loadAnimation(requireActivity(), R.anim.rotate)
         bindingActivity.currentMusicImg.startAnimation(animation)
 
         /*val intent = Intent(requireActivity(), Service::class.java)
         intent.putExtra("position", position)
         startForegroundService(requireActivity(), intent)*/
 
-        if (shared.getBoolean("first" , true)){
+        if (shared.getBoolean("first", true)) {
             (activity as MainActivity?)!!.startService()
-            editor.putBoolean("first" , false)
+            editor.putBoolean("first", false)
             editor.apply()
-        }else{
-            (activity as MainActivity?)!!.play(data.Path  , null)
+        } else {
+            (activity as MainActivity?)!!.play(data.Path, null, null)
         }
 
 
     }
 
 
-    private fun getMusicsDetails(){
+    private fun getMusicsDetails() {
         val projection = arrayOf(
             MediaStore.Audio.Media.TITLE,
             MediaStore.Audio.Media.DATA,
@@ -177,12 +171,11 @@ class MainFragment() : Fragment() , MusicListener , MusicMenuListener {
                 AudioModel(
                     cursor.getString(1),
                     cursor.getString(0).trim(),
-                    if (cursor.getString(3)==null){
+                    if (cursor.getString(3) == null) {
                         "100000"
-                    }else{
+                    } else {
                         cursor.getString(2)
-                    }
-                    ,
+                    },
                     artUri,
                     cursor.getString(4)
                 )
@@ -196,41 +189,65 @@ class MainFragment() : Fragment() , MusicListener , MusicMenuListener {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun playShuffle(){
-        val size = viewModel.size()-1
+    private fun playShuffle() {
+
+        val music = viewModel.observeSongsList().value!!
+
+        val size = viewModel.size() - 1
         shuffleList = (0..size).shuffled()
         Log.i("shuffle" , shuffleList.toString())
-        val editor =shared.edit()
-        editor.putInt("position" , shuffleList[0])
-        editor.putInt("shufflePosition" , 0)
+        val editor = shared.edit()
+        editor.putInt("position", shuffleList[0])
+        editor.putInt("shufflePosition", 1)
         editor.putBoolean("shuffle", true)
+        editor.putString("imagePath", music[shuffleList[0]].image)
+        editor.putString("musicPath", music[shuffleList[0]].Path)
+        editor.putString("musicName", music[shuffleList[0]].Title)
+        editor.putString("musicArtist", music[shuffleList[0]].Artist)
+        editor.putBoolean("favorite", false)
+        editor.putBoolean("recent", false)
         editor.apply()
 
 
-        val intent = Intent(requireActivity(), Service::class.java)
-        intent.putExtra("shuffleList" , shuffleList.toIntArray())
-        startForegroundService(requireActivity() , intent)
+        bindingActivity.currentMusicTxt.text = music[shuffleList[0]].Title
+        bindingActivity.currentMusicArtistTxt.text = music[shuffleList[0]].Artist
+        Glide.with(requireActivity()).load(music[shuffleList[0]].image).into(bindingActivity.currentMusicImg)
+        val animation = AnimationUtils.loadAnimation(requireActivity(), R.anim.rotate)
+        bindingActivity.currentMusicImg.startAnimation(animation)
+
+
+
+        if (shared.getBoolean("first", true)) {
+            (activity as MainActivity?)!!.setShuffleList(shuffleList)
+            (activity as MainActivity?)!!.startService()
+            editor.putBoolean("first", false)
+            editor.apply()
+        } else {
+            (activity as MainActivity?)!!.play(music[shuffleList[0]].Path, null, shuffleList)
+        }
 
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu){
+    override fun onPrepareOptionsMenu(menu: Menu) {
 
     }
+
 
     override fun onMenuClickListener(data: AudioModel, position: Int, view: View) {
-        val popupMenu = PopupMenu(requireContext() , view)
+        val popupMenu = PopupMenu(requireContext(), view)
         // add the menu
         popupMenu.inflate(R.menu.options_menu)
         popupMenu.show()
 
         popupMenu.setOnMenuItemClickListener { item ->
-            when(item.title){
-                "delete"->{
+            when (item.title) {
+                "delete" -> {
                     Toast.makeText(requireActivity(), "delete", Toast.LENGTH_SHORT).show()
                     true
                 }
-                "playlist"->{
-                    val intent =Intent(requireActivity() , PlaylistActivity::class.java)
+
+                "playlist" -> {
+                    val intent = Intent(requireActivity(), PlaylistActivity::class.java)
                     intent.putExtra("title", data.Title)
                     intent.putExtra("artist", data.Artist)
                     intent.putExtra("image", data.image)
@@ -239,7 +256,8 @@ class MainFragment() : Fragment() , MusicListener , MusicMenuListener {
                     startActivity(intent)
                     true
                 }
-                else->{
+
+                else -> {
                     false
                 }
             }
@@ -249,10 +267,6 @@ class MainFragment() : Fragment() , MusicListener , MusicMenuListener {
 
 
     }
-
-
-
-    
 
 
 }

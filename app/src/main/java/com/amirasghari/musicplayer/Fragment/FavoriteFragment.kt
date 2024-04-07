@@ -114,7 +114,7 @@ class FavoriteFragment : Fragment(), MusicListener {
             editor.putBoolean("first", false)
             editor.apply()
         } else {
-            (activity as MainActivity?)!!.play(data.Path)
+            (activity as MainActivity?)!!.play(data.Path , null , null)
         }
 
     }

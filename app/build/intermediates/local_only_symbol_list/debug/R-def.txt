@@ -44,6 +44,7 @@ drawable round_bg
 drawable round_bg2
 drawable search
 drawable shuffle
+drawable shuffle2
 font iransansx_bold
 font iransansx_regular
 id action_mainFragment_to_showMusicFragment

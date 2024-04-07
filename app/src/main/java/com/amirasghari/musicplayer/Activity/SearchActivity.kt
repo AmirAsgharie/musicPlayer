@@ -44,6 +44,8 @@ class SearchActivity : AppCompatActivity(), ServiceConnection ,  MusicListener{
         shared = getSharedPreferences("music" , 0)
         viewModel = ViewModelProvider(this)[ViewModel::class.java]
 
+        binding.searchEdt.requestFocus()
+
 
         startService()
         binding.moreBtn.setOnClickListener {

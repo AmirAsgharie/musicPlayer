@@ -231,14 +231,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/_40sdp"
-                android:foreground="?android:attr/selectableItemBackground"
                 android:src="@drawable/next"
                 app:layout_constraintBottom_toBottomOf="@id/controlBtn"
                 app:layout_constraintLeft_toRightOf="@id/controlBtn"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="@id/controlBtn" />
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/backBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -260,7 +259,6 @@
                 android:layout_height="wrap_content"
                 android:alpha="0.5"
                 android:background="@android:color/transparent"
-                android:foreground="?android:attr/selectableItemBackground"
                 android:src="@drawable/shuffle"
                 app:layout_constraintBottom_toBottomOf="@id/controlBtn"
                 app:layout_constraintLeft_toLeftOf="parent"

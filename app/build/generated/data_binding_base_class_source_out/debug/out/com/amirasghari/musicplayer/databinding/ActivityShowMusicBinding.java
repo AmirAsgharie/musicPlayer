@@ -26,7 +26,7 @@ public abstract class ActivityShowMusicBinding extends ViewDataBinding {
   public final WaveformSeekBar audioWave;
 
   @NonNull
-  public final ImageButton backBtn;
+  public final ImageView backBtn;
 
   @NonNull
   public final CardView backCard;
@@ -74,7 +74,7 @@ public abstract class ActivityShowMusicBinding extends ViewDataBinding {
   public final ImageButton shuffleBtn;
 
   protected ActivityShowMusicBinding(Object _bindingComponent, View _root, int _localFieldCount,
-      ImageView addBtn, WaveformSeekBar audioWave, ImageButton backBtn, CardView backCard,
+      ImageView addBtn, WaveformSeekBar audioWave, ImageView backBtn, CardView backCard,
       ConstraintLayout cons, CardView controlBtn, ImageButton controlMusicImg,
       TextView currentDuration, CardView currentMusicImgCard, ImageView favoriteBtn,
       TextView musicArtist, ConstraintLayout musicController, TextView musicDuration,

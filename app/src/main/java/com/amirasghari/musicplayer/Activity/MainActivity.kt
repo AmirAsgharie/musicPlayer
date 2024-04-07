@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.*
 import android.content.pm.PackageManager
 import android.database.Cursor
+import android.media.AudioManager
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Build
@@ -28,13 +29,15 @@ import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 
 
-class MainActivity : AppCompatActivity(), ServiceConnection {
+class MainActivity : AppCompatActivity(), ServiceConnection,
+    AudioManager.OnAudioFocusChangeListener {
 
     lateinit var binding: ActivityMainBinding
     lateinit var mediaPlayer: MediaPlayer
     lateinit var viewModel: ViewModel
+    lateinit var audioManager: AudioManager
     lateinit var shared: SharedPreferences
-    private lateinit var shuffleList: List<Int>
+    private var shuffleList: List<Int>? = null
     var musicService: Service? = null
     lateinit var path: String
     lateinit var musicName: String
@@ -58,10 +61,9 @@ class MainActivity : AppCompatActivity(), ServiceConnection {
         if (!checkPermission()) {
             requestPermission()
             return
-        }else{
+        } else {
             setUpTabLayout()
         }
-
 
 
         //viewModel = ViewModelProvider(this)[ViewModel::class.java]
@@ -96,7 +98,6 @@ class MainActivity : AppCompatActivity(), ServiceConnection {
     }
 
 
-
     private fun setUpTabLayout() {
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Favorite"))
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Song"))
@@ -127,12 +128,15 @@ class MainActivity : AppCompatActivity(), ServiceConnection {
 
     }
 
+
     fun startService() {
         val intent = Intent(this, Service::class.java)
         bindService(intent, this, BIND_AUTO_CREATE)
         startService(intent)
-        //Toast.makeText(this, "1", Toast.LENGTH_SHORT).show()
+
+
     }
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onServiceConnected(p0: ComponentName?, service: IBinder?) {
@@ -140,17 +144,24 @@ class MainActivity : AppCompatActivity(), ServiceConnection {
         musicService = binder.currentService()
         val path = shared.getString("musicPath", "")
         val recent = shared.getBoolean("recent", false)
-        if (!recent) {
-            play(path!!, null)
+
+
+        if (!shuffleList.isNullOrEmpty()) {
+            play(path!!, null, shuffleList)
+        } else if (!recent) {
+            play(path!!, null, null)
         } else {
             getRecentMusicsDetails()
-            play(path!!, recentSongs)
+            play(path!!, recentSongs, null)
         }
 
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun play(path: String, recentSongs: ArrayList<AudioModel>? = null) {
+    fun play(path: String, recentSongs: ArrayList<AudioModel>? = null, shuffleList: List<Int>?) {
+
+        changeMusicFocus()
+
 
         if (recentSongs != null) {
 
@@ -186,7 +197,14 @@ class MainActivity : AppCompatActivity(), ServiceConnection {
             }
 
         }
-        musicService!!.playShuffle()
+
+        if (shuffleList == null) {
+            musicService!!.playShuffle()
+        } else {
+            musicService!!.shuffleList = shuffleList
+            Log.i("sh" , musicService!!.shuffleList.toString())
+        }
+
 
 
         if (musicService!!.musicPlayer == null) musicService!!.musicPlayer = MediaPlayer()
@@ -230,6 +248,7 @@ class MainActivity : AppCompatActivity(), ServiceConnection {
         }
 
     }
+
 
     override fun onServiceDisconnected(p0: ComponentName?) {
 
@@ -319,18 +338,41 @@ class MainActivity : AppCompatActivity(), ServiceConnection {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode==100){
-            if (grantResults[0]==PackageManager.PERMISSION_GRANTED){
+        if (requestCode == 100) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 binding.permissionTxt.visibility = View.GONE
                 setUpTabLayout()
-            }else{
+            } else {
                 binding.permissionTxt.visibility = View.VISIBLE
             }
         }
     }
 
+    fun setShuffleList(shuffleList: List<Int>) {
+        this.shuffleList = shuffleList
+    }
+
+    override fun onAudioFocusChange(focus: Int) {
+        if (focus == AudioManager.AUDIOFOCUS_LOSS) {
+            audioManager.abandonAudioFocus(this);
+            musicService!!.musicPlayer!!.stop();
+        }
+    }
+
+    private fun changeMusicFocus() {
+        // Request audio focus for playback
+        audioManager = getSystemService(AUDIO_SERVICE) as AudioManager
 
 
+        // Request audio focus for playback
+        val result = audioManager.requestAudioFocus(
+            this,  // Use the music stream.
+            AudioManager.STREAM_MUSIC,  // Request permanent focus.
+            AudioManager.AUDIOFOCUS_GAIN
+        )
+
+
+    }
 
 
 }

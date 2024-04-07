@@ -45,7 +45,7 @@ public class ActivityShowMusicBindingImpl extends ActivityShowMusicBinding  {
         super(bindingComponent, root, 0
             , (android.widget.ImageView) bindings[6]
             , (com.masoudss.lib.WaveformSeekBar) bindings[9]
-            , (android.widget.ImageButton) bindings[15]
+            , (android.widget.ImageView) bindings[15]
             , (androidx.cardview.widget.CardView) bindings[3]
             , (androidx.constraintlayout.widget.ConstraintLayout) bindings[0]
             , (androidx.cardview.widget.CardView) bindings[12]

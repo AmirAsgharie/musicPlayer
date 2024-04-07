@@ -20,8 +20,8 @@
         "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\layout\\fragment_favorite.xml"
     },
     {
-        "merged": "com.amirasghari.musicplayer.app-mergeDebugResources-4:/layout/activity_main.xml",
-        "source": "com.amirasghari.musicplayer.app-main-7:/layout/activity_main.xml"
+        "merged": "com.amirasghari.musicplayer.app-mergeDebugResources-4:/layout/activity_single_playlist.xml",
+        "source": "com.amirasghari.musicplayer.app-main-7:/layout/activity_single_playlist.xml"
     },
     {
         "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-mergeDebugResources-4:\\layout\\activity_single_playlist.xml",

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.content.SharedPreferences
 import android.database.Cursor
+import android.media.AudioManager
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.*
@@ -35,7 +36,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 @Suppress("UNREACHABLE_CODE")
-class ShowMusicActivity : AppCompatActivity(), ServiceConnection {
+class ShowMusicActivity : AppCompatActivity(), ServiceConnection , AudioManager.OnAudioFocusChangeListener {
 
     lateinit var binding: ActivityShowMusicBinding
     lateinit var shared: SharedPreferences
@@ -45,7 +46,7 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection {
     private var recentSongs = ArrayList<AudioModel>()
     lateinit var mainHandler: Handler
     var time: Int = 0
-
+    lateinit var audioManager:AudioManager
     var favorite = false
 
     lateinit var zoom_in: Animation
@@ -143,6 +144,7 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection {
                 it.setImageResource(R.drawable.play2)
                 musicService!!.musicPlayer!!.pause()
             } else {
+                changeMusicFocus()
                 it.setImageResource(R.drawable.pause2)
                 musicService!!.musicPlayer!!.start()
                 time()
@@ -208,6 +210,8 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection {
         binding.musicArtist.text = musicArtist
 
 
+
+
         val data = RealmDAO().favoriteReadAll()
         favorite = false
         binding.favoriteBtn.setImageResource(R.drawable.favorite_svgrepo_com__1_)
@@ -226,12 +230,16 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection {
         } catch (E: Exception) {
             E.printStackTrace()
         }
+
+
         try {
             runBlocking {
                 coroutineScope {
                     launch {
                         binding.audioWave.setSampleFrom(path!!)
                     }
+                    val position = shared.getFloat("currentTime" , 0f)
+                    binding.audioWave.progress = position
                 }
             }
 
@@ -416,7 +424,7 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun onClickNextBtn() {
 
-
+        changeMusicFocus()
         animation(binding.nextBtn)
 
         var pos = shared.getInt("position", 0)
@@ -429,7 +437,7 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection {
 
 
         if (shuffle) {
-            musicService!!.playShuffle()
+            //musicService!!.playShuffle()
             //Toast.makeText(this, "true", Toast.LENGTH_SHORT).show()
             val shufflePos = shared.getInt("shufflePosition", 0)
             //Toast.makeText(this, shufflePos.toString(), Toast.LENGTH_SHORT).show()
@@ -521,6 +529,7 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun onClickBackBtn() {
 
+        changeMusicFocus()
         animation(binding.backBtn)
         var pos = shared.getInt("position", 0)
         val shuffle = shared.getBoolean("shuffle", false)
@@ -660,6 +669,9 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection {
                     val current = musicService!!.musicPlayer!!.currentPosition * 100
                     var position = (current.toDouble() / time.toDouble())
                     binding.audioWave.progress = position.toFloat()
+                    editor.putFloat("currentTime", position.toFloat())
+                    editor.apply()
+
 
                     val min = ((current / (100000 * 60)) % 60)
                     val sec = (current / 100000) % 60
@@ -679,7 +691,7 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection {
 
     }
 
-    private fun animation(view:View){
+    private fun animation(view: View) {
 
         try {
             runBlocking {
@@ -689,7 +701,7 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection {
                         view.startAnimation(zoom_out)
                         Handler().postDelayed({
                             view.startAnimation(zoom_in)
-                        },200)
+                        }, 200)
                     }
                 }
             }
@@ -698,6 +710,27 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection {
         } catch (e: Exception) {
             e.printStackTrace()
         }
+
+    }
+
+    override fun onAudioFocusChange(focus: Int) {
+        if (focus == AudioManager.AUDIOFOCUS_LOSS) {
+            audioManager.abandonAudioFocus(this);
+            musicService!!.musicPlayer!!.stop();
+        }
+    }
+
+    private fun changeMusicFocus() {
+        // Request audio focus for playback
+        audioManager = getSystemService(AUDIO_SERVICE) as AudioManager
+
+
+        // Request audio focus for playback
+        val result = audioManager.requestAudioFocus(
+            this,  // Use the music stream.
+            AudioManager.STREAM_MUSIC,  // Request permanent focus.
+            AudioManager.AUDIOFOCUS_GAIN
+        )
 
     }
 

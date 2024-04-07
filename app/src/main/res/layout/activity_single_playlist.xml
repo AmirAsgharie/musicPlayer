@@ -70,8 +70,11 @@
                 <ImageView
                     android:layout_width="@dimen/_30sdp"
                     android:layout_height="@dimen/_30sdp"
-                    android:src="@drawable/search"
+                    android:src="@drawable/shuffle2"
                     android:background="@drawable/round_bg"
+                    android:scaleType="centerCrop"
+                    android:padding="@dimen/_6sdp"
+                    android:alpha="0.5"
                     android:layout_gravity="center"/>
             </androidx.cardview.widget.CardView>
 
