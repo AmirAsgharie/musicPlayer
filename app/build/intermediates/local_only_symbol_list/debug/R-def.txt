@@ -96,6 +96,7 @@ id searchCard
 id searchEdt
 id showMusicFragment
 id shuffleBtn
+id shuffleCard
 id tabLayout
 id viewPager
 layout activity_main

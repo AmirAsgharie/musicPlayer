@@ -4227,6 +4227,7 @@ int id showHome 0x7f0901c6
 int id showMusicFragment 0x7f0901c7
 int id showTitle 0x7f0901c8
 int id shuffleBtn 0x7f0901c9
+int id shuffleCard 0x7f090233
 int id sin 0x7f0901ca
 int id skipCollapsed 0x7f0901cb
 int id skipped 0x7f0901cc

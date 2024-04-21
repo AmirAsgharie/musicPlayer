@@ -4228,6 +4228,7 @@ id showHome
 id showMusicFragment
 id showTitle
 id shuffleBtn
+id shuffleCard
 id sin
 id skipCollapsed
 id skipped

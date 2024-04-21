@@ -164,5 +164,10 @@ class RecentlyFragment : Fragment(), MusicListener, MusicMenuListener ,ServiceCo
         TODO("Not yet implemented")
     }
 
+    override fun onStop() {
+        super.onStop()
+        recentSongs.clear()
+    }
+
 
 }

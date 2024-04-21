@@ -39,7 +39,9 @@ class SinglePlaylistActivity : AppCompatActivity(), SinglePlayListListener,
     lateinit var path: String
     lateinit var musicName: String
     lateinit var musicArtist: String
+    private lateinit var shuffleList: List<Int>
     val currentPlayListMusic = ArrayList<SinglePlaylistInfo>()
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySinglePlaylistBinding.inflate(layoutInflater)
@@ -64,6 +66,10 @@ class SinglePlaylistActivity : AppCompatActivity(), SinglePlayListListener,
 
         binding.backCard.setOnClickListener {
             onBackPressed()
+        }
+
+        binding.shuffleCard.setOnClickListener {
+            playShuffle(currentPlayListMusic)
         }
 
         val realm = RealmDAO()
@@ -137,7 +143,7 @@ class SinglePlaylistActivity : AppCompatActivity(), SinglePlayListListener,
         musicService = binder.currentService()
         //Toast.makeText(this, "2", Toast.LENGTH_SHORT).show()
         val path = shared.getString("musicPath", "")
-        play(path!!)
+        play(path!! , null , null)
     }
 
     override fun onServiceDisconnected(p0: ComponentName?) {
@@ -145,7 +151,7 @@ class SinglePlaylistActivity : AppCompatActivity(), SinglePlayListListener,
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun play(path: String) {
+    private fun play(path: String, recentSongs: ArrayList<AudioModel>? = null, shuffleList: List<Int>?) {
         val playListMusics = changePlayList()
         Toast.makeText(this, playListMusics.toString(), Toast.LENGTH_SHORT).show()
         musicService!!.songList = playListMusics
@@ -204,4 +210,50 @@ class SinglePlaylistActivity : AppCompatActivity(), SinglePlayListListener,
         }
         return playListMusics
     }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun playShuffle(currentPlayListMusic: ArrayList<SinglePlaylistInfo>) {
+
+        val music = currentPlayListMusic
+
+        val size =  currentPlayListMusic.size
+        shuffleList = (0..size).shuffled()
+        Log.i("shuffle" , shuffleList.toString())
+        val editor = shared.edit()
+        editor.putInt("position", shuffleList[0])
+        editor.putInt("shufflePosition", 1)
+        editor.putBoolean("shuffle", true)
+        editor.putString("imagePath", music[shuffleList[0]].imagePath)
+        editor.putString("musicPath", music[shuffleList[0]].musicPath)
+        editor.putString("musicName", music[shuffleList[0]].musicName)
+        editor.putString("musicArtist", music[shuffleList[0]].artist)
+        editor.putBoolean("favorite", false)
+        editor.putBoolean("recent", false)
+        editor.apply()
+
+
+        binding.currentMusicTxt.text = music[shuffleList[0]].musicName
+        binding.currentMusicArtistTxt.text = music[shuffleList[0]].artist
+        Glide.with(this).load(music[shuffleList[0]].imagePath).into(binding.currentMusicImg)
+        val animation = AnimationUtils.loadAnimation(this, R.anim.rotate)
+        binding.currentMusicImg.startAnimation(animation)
+
+
+
+        if (shared.getBoolean("first", true)) {
+            setShuffleList(shuffleList)
+            startService()
+            editor.putBoolean("first", false)
+            editor.apply()
+        } else {
+           play(music[shuffleList[0]].musicPath, null, shuffleList)
+        }
+
+    }
+
+    fun setShuffleList(shuffleList: List<Int>) {
+        this.shuffleList = shuffleList
+    }
+
+
 }

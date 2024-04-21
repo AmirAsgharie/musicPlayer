@@ -26,7 +26,6 @@ class Service : Service() {
 
     var songList :ArrayList<AudioModel> = ArrayList<AudioModel>()
     var mainSongList = ArrayList<AudioModel>()
-    var recentSongs = ArrayList<AudioModel>()
     var position: Int = 0
     var shufflePosition: Int = 0
     lateinit var notificationManager: NotificationManager

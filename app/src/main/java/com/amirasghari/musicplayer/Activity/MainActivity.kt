@@ -33,7 +33,6 @@ class MainActivity : AppCompatActivity(), ServiceConnection,
     AudioManager.OnAudioFocusChangeListener {
 
     lateinit var binding: ActivityMainBinding
-    lateinit var mediaPlayer: MediaPlayer
     lateinit var viewModel: ViewModel
     lateinit var audioManager: AudioManager
     lateinit var shared: SharedPreferences
@@ -164,10 +163,8 @@ class MainActivity : AppCompatActivity(), ServiceConnection,
 
 
         if (recentSongs != null) {
-
             recentSongs.reverse()
             musicService!!.songList = recentSongs
-
 
         } else if (shared.getBoolean("favorite", false)) {
             val favoriteMusic = ArrayList<AudioModel>()
@@ -202,7 +199,7 @@ class MainActivity : AppCompatActivity(), ServiceConnection,
             musicService!!.playShuffle()
         } else {
             musicService!!.shuffleList = shuffleList
-            Log.i("sh" , musicService!!.shuffleList.toString())
+            Log.i("sh", musicService!!.shuffleList.toString())
         }
 
 

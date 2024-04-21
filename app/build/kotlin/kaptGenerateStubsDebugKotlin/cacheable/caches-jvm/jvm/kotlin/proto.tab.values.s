@@ -1,1 +1,1 @@
-Ö•ØMæNÆOòOðOðOðOðOþK
+ß–

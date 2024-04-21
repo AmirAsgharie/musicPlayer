@@ -53,14 +53,14 @@ public abstract class ActivitySinglePlaylistBinding extends ViewDataBinding {
   public final RecyclerView recycler;
 
   @NonNull
-  public final CardView searchCard;
+  public final CardView shuffleCard;
 
   protected ActivitySinglePlaylistBinding(Object _bindingComponent, View _root,
       int _localFieldCount, CardView backCard, TextView currentMusicArtistTxt,
       CardView currentMusicCard, ConstraintLayout currentMusicCons, ImageView currentMusicImg,
       CardView currentMusicImgCard, TextView currentMusicTxt, Guideline guid50Hor,
       ConstraintLayout headerCons, TextView playListName, RecyclerView recycler,
-      CardView searchCard) {
+      CardView shuffleCard) {
     super(_bindingComponent, _root, _localFieldCount);
     this.backCard = backCard;
     this.currentMusicArtistTxt = currentMusicArtistTxt;
@@ -73,7 +73,7 @@ public abstract class ActivitySinglePlaylistBinding extends ViewDataBinding {
     this.headerCons = headerCons;
     this.playListName = playListName;
     this.recycler = recycler;
-    this.searchCard = searchCard;
+    this.shuffleCard = shuffleCard;
   }
 
   @NonNull

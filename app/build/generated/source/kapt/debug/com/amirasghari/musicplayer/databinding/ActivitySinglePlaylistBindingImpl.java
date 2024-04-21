@@ -16,7 +16,7 @@ public class ActivitySinglePlaylistBindingImpl extends ActivitySinglePlaylistBin
         sViewsWithIds = new android.util.SparseIntArray();
         sViewsWithIds.put(R.id.headerCons, 1);
         sViewsWithIds.put(R.id.backCard, 2);
-        sViewsWithIds.put(R.id.searchCard, 3);
+        sViewsWithIds.put(R.id.shuffleCard, 3);
         sViewsWithIds.put(R.id.playListName, 4);
         sViewsWithIds.put(R.id.recycler, 5);
         sViewsWithIds.put(R.id.currentMusicCard, 6);
