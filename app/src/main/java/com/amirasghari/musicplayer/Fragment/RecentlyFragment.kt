@@ -107,6 +107,9 @@ class RecentlyFragment : Fragment(), MusicListener, MusicMenuListener ,ServiceCo
             editor.apply()
             (activity as MainActivity?)!!.startService()
         } else {
+            editor.putBoolean("favorite", false)
+            editor.putBoolean("recent" , true)
+            editor.apply()
             (activity as MainActivity?)!!.play(data.Path , recentSongs , null)
         }
     }

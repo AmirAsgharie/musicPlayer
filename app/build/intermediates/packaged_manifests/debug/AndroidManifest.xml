@@ -56,6 +56,8 @@
 
         <service android:name="com.amirasghari.musicplayer.Service.Service" />
 
+        <receiver android:name="com.amirasghari.musicplayer.Broadcast.MusicNotificationBroadcastReceiver" />
+
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="com.amirasghari.musicplayer.androidx-startup"

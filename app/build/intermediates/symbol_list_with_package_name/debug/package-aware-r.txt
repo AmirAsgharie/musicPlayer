@@ -3759,6 +3759,8 @@ drawable plus1
 drawable pluss
 drawable plusss
 drawable plussss
+drawable previous
+drawable previous2
 drawable repeat
 drawable round_bg
 drawable round_bg2

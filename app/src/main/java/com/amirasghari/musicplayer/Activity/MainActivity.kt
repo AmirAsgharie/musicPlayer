@@ -186,7 +186,7 @@ class MainActivity : AppCompatActivity(), ServiceConnection,
         } else {
             try {
                 musicService!!.songList = musicService!!.mainSongList
-                Log.i("playy", "here2")
+                //Log.i("playy", "here2")
             } catch (E: Exception) {
                 musicService!!.getMusicsDetails()
                 Log.i("playy", "here")

@@ -1,1 +1,1 @@
-ß–
+É˜êVýMóPÐLÇOÝMÝCÑCÇBÝCÅCÐEÔE

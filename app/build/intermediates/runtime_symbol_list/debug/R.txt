@@ -3758,6 +3758,8 @@ int drawable plus1 0x7f0700eb
 int drawable pluss 0x7f0700ec
 int drawable plusss 0x7f0700ed
 int drawable plussss 0x7f0700ee
+int drawable previous 0x7f0700f8
+int drawable previous2 0x7f0700f9
 int drawable repeat 0x7f0700ef
 int drawable round_bg 0x7f0700f0
 int drawable round_bg2 0x7f0700f1

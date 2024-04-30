@@ -2,29 +2,36 @@ package com.amirasghari.musicplayer.Service
 
 import android.app.*
 import android.app.Service
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.media.MediaMetadataRetriever
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.*
 import android.provider.MediaStore
 import android.support.v4.media.session.MediaSessionCompat
+import android.util.Log
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.amirasghari.musicplayer.Activity.ShowMusicActivity
 import com.amirasghari.musicplayer.ApplicationClass
+import com.amirasghari.musicplayer.Broadcast.MusicNotificationBroadcastReceiver
 import com.amirasghari.musicplayer.Model.AudioModel
 import com.amirasghari.musicplayer.R
 
 
 class Service : Service() {
 
-    var songList :ArrayList<AudioModel> = ArrayList<AudioModel>()
+    var songList: ArrayList<AudioModel> = ArrayList<AudioModel>()
     var mainSongList = ArrayList<AudioModel>()
     var position: Int = 0
     var shufflePosition: Int = 0
@@ -38,6 +45,11 @@ class Service : Service() {
     private var myBinder = MyBinder()
     var musicPlayer: MediaPlayer? = null
     private lateinit var mediaSession: MediaSessionCompat
+
+    val ACTION_PRE = "actionprevious"
+    val ACTION_PLAY = "actionplay"
+    val ACTION_NEXT = "actionpause"
+    val ACTION_DESTROY_SERVICE = "destroy"
 
     override fun onBind(data: Intent?): IBinder? {
         mediaSession = MediaSessionCompat(baseContext, "My Music")
@@ -57,6 +69,8 @@ class Service : Service() {
         shared = getSharedPreferences("music", 0)
 
         getMusicsDetails()
+        LocalBroadcastManager.getInstance(this)
+            .registerReceiver(broadcastNotificationReceiver, IntentFilter("TRACKS"));
 
 
     }
@@ -208,6 +222,8 @@ class Service : Service() {
 
 
 
+
+
         while (cursor!!.moveToNext()) {
             //Toast.makeText(this, "ttttttt", Toast.LENGTH_SHORT).show()
             val id = cursor!!.getLong(3).toString()
@@ -275,14 +291,16 @@ class Service : Service() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val NOTIFICATION_CHANNEL_ID = "123"
             val channelName = "My Notification Service"
-            var largeIcon: Bitmap? = BitmapFactory.decodeResource(resources, R.drawable.shuffle)
+            var largeIcon: Bitmap? = getAlbumImage(shared.getString("musicPath", "")!!)
             if (largeIcon == null) {
-                largeIcon = BitmapFactory.decodeResource(resources, R.drawable.playp)
+                largeIcon =
+                    BitmapFactory.decodeResource(resources, R.drawable.ic_launcher_foreground)
             }
             val drw_previous: Int
-            drw_previous = R.drawable.next
+            drw_previous = R.drawable.previous2
             val drw_play: Int
-            if (musicPlayer!!.isPlaying) drw_play = R.drawable.pause1 else drw_play = R.drawable.playp
+            if (musicPlayer!!.isPlaying) drw_play = R.drawable.pause1 else drw_play =
+                R.drawable.playp
             val drw_next: Int
             drw_next = R.drawable.next
             val mediaSession = MediaSessionCompat(applicationContext, "MusicService")
@@ -302,10 +320,11 @@ class Service : Service() {
                 .setSmallIcon(R.drawable.play)
                 .setContentTitle(shared.getString("musicName", ""))
                 .setLargeIcon(largeIcon)
-                .addAction(drw_previous, "Previous", null)
-                .addAction(drw_play, "Play", null)
-                .addAction(drw_next, "Next", null)
+                .addAction(drw_previous, "Previous", getPendingIntentPrevious())
+                .addAction(drw_play, "Play", getPendingIntentPlay())
+                .addAction(drw_next, "Next", getPendingIntentNext())
                 .setTicker(shared.getString("musicName", ""))
+                .setDeleteIntent(getPendingIntentDelete())
                 .setStyle(
                     androidx.media.app.NotificationCompat.MediaStyle()
                         .setShowActionsInCompactView(0, 1, 2)
@@ -324,5 +343,320 @@ class Service : Service() {
         }
     }
 
+    protected fun getPendingIntentPrevious(): PendingIntent? {
+        val pendingIntentPrevious: PendingIntent
+        val intentPrevious =
+            Intent(applicationContext, MusicNotificationBroadcastReceiver::class.java).setAction(
+                ACTION_PRE
+            )
+        pendingIntentPrevious = PendingIntent.getBroadcast(
+            applicationContext,
+            0,
+            intentPrevious,
+            PendingIntent.FLAG_MUTABLE
+        )
+        return pendingIntentPrevious
+    }
 
+    protected fun getPendingIntentPlay(): PendingIntent? {
+        val pendingIntentPlay: PendingIntent
+        val intentPlay =
+            Intent(applicationContext, MusicNotificationBroadcastReceiver::class.java).setAction(
+                ACTION_PLAY
+            )
+        pendingIntentPlay = PendingIntent.getBroadcast(
+            applicationContext,
+            0,
+            intentPlay,
+            PendingIntent.FLAG_MUTABLE
+        )
+        return pendingIntentPlay
+    }
+
+    protected fun getPendingIntentNext(): PendingIntent? {
+        val pendingIntentNext: PendingIntent
+        val intentNext =
+            Intent(applicationContext, MusicNotificationBroadcastReceiver::class.java).setAction(
+                ACTION_NEXT
+            )
+        pendingIntentNext = PendingIntent.getBroadcast(
+            applicationContext,
+            0,
+            intentNext,
+            PendingIntent.FLAG_MUTABLE
+        )
+        return pendingIntentNext
+    }
+
+    protected fun getPendingIntentDelete(): PendingIntent? {
+        val pendingIntentDelete: PendingIntent
+        val intentDelete =
+            Intent(applicationContext, MusicNotificationBroadcastReceiver::class.java).setAction(
+                ACTION_DESTROY_SERVICE
+            )
+        pendingIntentDelete = PendingIntent.getBroadcast(
+            applicationContext,
+            0,
+            intentDelete,
+            PendingIntent.FLAG_MUTABLE
+        )
+        return pendingIntentDelete
+    }
+
+
+    private val broadcastNotificationReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            val action = intent.extras!!.getString("actionname")
+            if (action == ACTION_PRE) {
+                Toast.makeText(applicationContext, "egr", Toast.LENGTH_SHORT).show()
+                Log.i("prev", "prev2")
+
+                playPrev()
+                //songPlaying = true
+                startNotification()
+            } else if (action == ACTION_PLAY) {
+                playPlayer()
+                startNotification()
+
+            } else if (action == ACTION_NEXT) {
+                playNext()
+                //songPlaying = true
+                startNotification()
+            } else if (action == ACTION_DESTROY_SERVICE) {
+                //stopSelf()
+            }
+        }
+    }
+
+    private fun getAlbumImage(path: String): Bitmap? {
+        val mmr = MediaMetadataRetriever()
+        mmr.setDataSource(path)
+        val data = mmr.embeddedPicture
+        return if (data != null) BitmapFactory.decodeByteArray(data, 0, data.size) else null
+    }
+
+    fun playPrev() {
+        var pos = shared.getInt("position", 0)
+        val shuffle = shared.getBoolean("shuffle", false)
+        val editor = shared.edit()
+
+
+
+        if (shuffle) {
+            val shufflePos = shared.getInt("shufflePosition", 0)
+            // Toast.makeText(this, "shufflePos $shufflePos", Toast.LENGTH_SHORT).show()
+
+            if (shufflePos == 0) {
+                editor.putInt("shufflePosition", shuffleList.size - 1)
+                editor.putString(
+                    "musicName", songList[shuffleList[shuffleList.size - 1]].Title
+                )
+                editor.putString(
+                    "musicArtist",
+                    songList[shuffleList[shuffleList.size - 1]].Artist
+                )
+                editor.putString(
+                    "imagePath",
+                    songList[shuffleList[shuffleList.size - 1]].image
+                )
+                editor.putString(
+                    "musicPath",
+                    songList[shuffleList[shuffleList.size - 1]].Path
+                )
+                editor.putInt(
+                    "position",
+                    shuffleList[shuffleList.size - 1]
+                )
+                editor.apply()
+                play()
+            } else {
+                if (shufflePos == 1) {
+                    editor.putInt("shufflePosition", shuffleList.size - 1)
+                    editor.putString(
+                        "musicName",
+                        songList[shuffleList[shuffleList.size - 1]].Title
+                    )
+                    editor.putString(
+                        "musicArtist",
+                        songList[shuffleList[shuffleList.size - 1]].Artist
+                    )
+                    editor.putString(
+                        "imagePath",
+                        songList[shuffleList[shuffleList.size - 1]].image
+                    )
+                    editor.putString(
+                        "musicPath",
+                        songList[shuffleList[shuffleList.size - 1]].Path
+                    )
+                    editor.putInt(
+                        "position",
+                        shuffleList[shuffleList.size - 1]
+                    )
+                } else {
+                    editor.putInt("shufflePosition", shufflePos - 2)
+                    editor.putString(
+                        "musicName",
+                        songList[shuffleList[shufflePos - 2]].Title
+                    )
+                    editor.putString(
+                        "musicArtist",
+                        songList[shuffleList[shufflePos - 2]].Artist
+                    )
+                    editor.putString(
+                        "imagePath",
+                        songList[shuffleList[shufflePos - 2]].image
+                    )
+                    editor.putString(
+                        "musicPath",
+                        songList[shuffleList[shufflePos - 2]].Path
+                    )
+                    editor.putInt("position", shuffleList[shufflePos - 2])
+                }
+
+                editor.apply()
+
+                play()
+            }
+            /*val intent = Intent(requireActivity(), Service::class.java)
+            intent.putExtra("shuffleList" , shuffleList.toIntArray())
+            ContextCompat.startForegroundService(requireActivity(), intent)*/
+        } else {
+            if (pos == 0) {
+                val end = songList.size - 1
+                editor.putInt("position", end - 1)
+                editor.putString("musicName", songList[end].Title)
+                editor.putString("musicArtist", songList[end].Artist)
+                editor.putString("imagePath", songList[end].image)
+                editor.putString("musicPath", songList[end].Path)
+                editor.apply()
+
+                play()
+                /*val intent = Intent(requireActivity(), Service::class.java)
+                pos = viewModel.size() - 1
+                ContextCompat.startForegroundService(requireActivity(), intent)*/
+
+            } else {
+                editor.putInt("position", pos - 2)
+                editor.putString("musicName", songList[pos - 1].Title)
+                editor.putString("musicArtist", songList[pos - 1].Artist)
+                editor.putString("imagePath", songList[pos - 1].image)
+                editor.putString("musicPath", songList[pos - 1].Path)
+                editor.apply()
+
+                play()
+                //val intent = Intent(requireActivity(), Service::class.java)
+                //pos = pos!! - 1
+                //startForegroundService(requireActivity() , intent)
+
+            }
+        }
+
+
+    }
+
+    fun playPlayer() {
+        if (musicPlayer!!.isPlaying) {
+            musicPlayer!!.stop()
+        } else {
+            musicPlayer!!.start()
+        }
+    }
+
+    fun playNext() {
+        //changeMusicFocus()
+
+        var pos = shared.getInt("position", 0)
+        val shuffle = shared.getBoolean("shuffle", false)
+        val editor = shared.edit()
+
+
+
+
+
+
+        if (shuffle) {
+            //musicService!!.playShuffle()
+            //Toast.makeText(this, "true", Toast.LENGTH_SHORT).show()
+            val shufflePos = shared.getInt("shufflePosition", 0)
+            //Toast.makeText(this, shufflePos.toString(), Toast.LENGTH_SHORT).show()
+            if (shufflePos == shuffleList.size) {
+                editor.putInt("shufflePosition", 0)
+                editor.putString(
+                    "musicName",
+                    songList[shuffleList[0]].Title
+                )
+                editor.putString(
+                    "musicArtist",
+                    songList[shuffleList[0]].Artist
+                )
+                editor.putString(
+                    "imagePath",
+                    songList[shuffleList[0]].image
+                )
+                editor.putString(
+                    "musicPath",
+                    songList[shuffleList[0]].Path
+                )
+                editor.putInt("position", shuffleList[0])
+                editor.apply()
+                //setUp()
+                play()
+            } else {
+                editor.putString(
+                    "musicName",
+                    songList[shuffleList[shufflePos]].Title
+                )
+                editor.putString(
+                    "musicArtist",
+                    songList[shuffleList[shufflePos]].Artist
+                )
+                editor.putString(
+                    "imagePath",
+                    songList[shuffleList[shufflePos]].image
+                )
+                editor.putString(
+                    "musicPath",
+                    songList[shuffleList[shufflePos]].Path
+                )
+                editor.putInt("position", shuffleList[shufflePos])
+                editor.apply()
+                //setUp()
+                play()
+            }
+
+        } else {
+            //Toast.makeText(this, "false", Toast.LENGTH_SHORT).show()
+            if (pos == songList.size - 1) {
+                editor.putInt("position", -1)
+                editor.putString("musicName", songList[0].Title)
+                editor.putString("musicArtist", songList[0].Artist)
+                editor.putString("imagePath", songList[0].image)
+                editor.putString("musicPath", songList[0].Path)
+                editor.apply()
+                //setUp()
+                play()
+
+            } else if (pos != null) {
+                /*editor.putInt("position" , pos+1)
+                editor.apply()*/
+                //val intent = Intent(requireActivity(), Service::class.java)
+                //pos = pos!! + 1
+                Log.i("list", songList.toString())
+                editor.putString("musicName", songList[pos + 1].Title)
+                editor.putString("musicArtist", songList[pos + 1].Artist)
+                editor.putString("imagePath", songList[pos + 1].image)
+                editor.putString("musicPath", songList[pos + 1].Path)
+                editor.apply()
+                /*binding.musicTitle.text = musicService!!.songList[pos+1].Title
+                //binding.musicTitle.setSingleLine()
+                binding.musicArtist.text = musicService!!.songList[pos+1].Artist
+                Glide.with(this).load(musicService!!.songList[pos+1].image).into(binding.musicImg)*/
+                //setUp()
+                play()
+                //ContextCompat.startForegroundService(requireActivity(), intent)
+            }
+
+
+        }
+    }
 }

@@ -4,6 +4,7 @@ import android.content.ComponentName
 import android.content.Intent
 import android.content.ServiceConnection
 import android.content.SharedPreferences
+import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Build
 import android.os.Bundle
@@ -30,13 +31,14 @@ import com.bumptech.glide.Glide
 
 class SinglePlaylistActivity : AppCompatActivity(), SinglePlayListListener,
     SinglePlayListMenuListener,
-    ServiceConnection {
+    ServiceConnection ,AudioManager.OnAudioFocusChangeListener{
 
     var musicService: Service? = null
     lateinit var shared: SharedPreferences
     lateinit var viewModel: ViewModel
     lateinit var binding: ActivitySinglePlaylistBinding
     lateinit var path: String
+    lateinit var audioManager: AudioManager
     lateinit var musicName: String
     lateinit var musicArtist: String
     private lateinit var shuffleList: List<Int>
@@ -152,6 +154,7 @@ class SinglePlaylistActivity : AppCompatActivity(), SinglePlayListListener,
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun play(path: String, recentSongs: ArrayList<AudioModel>? = null, shuffleList: List<Int>?) {
+        changeMusicFocus()
         val playListMusics = changePlayList()
         Toast.makeText(this, playListMusics.toString(), Toast.LENGTH_SHORT).show()
         musicService!!.songList = playListMusics
@@ -253,6 +256,28 @@ class SinglePlaylistActivity : AppCompatActivity(), SinglePlayListListener,
 
     fun setShuffleList(shuffleList: List<Int>) {
         this.shuffleList = shuffleList
+    }
+
+    private fun changeMusicFocus() {
+        // Request audio focus for playback
+        audioManager = getSystemService(AUDIO_SERVICE) as AudioManager
+
+
+        // Request audio focus for playback
+        val result = audioManager.requestAudioFocus(
+            this,  // Use the music stream.
+            AudioManager.STREAM_MUSIC,  // Request permanent focus.
+            AudioManager.AUDIOFOCUS_GAIN
+        )
+
+
+    }
+
+    override fun onAudioFocusChange(focus: Int) {
+        if (focus == AudioManager.AUDIOFOCUS_LOSS) {
+            audioManager.abandonAudioFocus(this);
+            musicService!!.musicPlayer!!.stop();
+        }
     }
 
 

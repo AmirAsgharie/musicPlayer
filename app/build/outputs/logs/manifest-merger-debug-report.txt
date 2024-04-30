@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:2:1-46:12
-INJECTED from C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:2:1-46:12
-INJECTED from C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:2:1-46:12
-INJECTED from C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:2:1-46:12
+ADDED from C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:2:1-48:12
+INJECTED from C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:2:1-48:12
+INJECTED from C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:2:1-48:12
+INJECTED from C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:2:1-48:12
 MERGED from [io.realm:realm-android-library:10.11.1] C:\Users\amirr\.gradle\caches\transforms-3\19007d8ace65bd41c3cb62ffc2aaa433\transformed\realm-android-library-10.11.1\AndroidManifest.xml:2:1-9:12
 MERGED from [io.realm:realm-android-kotlin-extensions:10.11.1] C:\Users\amirr\.gradle\caches\transforms-3\717cdde7a9662c3de6f57d943b1ce6d9\transformed\realm-android-kotlin-extensions-10.11.1\AndroidManifest.xml:2:1-9:12
 MERGED from [androidx.databinding:databinding-adapters:7.2.2] C:\Users\amirr\.gradle\caches\transforms-3\ca4bd91c85f3709fb66e3b78dfc19b06\transformed\databinding-adapters-7.2.2\AndroidManifest.xml:17:1-24:12
@@ -79,22 +79,22 @@ MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\amirr\.gradle\ca
 MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\amirr\.gradle\caches\transforms-3\5395f3022fb5e55342cdb0b521c11f85\transformed\documentfile-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\amirr\.gradle\caches\transforms-3\431e8a2f0ad7e82053e05cdf61f3b753\transformed\localbroadcastmanager-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.print:print:1.0.0] C:\Users\amirr\.gradle\caches\transforms-3\0b4d56dc7a5a90553ea5c9f3f4273cfa\transformed\print-1.0.0\AndroidManifest.xml:17:1-22:12
-INJECTED from C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:2:1-46:12
-INJECTED from C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:2:1-46:12
-INJECTED from C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:2:1-46:12
+INJECTED from C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:2:1-48:12
+INJECTED from C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:2:1-48:12
+INJECTED from C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:2:1-48:12
 	package
 		ADDED from C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:4:5-42
 		INJECTED from C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml
 		INJECTED from C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml
 	android:versionName
 		INJECTED from C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml
-		ADDED from C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:2:1-46:12
+		ADDED from C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:2:1-48:12
 		INJECTED from C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml
 	xmlns:tools
 		ADDED from C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:3:5-51
 	android:versionCode
 		INJECTED from C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml
-		ADDED from C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:2:1-46:12
+		ADDED from C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:2:1-48:12
 		INJECTED from C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml
 	xmlns:android
 		ADDED from C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:2:11-69
@@ -111,7 +111,7 @@ ADDED from C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:8:5-67
 	android:name
 		ADDED from C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:8:22-64
 application
-ADDED from C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:10:5-44:19
+ADDED from C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:10:5-46:19
 MERGED from [com.google.android.material:material:1.9.0] C:\Users\amirr\.gradle\caches\transforms-3\f8b92de52bdd9156f6c545f5d8196fce\transformed\material-1.9.0\AndroidManifest.xml:24:5-20
 MERGED from [com.google.android.material:material:1.9.0] C:\Users\amirr\.gradle\caches\transforms-3\f8b92de52bdd9156f6c545f5d8196fce\transformed\material-1.9.0\AndroidManifest.xml:24:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\amirr\.gradle\caches\transforms-3\04a574a54260a4df12d1721b1cb87a72\transformed\constraintlayout-2.1.4\AndroidManifest.xml:9:5-20
@@ -200,6 +200,10 @@ service#com.amirasghari.musicplayer.Service.Service
 ADDED from C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:43:9-52
 	android:name
 		ADDED from C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:43:18-49
+receiver#com.amirasghari.musicplayer.Broadcast.MusicNotificationBroadcastReceiver
+ADDED from C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:45:9-91
+	android:name
+		ADDED from C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:45:19-79
 uses-sdk
 INJECTED from C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml

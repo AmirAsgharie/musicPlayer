@@ -41,6 +41,8 @@
         </activity>
 
         <service android:name=".Service.Service" />
+
+        <receiver android:name=".Broadcast.MusicNotificationBroadcastReceiver"></receiver>
     </application>
 
 </manifest>

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.content.SharedPreferences
 import android.graphics.drawable.GradientDrawable.Orientation
+import android.media.AudioManager
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -29,11 +30,12 @@ import com.amirasghari.musicplayer.Service.Service
 import com.amirasghari.musicplayer.ViewModel.ViewModel
 import com.amirasghari.musicplayer.databinding.ActivitySearchBinding
 
-class SearchActivity : AppCompatActivity(), ServiceConnection ,  MusicListener{
+class SearchActivity : AppCompatActivity(), ServiceConnection ,  MusicListener, AudioManager.OnAudioFocusChangeListener{
 
     lateinit var binding:ActivitySearchBinding
     var musicService: Service? = null
     lateinit var shared: SharedPreferences
+    lateinit var audioManager: AudioManager
     var music = ArrayList<AudioModel>()
     lateinit var viewModel: ViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -103,6 +105,7 @@ class SearchActivity : AppCompatActivity(), ServiceConnection ,  MusicListener{
     }
 
     override fun onclickListener(data: AudioModel, position: Int) {
+        changeMusicFocus()
         val editor = shared.edit()
         editor.putInt("position" , position)
         editor.putString("imagePath" , data.image)
@@ -122,6 +125,28 @@ class SearchActivity : AppCompatActivity(), ServiceConnection ,  MusicListener{
 
         musicService!!.musicPlayer!!.setOnCompletionListener {
             musicService!!.repeat()
+        }
+    }
+
+    private fun changeMusicFocus() {
+        // Request audio focus for playback
+        audioManager = getSystemService(AUDIO_SERVICE) as AudioManager
+
+
+        // Request audio focus for playback
+        val result = audioManager.requestAudioFocus(
+            this,  // Use the music stream.
+            AudioManager.STREAM_MUSIC,  // Request permanent focus.
+            AudioManager.AUDIOFOCUS_GAIN
+        )
+
+
+    }
+
+    override fun onAudioFocusChange(focus: Int) {
+        if (focus == AudioManager.AUDIOFOCUS_LOSS) {
+            audioManager.abandonAudioFocus(this);
+            musicService!!.musicPlayer!!.stop();
         }
     }
 

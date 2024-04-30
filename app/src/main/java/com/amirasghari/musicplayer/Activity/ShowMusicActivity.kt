@@ -36,7 +36,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 @Suppress("UNREACHABLE_CODE")
-class ShowMusicActivity : AppCompatActivity(), ServiceConnection , AudioManager.OnAudioFocusChangeListener {
+class ShowMusicActivity : AppCompatActivity(), ServiceConnection,
+    AudioManager.OnAudioFocusChangeListener {
 
     lateinit var binding: ActivityShowMusicBinding
     lateinit var shared: SharedPreferences
@@ -46,7 +47,7 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection , AudioManager.
     private var recentSongs = ArrayList<AudioModel>()
     lateinit var mainHandler: Handler
     var time: Int = 0
-    lateinit var audioManager:AudioManager
+    lateinit var audioManager: AudioManager
     var favorite = false
 
     lateinit var zoom_in: Animation
@@ -118,6 +119,7 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection , AudioManager.
                 editor.putBoolean("shuffle", true)
                 binding.shuffleBtn.alpha = 1f
 
+
             }
 
             editor.apply()
@@ -140,6 +142,11 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection , AudioManager.
 
         binding.controlMusicImg.setOnClickListener {
             it as ImageButton
+            /*if (shared.getBoolean("first" , false)){
+                val editor = shared.edit()
+                editor.putBoolean("first" , false)
+                editor.apply()
+            }else */
             if (musicService!!.musicPlayer!!.isPlaying) {
                 it.setImageResource(R.drawable.play2)
                 musicService!!.musicPlayer!!.pause()
@@ -147,6 +154,11 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection , AudioManager.
                 changeMusicFocus()
                 it.setImageResource(R.drawable.pause2)
                 musicService!!.musicPlayer!!.start()
+                try {
+                    musicService!!.startNotification()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
                 time()
             }
         }
@@ -203,13 +215,15 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection , AudioManager.
         val musicArtist = shared.getString("musicArtist", "")
         val image = shared.getString("imagePath", "")
         val path = shared.getString("musicPath", "")
+        val time = shared.getFloat("currentTime", 0F)
+
+
+        binding.audioWave.progress = time
 
 
 
         binding.musicTitle.text = musicName
         binding.musicArtist.text = musicArtist
-
-
 
 
         val data = RealmDAO().favoriteReadAll()
@@ -238,7 +252,7 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection , AudioManager.
                     launch {
                         binding.audioWave.setSampleFrom(path!!)
                     }
-                    val position = shared.getFloat("currentTime" , 0f)
+                    val position = shared.getFloat("currentTime", 0f)
                     binding.audioWave.progress = position
                 }
             }
@@ -303,6 +317,9 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection , AudioManager.
             getRecentMusicsDetails()
             musicService!!.songList = recentSongs
             Log.i("songlist", musicService!!.songList.toString())
+        } else {
+            //musicService!!.getMusicsDetails()
+            musicService!!.songList = musicService!!.mainSongList
         }
 
         if (musicService!!.musicPlayer == null) {
@@ -650,6 +667,8 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection , AudioManager.
 
         binding.controlMusicImg.setImageResource(R.drawable.pause2)
         time()
+
+        Log.i("musics", musicService!!.songList.toString())
 
     }
 
