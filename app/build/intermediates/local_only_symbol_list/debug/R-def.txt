@@ -27,10 +27,12 @@ drawable ic_launcher_background
 drawable ic_launcher_foreground
 drawable left
 drawable next
+drawable next_notif
 drawable pause
 drawable pause1
 drawable pause2
 drawable pause_icon
+drawable pause_notice
 drawable play
 drawable play2
 drawable playp
@@ -39,6 +41,7 @@ drawable plus1
 drawable pluss
 drawable plusss
 drawable plussss
+drawable prev_notif
 drawable previous
 drawable previous2
 drawable repeat

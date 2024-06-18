@@ -156,7 +156,6 @@ class SinglePlaylistActivity : AppCompatActivity(), SinglePlayListListener,
     private fun play(path: String, recentSongs: ArrayList<AudioModel>? = null, shuffleList: List<Int>?) {
         changeMusicFocus()
         val playListMusics = changePlayList()
-        Toast.makeText(this, playListMusics.toString(), Toast.LENGTH_SHORT).show()
         musicService!!.songList = playListMusics
         Log.i("playy", playListMusics.toString())
         musicService!!.playShuffle()
@@ -220,7 +219,7 @@ class SinglePlaylistActivity : AppCompatActivity(), SinglePlayListListener,
         val music = currentPlayListMusic
 
         val size =  currentPlayListMusic.size
-        shuffleList = (0..size).shuffled()
+        shuffleList = (0 until size).shuffled()
         Log.i("shuffle" , shuffleList.toString())
         val editor = shared.edit()
         editor.putInt("position", shuffleList[0])

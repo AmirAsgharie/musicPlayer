@@ -9,7 +9,9 @@ import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
@@ -34,6 +36,7 @@ class MainActivity : AppCompatActivity(), ServiceConnection,
 
     lateinit var binding: ActivityMainBinding
     lateinit var viewModel: ViewModel
+    lateinit var mainHandler: Handler
     lateinit var audioManager: AudioManager
     lateinit var shared: SharedPreferences
     private var shuffleList: List<Int>? = null
@@ -76,6 +79,12 @@ class MainActivity : AppCompatActivity(), ServiceConnection,
             startActivity(intent)
         }
 
+        mainHandler = Handler(Looper.getMainLooper())
+
+
+
+
+
 
     }
 
@@ -87,6 +96,10 @@ class MainActivity : AppCompatActivity(), ServiceConnection,
         Glide.with(this).load(path).into(binding.currentMusicImg)
         binding.currentMusicTxt.text = musicName
         binding.currentMusicArtistTxt.text = musicArtist
+
+        updateUI()
+
+
     }
 
     private fun clickCurrentCard() {
@@ -214,7 +227,7 @@ class MainActivity : AppCompatActivity(), ServiceConnection,
 
 
         musicService!!.musicPlayer!!.setOnCompletionListener {
-            val pos = shared.getInt("position", 0)
+            var pos = shared.getInt("position", 0)
             val editor = shared.edit()
             if (shared.getBoolean("shuffle", false)) {
                 val shufflePos = shared.getInt("shufflePosition", 0)
@@ -230,6 +243,10 @@ class MainActivity : AppCompatActivity(), ServiceConnection,
                 editor.putString("musicArtist", musicArtist)
                 editor.putString("imagePath", imagePath)
             } else {
+                if (pos == musicService!!.songList.size){
+                    pos=-1
+                    editor.putInt("position" , 0)
+                }
                 val musicName = musicService!!.songList[pos + 1].Title
                 val musicArtist = musicService!!.songList[pos + 1].Artist
                 binding.currentMusicTxt.text = musicName
@@ -369,6 +386,22 @@ class MainActivity : AppCompatActivity(), ServiceConnection,
         )
 
 
+    }
+
+    fun updateUI(){
+        mainHandler.post(object : Runnable {
+            override fun run() {
+                if (path != shared.getString("imagePath", "").toString()) {
+                    path = shared.getString("imagePath", "").toString()
+                    musicName = shared.getString("musicName", "").toString()
+                    musicArtist = shared.getString("musicArtist", "").toString()
+
+                    Glide.with(this@MainActivity).load(path).into(binding.currentMusicImg)
+                    binding.currentMusicTxt.text = musicName
+                    binding.currentMusicArtistTxt.text = musicArtist}
+                mainHandler.postDelayed(this, 1000)
+            }
+        })
     }
 
 

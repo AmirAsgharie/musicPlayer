@@ -137,7 +137,7 @@ MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\amirr\.gradle\cach
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.9.0] C:\Users\amirr\.gradle\caches\transforms-3\1dc78716db08b6d1dcc8971c4e5a0ce8\transformed\core-1.9.0\AndroidManifest.xml:28:18-86
 	android:supportsRtl
-		ADDED from C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:18:9-35
+		ADDED from C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:18:9-36
 	android:label
 		ADDED from C:\AndriodProject\MusicPlayer\app\src\main\AndroidManifest.xml:16:9-41
 	android:fullBackupContent

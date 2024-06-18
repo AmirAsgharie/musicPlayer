@@ -22,11 +22,13 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.amirasghari.musicplayer.Activity.MainActivity
 import com.amirasghari.musicplayer.Activity.ShowMusicActivity
 import com.amirasghari.musicplayer.ApplicationClass
 import com.amirasghari.musicplayer.Broadcast.MusicNotificationBroadcastReceiver
 import com.amirasghari.musicplayer.Model.AudioModel
 import com.amirasghari.musicplayer.R
+import kotlinx.coroutines.delay
 
 
 class Service : Service() {
@@ -102,12 +104,13 @@ class Service : Service() {
         position = shared.getInt("position", 0)
 
         if (shared.getBoolean("shuffle", false)) {
+            Log.i("where", "1")
             var shufflePos = shared.getInt("shufflePosition", 0)
             musicPlayer!!.reset()
             musicPlayer!!.setDataSource(songList[shuffleList[shufflePos]].Path)
             musicPlayer!!.prepare()
             musicPlayer!!.start()
-            //showNotification()
+            //showNotification()/
             startNotification()
             val editor = shared.edit()
             editor.putString("musicPath", songList[shuffleList[shufflePos]].Path)
@@ -115,18 +118,41 @@ class Service : Service() {
             editor.putInt("shufflePosition", shufflePos + 1)
             editor.apply()
         } else {
+            Log.i("where", position.toString())
             position += 1
             val editor = shared.edit()
             editor.putInt("position", position)
             editor.putString("musicPath", songList[position].Path)
             editor.apply()
+            //musicPlayer = MediaPlayer()
             musicPlayer!!.reset()
             musicPlayer!!.setDataSource(songList[position].Path)
             musicPlayer!!.prepare()
             musicPlayer!!.start()
+
+
+
             //showNotification()
             startNotification()
         }
+
+        Handler().postDelayed({
+            if (!musicPlayer!!.isPlaying){
+                musicPlayer!!.reset()
+                musicPlayer!!.setDataSource(songList[position].Path)
+                musicPlayer!!.prepare()
+                musicPlayer!!.start()
+            }
+            //Log.i("play3", musicPlayer!!.isPlaying.toString())
+        }, 1000)
+
+        /* if (!musicPlayer!!.isPlaying){
+             musicPlayer!!.reset()
+             musicPlayer!!.setDataSource(songList[position].Path)
+             musicPlayer!!.prepare()
+             musicPlayer!!.start()
+
+         }*/
 
         //notification()
 
@@ -297,29 +323,21 @@ class Service : Service() {
                     BitmapFactory.decodeResource(resources, R.drawable.ic_launcher_foreground)
             }
             val drw_previous: Int
-            drw_previous = R.drawable.previous2
+            drw_previous = R.drawable.prev_notif
             val drw_play: Int
-            if (musicPlayer!!.isPlaying) drw_play = R.drawable.pause1 else drw_play =
+            if (musicPlayer!!.isPlaying) drw_play = R.drawable.pause_notice else drw_play =
                 R.drawable.playp
             val drw_next: Int
-            drw_next = R.drawable.next
+            drw_next = R.drawable.next_notif
             val mediaSession = MediaSessionCompat(applicationContext, "MusicService")
             val token = mediaSession.sessionToken
-            val chan = NotificationChannel(
-                NOTIFICATION_CHANNEL_ID,
-                channelName,
-                NotificationManager.IMPORTANCE_HIGH
-            )
-            chan.lightColor = Color.BLUE
-            chan.lockscreenVisibility = Notification.VISIBILITY_PRIVATE
-            notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-            assert(notificationManager != null)
-            notificationManager.createNotificationChannel(chan)
             val notificationBuilder = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
             val notification: Notification = notificationBuilder.setOngoing(false)
                 .setSmallIcon(R.drawable.play)
                 .setContentTitle(shared.getString("musicName", ""))
                 .setLargeIcon(largeIcon)
+                .setSound(null)
+                .setSilent(true)
                 .addAction(drw_previous, "Previous", getPendingIntentPrevious())
                 .addAction(drw_play, "Play", getPendingIntentPlay())
                 .addAction(drw_next, "Next", getPendingIntentNext())
@@ -331,9 +349,22 @@ class Service : Service() {
                         .setMediaSession(token)
                 )
                 .setContentText("Artist: ${shared.getString("musicArtist", "")}")
-                .setPriority(NotificationManager.IMPORTANCE_HIGH)
+                .setPriority(NotificationManager.IMPORTANCE_LOW)
                 .setCategory(Notification.CATEGORY_SERVICE)
                 .build()
+            val chan = NotificationChannel(
+                NOTIFICATION_CHANNEL_ID,
+                channelName,
+                NotificationManager.IMPORTANCE_HIGH
+            )
+            chan.lightColor = Color.BLUE
+            chan.setSound(null, null)
+            chan.setShowBadge(false)
+            chan.lockscreenVisibility = Notification.VISIBILITY_PRIVATE
+            notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+            assert(notificationManager != null)
+            notificationManager.createNotificationChannel(chan)
+
             startForeground(2, notification)
             if (musicPlayer!!.isPlaying === false) {
                 stopForeground(false)
@@ -408,22 +439,17 @@ class Service : Service() {
         override fun onReceive(context: Context, intent: Intent) {
             val action = intent.extras!!.getString("actionname")
             if (action == ACTION_PRE) {
-                Toast.makeText(applicationContext, "egr", Toast.LENGTH_SHORT).show()
-                Log.i("prev", "prev2")
-
                 playPrev()
-                //songPlaying = true
+
                 startNotification()
             } else if (action == ACTION_PLAY) {
                 playPlayer()
                 startNotification()
-
             } else if (action == ACTION_NEXT) {
                 playNext()
-                //songPlaying = true
                 startNotification()
             } else if (action == ACTION_DESTROY_SERVICE) {
-                //stopSelf()
+
             }
         }
     }
@@ -658,5 +684,6 @@ class Service : Service() {
 
 
         }
+
     }
 }

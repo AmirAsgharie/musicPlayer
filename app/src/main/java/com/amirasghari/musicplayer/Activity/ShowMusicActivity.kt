@@ -11,7 +11,6 @@ import android.net.Uri
 import android.os.*
 import android.provider.MediaStore
 import android.util.Log
-import android.view.ContextMenu
 import android.view.MenuItem
 import android.view.View
 import android.view.animation.Animation
@@ -46,10 +45,11 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection,
     var musicService: Service? = null
     private var recentSongs = ArrayList<AudioModel>()
     lateinit var mainHandler: Handler
+    lateinit var updateHandler: Handler
     var time: Int = 0
     lateinit var audioManager: AudioManager
     var favorite = false
-
+    lateinit var path: String
     lateinit var zoom_in: Animation
     lateinit var zoom_out: Animation
 
@@ -63,6 +63,7 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection,
         shared = getSharedPreferences("music", 0)
         viewModel = ViewModelProvider(this)[ViewModel::class.java]
         mainHandler = Handler(Looper.getMainLooper())
+        updateHandler = Handler(Looper.getMainLooper())
 
         zoom_in = AnimationUtils.loadAnimation(this, R.anim.zoom_in)
         zoom_out = AnimationUtils.loadAnimation(this, R.anim.zoom_out)
@@ -154,12 +155,12 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection,
                 changeMusicFocus()
                 it.setImageResource(R.drawable.pause2)
                 musicService!!.musicPlayer!!.start()
-                try {
+                /*try {
                     musicService!!.startNotification()
                 } catch (e: Exception) {
                     e.printStackTrace()
-                }
-                time()
+                }*/
+
             }
         }
 
@@ -185,23 +186,14 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection,
 
         }
 
+
+
         startService()
+        updateUI()
+
 
     }
 
-    override fun onCreateContextMenu(
-        menu: ContextMenu?,
-        v: View?,
-        menuInfo: ContextMenu.ContextMenuInfo?
-    ) {
-        super.onCreateContextMenu(menu, v, menuInfo)
-
-        menu!!.setHeaderTitle("Choose a color")
-        // add menu items
-        menu.add(0, v!!.id, 0, "Yellow")
-        menu.add(0, v.id, 0, "Gray")
-        menu.add(0, v.id, 0, "Cyan")
-    }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
         return super.onContextItemSelected(item)
@@ -214,7 +206,7 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection,
         val musicName = shared.getString("musicName", "")
         val musicArtist = shared.getString("musicArtist", "")
         val image = shared.getString("imagePath", "")
-        val path = shared.getString("musicPath", "")
+        path = shared.getString("musicPath", "").toString()
         val time = shared.getFloat("currentTime", 0F)
 
 
@@ -252,8 +244,8 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection,
                     launch {
                         binding.audioWave.setSampleFrom(path!!)
                     }
-                    val position = shared.getFloat("currentTime", 0f)
-                    binding.audioWave.progress = position
+                    /*val position = shared.getFloat("currentTime", 0f)
+                    binding.audioWave.progress = position*/
                 }
             }
 
@@ -261,7 +253,6 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection,
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
 
     }
 
@@ -280,6 +271,8 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection,
         } else {
             binding.repeatBtn.alpha = 0.5f
         }
+
+        //time()
 
 
     }
@@ -323,6 +316,7 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection,
         }
 
         if (musicService!!.musicPlayer == null) {
+            Toast.makeText(this, "erf", Toast.LENGTH_SHORT).show()
             musicService!!.musicPlayer = MediaPlayer()
             binding.controlMusicImg.setImageResource(R.drawable.play2)
         }
@@ -344,7 +338,7 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection,
 
 
         musicService!!.musicPlayer!!.setOnCompletionListener {
-            val pos = shared.getInt("position", 0)
+            var pos = shared.getInt("position", 0)
             val editor = shared.edit()
 
             if (shared.getBoolean("repeat", false)) {
@@ -363,6 +357,11 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection,
                     editor.putString("imagePath", imagePath)
 
                 } else {
+
+                    if (pos == musicService!!.songList.size-1){
+                        pos = -1
+                        editor.putInt("position" , 0)
+                    }
                     val musicName = musicService!!.songList[pos + 1].Title
                     val musicArtist = musicService!!.songList[pos + 1].Artist
                     val imagePath = musicService!!.songList[pos + 1].image
@@ -478,8 +477,8 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection,
                 )
                 editor.putInt("position", musicService!!.shuffleList[0])
                 editor.apply()
-                setUp()
-                musicService!!.play()
+                //setUp()
+                //musicService!!.play()
             } else {
                 editor.putString(
                     "musicName",
@@ -499,8 +498,8 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection,
                 )
                 editor.putInt("position", musicService!!.shuffleList[shufflePos])
                 editor.apply()
-                setUp()
-                musicService!!.play()
+                //setUp()
+                // musicService!!.play()
             }
 
         } else {
@@ -512,8 +511,8 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection,
                 editor.putString("imagePath", musicService!!.songList[0].image)
                 editor.putString("musicPath", musicService!!.songList[0].Path)
                 editor.apply()
-                setUp()
-                musicService!!.play()
+                //setUp()
+                //musicService!!.play()
 
             } else if (pos != null) {
                 /*editor.putInt("position" , pos+1)
@@ -530,14 +529,16 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection,
                 //binding.musicTitle.setSingleLine()
                 binding.musicArtist.text = musicService!!.songList[pos+1].Artist
                 Glide.with(this).load(musicService!!.songList[pos+1].image).into(binding.musicImg)*/
-                setUp()
-                musicService!!.play()
+                //setUp()
+                //musicService!!.play()
                 //ContextCompat.startForegroundService(requireActivity(), intent)
 
             }
         }
-
+        musicService!!.play()
+        setUp()
         binding.controlMusicImg.setImageResource(R.drawable.pause2)
+        //musicService!!.startNotification()
         time()
 
 
@@ -667,6 +668,8 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection,
 
         binding.controlMusicImg.setImageResource(R.drawable.pause2)
         time()
+        //musicService!!.startNotification()
+
 
         Log.i("musics", musicService!!.songList.toString())
 
@@ -750,6 +753,21 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection,
             AudioManager.STREAM_MUSIC,  // Request permanent focus.
             AudioManager.AUDIOFOCUS_GAIN
         )
+
+    }
+
+    fun updateUI() {
+
+        mainHandler.post(object : Runnable {
+            override fun run() {
+                if (path != shared.getString("musicPath", "").toString()) {
+                    setUp()
+                    time()
+                }
+                mainHandler.postDelayed(this, 1000)
+            }
+        })
+
 
     }
 

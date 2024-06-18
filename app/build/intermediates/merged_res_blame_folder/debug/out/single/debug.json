@@ -28,6 +28,10 @@
         "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\drawable\\favorite.xml"
     },
     {
+        "merged": "com.amirasghari.musicplayer.app-merged_res-5:/drawable_pause_icon.xml.flat",
+        "source": "com.amirasghari.musicplayer.app-main-7:/drawable/pause_icon.xml"
+    },
+    {
         "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\mipmap-mdpi_ic_launcher_round.webp.flat",
         "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\mipmap-mdpi\\ic_launcher_round.webp"
     },
@@ -36,20 +40,16 @@
         "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\drawable\\plussss.png"
     },
     {
-        "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\mipmap-hdpi_ic_launcher.webp.flat",
-        "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\mipmap-hdpi\\ic_launcher.webp"
-    },
-    {
         "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\drawable_shuffle2.xml.flat",
         "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\drawable\\shuffle2.xml"
     },
     {
-        "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\layout_fragment_main.xml.flat",
-        "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\layout\\fragment_main.xml"
+        "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\mipmap-hdpi\\ic_launcher.webp"
     },
     {
-        "merged": "com.amirasghari.musicplayer.app-merged_res-5:/drawable_previous2.xml.flat",
-        "source": "com.amirasghari.musicplayer.app-main-7:/drawable/previous2.xml"
+        "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\layout_fragment_main.xml.flat",
+        "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\layout\\fragment_main.xml"
     },
     {
         "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\anim_zoom_in.xml.flat",
@@ -60,12 +60,12 @@
         "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\xml\\backup_rules.xml"
     },
     {
-        "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\drawable_repeat.xml.flat",
-        "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\drawable\\repeat.xml"
-    },
-    {
         "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\anim_zoom_out.xml.flat",
         "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\anim\\zoom_out.xml"
+    },
+    {
+        "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\drawable_repeat.xml.flat",
+        "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\drawable\\repeat.xml"
     },
     {
         "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\drawable_favorite_svgrepo_com__2_.xml.flat",
@@ -80,12 +80,12 @@
         "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\drawable\\plusss.png"
     },
     {
-        "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\drawable_previous.xml.flat",
-        "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\drawable\\previous.xml"
+        "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\drawable_prev_notif.xml.flat",
+        "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\drawable\\prev_notif.xml"
     },
     {
-        "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\drawable_search.png.flat",
-        "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\drawable\\search.png"
+        "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\drawable_previous.xml.flat",
+        "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\drawable\\previous.xml"
     },
     {
         "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\anim_scale.xml.flat",
@@ -116,6 +116,10 @@
         "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\drawable\\playp.png"
     },
     {
+        "merged": "com.amirasghari.musicplayer.app-merged_res-5:/drawable_pause_notice.xml.flat",
+        "source": "com.amirasghari.musicplayer.app-main-7:/drawable/pause_notice.xml"
+    },
+    {
         "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\drawable_favorite_svgrepo_com__1_.xml.flat",
         "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\drawable\\favorite_svgrepo_com__1_.xml"
     },
@@ -144,12 +148,12 @@
         "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\drawable\\round_bg.xml"
     },
     {
-        "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\layout_activity_search.xml.flat",
-        "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\layout\\activity_search.xml"
-    },
-    {
         "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\font_iransansx_regular.ttf.flat",
         "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\font\\iransansx_regular.ttf"
+    },
+    {
+        "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\layout_activity_search.xml.flat",
+        "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\layout\\activity_search.xml"
     },
     {
         "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\drawable_click.xml.flat",
@@ -178,6 +182,10 @@
     {
         "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\drawable_pluss.png.flat",
         "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\drawable\\pluss.png"
+    },
+    {
+        "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\drawable_next_notif.xml.flat",
+        "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\drawable\\next_notif.xml"
     },
     {
         "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\mipmap-xxxhdpi_ic_launcher_round.webp.flat",
@@ -260,11 +268,11 @@
         "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\mipmap-xxhdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\drawable_search.xml.flat",
-        "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\drawable\\search.xml"
-    },
-    {
         "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\navigation_nav_graph.xml.flat",
         "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\navigation\\nav_graph.xml"
+    },
+    {
+        "merged": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-merged_res-5:\\drawable_search.xml.flat",
+        "source": "C:\\Users\\amirr\\.gradle\\daemon\\7.3.3\\com.amirasghari.musicplayer.app-main-7:\\drawable\\search.xml"
     }
 ]

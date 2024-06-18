@@ -75,7 +75,11 @@ class MusicAdapter(
         holder.bind(data.value?.get(position)!!, position, listener)
     }
 
-    override fun getItemCount(): Int = data.value!!.size
+    override fun getItemCount(): Int = try {
+        data.value!!.size
+    }catch (e:Exception){
+        0
+    }
 
 
 }

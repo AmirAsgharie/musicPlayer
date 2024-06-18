@@ -3735,6 +3735,7 @@ drawable mtrl_switch_track_decoration
 drawable mtrl_tabs_default_indicator
 drawable navigation_empty_icon
 drawable next
+drawable next_notif
 drawable notification_action_background
 drawable notification_bg
 drawable notification_bg_low
@@ -3751,6 +3752,7 @@ drawable pause
 drawable pause1
 drawable pause2
 drawable pause_icon
+drawable pause_notice
 drawable play
 drawable play2
 drawable playp
@@ -3759,6 +3761,7 @@ drawable plus1
 drawable pluss
 drawable plusss
 drawable plussss
+drawable prev_notif
 drawable previous
 drawable previous2
 drawable repeat
