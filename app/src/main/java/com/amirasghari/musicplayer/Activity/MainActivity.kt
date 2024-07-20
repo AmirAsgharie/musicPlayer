@@ -172,7 +172,7 @@ class MainActivity : AppCompatActivity(), ServiceConnection,
     @RequiresApi(Build.VERSION_CODES.O)
     fun play(path: String, recentSongs: ArrayList<AudioModel>? = null, shuffleList: List<Int>?) {
 
-        changeMusicFocus()
+        //changeMusicFocus()
 
 
         if (recentSongs != null) {
@@ -396,7 +396,13 @@ class MainActivity : AppCompatActivity(), ServiceConnection,
                     musicName = shared.getString("musicName", "").toString()
                     musicArtist = shared.getString("musicArtist", "").toString()
 
-                    Glide.with(this@MainActivity).load(path).into(binding.currentMusicImg)
+                    try {
+                        Glide.with(this@MainActivity).load(path).into(binding.currentMusicImg)
+
+                    }catch (e:Exception){
+                        e.printStackTrace()
+                    }
+
                     binding.currentMusicTxt.text = musicName
                     binding.currentMusicArtistTxt.text = musicArtist}
                 mainHandler.postDelayed(this, 1000)

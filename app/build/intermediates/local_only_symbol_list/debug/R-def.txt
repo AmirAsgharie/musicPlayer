@@ -18,9 +18,7 @@ color purple_700
 color teal_200
 color teal_700
 color white
-drawable click
 drawable current_music_bg
-drawable favorite
 drawable favorite_svgrepo_com__1_
 drawable favorite_svgrepo_com__2_
 drawable ic_launcher_background
@@ -28,10 +26,7 @@ drawable ic_launcher_foreground
 drawable left
 drawable next
 drawable next_notif
-drawable pause
-drawable pause1
 drawable pause2
-drawable pause_icon
 drawable pause_notice
 drawable play
 drawable play2
@@ -96,6 +91,7 @@ id playlistRec
 id rec
 id recentRec
 id recycler
+id rename
 id repeatBtn
 id searchCard
 id searchEdt
@@ -119,6 +115,7 @@ layout playllist_dialog
 layout search_row
 menu options_menu
 menu playlist_menu
+menu single_playlist_menu
 mipmap ic_launcher
 mipmap ic_launcher_round
 navigation nav_graph

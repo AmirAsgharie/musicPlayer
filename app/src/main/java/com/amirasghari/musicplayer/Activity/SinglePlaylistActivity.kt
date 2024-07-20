@@ -8,13 +8,16 @@ import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.PopupMenu
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amirasghari.musicplayer.Adapter.SinglePlaylistAdapter
@@ -25,24 +28,30 @@ import com.amirasghari.musicplayer.R
 import com.amirasghari.musicplayer.Service.Service
 import com.amirasghari.musicplayer.ViewModel.ViewModel
 import com.amirasghari.musicplayer.databinding.ActivitySinglePlaylistBinding
+import com.amirasghari.musicplayer.realm.PlaylistsInfo
 import com.amirasghari.musicplayer.realm.RealmDAO
 import com.amirasghari.musicplayer.realm.SinglePlaylistInfo
 import com.bumptech.glide.Glide
 
 class SinglePlaylistActivity : AppCompatActivity(), SinglePlayListListener,
     SinglePlayListMenuListener,
-    ServiceConnection ,AudioManager.OnAudioFocusChangeListener{
+    ServiceConnection, AudioManager.OnAudioFocusChangeListener {
 
     var musicService: Service? = null
     lateinit var shared: SharedPreferences
     lateinit var viewModel: ViewModel
+    lateinit var mainHandler: Handler
     lateinit var binding: ActivitySinglePlaylistBinding
     lateinit var path: String
     lateinit var audioManager: AudioManager
     lateinit var musicName: String
     lateinit var musicArtist: String
+    lateinit var playlistName:String
     private lateinit var shuffleList: List<Int>
     val currentPlayListMusic = ArrayList<SinglePlaylistInfo>()
+    var playListMusics = ArrayList<AudioModel>()
+
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,12 +59,16 @@ class SinglePlaylistActivity : AppCompatActivity(), SinglePlayListListener,
         setContentView(binding.root)
 
         viewModel = ViewModelProvider(this)[ViewModel::class.java]
+        playlistName = intent.getStringExtra("playListName").toString()
+
         shared = getSharedPreferences("music", 0)
         val editor = shared.edit()
+        editor.putBoolean("firstPlayList", true)
+        editor.putString("playlistName", playlistName)
         //editor.putBoolean("first" , true)
         editor.apply()
 
-        val playlistName = intent.getStringExtra("playListName")
+
 
         binding.playListName.text = playlistName.toString().uppercase()
 
@@ -81,9 +94,14 @@ class SinglePlaylistActivity : AppCompatActivity(), SinglePlayListListener,
                 currentPlayListMusic.add(it)
             }
         }
+        playListMusics = changePlayList()
+
+
 
         recyclerView(currentPlayListMusic)
-        Log.i("single1", currentPlayListMusic.toString())
+
+        mainHandler = Handler(Looper.getMainLooper())
+
     }
 
     override fun onResume() {
@@ -94,6 +112,8 @@ class SinglePlaylistActivity : AppCompatActivity(), SinglePlayListListener,
         Glide.with(this).load(path).into(binding.currentMusicImg)
         binding.currentMusicTxt.text = musicName
         binding.currentMusicArtistTxt.text = musicArtist
+
+        //updateUI()
     }
 
     private fun recyclerView(data: ArrayList<SinglePlaylistInfo>) {
@@ -112,8 +132,9 @@ class SinglePlaylistActivity : AppCompatActivity(), SinglePlayListListener,
         editor.putString("musicName", data.musicName)
         editor.putString("musicArtist", data.artist)
         editor.putBoolean("favorite", false)
+        editor.putBoolean("onPlayList", true)
         editor.apply()
-        viewModel.setCurrentMusicName(data.musicName)
+        //viewModel.setCurrentMusicName(data.musicName)
 
         binding.currentMusicTxt.text = data.musicName
         binding.currentMusicArtistTxt.text = data.artist
@@ -122,30 +143,85 @@ class SinglePlaylistActivity : AppCompatActivity(), SinglePlayListListener,
         binding.currentMusicImg.startAnimation(animation)
 
 
-
-        startService()
+        if (shared.getBoolean("firstPlayList", true)) {
+            startService()
+            editor.putBoolean("firstPlayList", false)
+            editor.apply()
+        } else {
+            val path = shared.getString("musicPath", "")
+            play(path!!, null, null)
+            editor.putBoolean("firstPlayList", false)
+            editor.apply()
+        }
 
 
     }
 
     override fun onMenuClickListener(data: SinglePlaylistInfo, position: Int, view: View) {
-        Toast.makeText(this, "2", Toast.LENGTH_SHORT).show()
+        val popupMenu = PopupMenu(this, view)
+        // add the menu
+        popupMenu.inflate(R.menu.single_playlist_menu)
+        popupMenu.show()
+
+
+        popupMenu.setOnMenuItemClickListener { item ->
+            when (item.title) {
+                "delete" -> {
+
+                    val realmDAO = RealmDAO()
+                    val musicName_PlayList = data.musicName_PlayList
+                    realmDAO.singlePlaylistDelete(musicName_PlayList)
+
+
+                    currentPlayListMusic.clear()
+
+
+                    val playlist = realmDAO.playlistReadByName(playlistName)
+                    val playlistsInfo = PlaylistsInfo()
+                    playlistsInfo.playListName = playlist!!.playListName
+                    playlistsInfo.musicNumber = playlist.musicNumber - 1
+                    playlistsInfo.playListMainImagePath = playlist.playListMainImagePath
+                    realmDAO.playlistUpdate(playlistsInfo)
+
+                    val allResult = realmDAO.singlePlaylistReadAll()
+                    allResult.forEach {
+                        if (it.playListName == playlistName) {
+                            currentPlayListMusic.add(it)
+                        }
+                    }
+                    playListMusics = changePlayList()
+
+
+
+                    recyclerView(currentPlayListMusic)
+
+
+                    // val playlist = realmDAO.playlistReadByName(data.playListName)
+                    true
+                }
+
+                else -> {
+                    false
+                }
+            }
+
+
+        }
     }
 
     fun startService() {
         val intent = Intent(this, Service::class.java)
         bindService(intent, this, BIND_AUTO_CREATE)
         startService(intent)
-        //Toast.makeText(this, "1", Toast.LENGTH_SHORT).show()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onServiceConnected(p0: ComponentName?, service: IBinder?) {
         val binder = service as Service.MyBinder
         musicService = binder.currentService()
-        //Toast.makeText(this, "2", Toast.LENGTH_SHORT).show()
+        musicService!!.songList = playListMusics
         val path = shared.getString("musicPath", "")
-        play(path!! , null , null)
+        play(path!!, null, null)
     }
 
     override fun onServiceDisconnected(p0: ComponentName?) {
@@ -153,11 +229,14 @@ class SinglePlaylistActivity : AppCompatActivity(), SinglePlayListListener,
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun play(path: String, recentSongs: ArrayList<AudioModel>? = null, shuffleList: List<Int>?) {
-        changeMusicFocus()
-        val playListMusics = changePlayList()
-        musicService!!.songList = playListMusics
-        Log.i("playy", playListMusics.toString())
+    private fun play(
+        path: String,
+        recentSongs: ArrayList<AudioModel>? = null,
+        shuffleList: List<Int>?
+    ) {
+        //changeMusicFocus()
+
+
         musicService!!.playShuffle()
 
         if (musicService!!.musicPlayer == null) musicService!!.musicPlayer = MediaPlayer()
@@ -165,7 +244,7 @@ class SinglePlaylistActivity : AppCompatActivity(), SinglePlayListListener,
         musicService!!.musicPlayer!!.setDataSource(path)
         musicService!!.musicPlayer!!.prepare()
         musicService!!.musicPlayer!!.start()
-        musicService!!.showNotification()
+        //musicService!!.startNotification()
 
         musicService!!.musicPlayer!!.setOnCompletionListener {
             val pos = shared.getInt("position", 0)
@@ -218,9 +297,9 @@ class SinglePlaylistActivity : AppCompatActivity(), SinglePlayListListener,
 
         val music = currentPlayListMusic
 
-        val size =  currentPlayListMusic.size
+        val size = currentPlayListMusic.size
         shuffleList = (0 until size).shuffled()
-        Log.i("shuffle" , shuffleList.toString())
+
         val editor = shared.edit()
         editor.putInt("position", shuffleList[0])
         editor.putInt("shufflePosition", 1)
@@ -231,6 +310,7 @@ class SinglePlaylistActivity : AppCompatActivity(), SinglePlayListListener,
         editor.putString("musicArtist", music[shuffleList[0]].artist)
         editor.putBoolean("favorite", false)
         editor.putBoolean("recent", false)
+        editor.putBoolean("onPlayList", true)
         editor.apply()
 
 
@@ -242,14 +322,19 @@ class SinglePlaylistActivity : AppCompatActivity(), SinglePlayListListener,
 
 
 
-        if (shared.getBoolean("first", true)) {
+        if (shared.getBoolean("firstPlayList", true)) {
             setShuffleList(shuffleList)
-            startService()
-            editor.putBoolean("first", false)
+            editor.putBoolean("firstPlayList", false)
             editor.apply()
+            startService()
         } else {
-           play(music[shuffleList[0]].musicPath, null, shuffleList)
+            editor.putBoolean("firstPlayList", false)
+            editor.apply()
+            play(music[shuffleList[0]].musicPath, null, null)
+            // play(music[shuffleList[0]].musicPath, null, shuffleList)
         }
+
+//        musicService!!.startNotification()
 
     }
 
@@ -277,6 +362,30 @@ class SinglePlaylistActivity : AppCompatActivity(), SinglePlayListListener,
             audioManager.abandonAudioFocus(this);
             musicService!!.musicPlayer!!.stop();
         }
+    }
+
+    fun updateUI() {
+        mainHandler.post(object : Runnable {
+            override fun run() {
+                if (path != shared.getString("imagePath", "").toString()) {
+                    path = shared.getString("imagePath", "").toString()
+                    musicName = shared.getString("musicName", "").toString()
+                    musicArtist = shared.getString("musicArtist", "").toString()
+
+                    try {
+                        Glide.with(this@SinglePlaylistActivity).load(path)
+                            .into(binding.currentMusicImg)
+
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+
+                    binding.currentMusicTxt.text = musicName
+                    binding.currentMusicArtistTxt.text = musicArtist
+                }
+                mainHandler.postDelayed(this, 1000)
+            }
+        })
     }
 
 

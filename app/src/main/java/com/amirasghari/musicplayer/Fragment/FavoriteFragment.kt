@@ -99,6 +99,7 @@ class FavoriteFragment : Fragment(), MusicListener {
         editor.putString("musicArtist", data.Artist)
         editor.putBoolean("favorite", true)
         editor.putBoolean("recent", false)
+        editor.putBoolean("onPlayList" , false)
         editor.apply()
         viewModel.setCurrentMusicName(data.Title)
 

@@ -27,6 +27,7 @@ import com.amirasghari.musicplayer.ViewModel.ViewModel
 import com.amirasghari.musicplayer.databinding.ActivityShowMusicBinding
 import com.amirasghari.musicplayer.realm.FavoriteInfo
 import com.amirasghari.musicplayer.realm.RealmDAO
+import com.amirasghari.musicplayer.realm.SinglePlaylistInfo
 import com.bumptech.glide.Glide
 import com.masoudss.lib.SeekBarOnProgressChanged
 import com.masoudss.lib.WaveformSeekBar
@@ -143,23 +144,13 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection,
 
         binding.controlMusicImg.setOnClickListener {
             it as ImageButton
-            /*if (shared.getBoolean("first" , false)){
-                val editor = shared.edit()
-                editor.putBoolean("first" , false)
-                editor.apply()
-            }else */
             if (musicService!!.musicPlayer!!.isPlaying) {
                 it.setImageResource(R.drawable.play2)
                 musicService!!.musicPlayer!!.pause()
             } else {
-                changeMusicFocus()
                 it.setImageResource(R.drawable.pause2)
                 musicService!!.musicPlayer!!.start()
-                /*try {
-                    musicService!!.startNotification()
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }*/
+
 
             }
         }
@@ -189,9 +180,15 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection,
 
 
         startService()
+
+
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+
         updateUI()
-
-
     }
 
 
@@ -208,6 +205,15 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection,
         val image = shared.getString("imagePath", "")
         path = shared.getString("musicPath", "").toString()
         val time = shared.getFloat("currentTime", 0F)
+        val current = shared.getInt("current", 0)
+
+
+
+
+        val min = ((current / (100000 * 60)) % 60)
+        val sec = (current / 100000) % 60
+        val show = String.format("%02d:%02d", min, sec)
+        binding.currentDuration.text = show
 
 
         binding.audioWave.progress = time
@@ -286,10 +292,9 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection,
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-        //Toast.makeText(this, "true", Toast.LENGTH_SHORT).show()
         val binder = service as Service.MyBinder
         musicService = binder.currentService()
-        Log.i("songList", musicService!!.mainSongList.toString())
+
         if (shared.getBoolean("favorite", false)) {
             val favoriteMusic = ArrayList<AudioModel>()
             val data = RealmDAO().favoriteReadAll()
@@ -307,34 +312,45 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection,
             musicService!!.songList = favoriteMusic
 
         } else if (shared.getBoolean("recent", false)) {
+
             getRecentMusicsDetails()
             musicService!!.songList = recentSongs
-            Log.i("songlist", musicService!!.songList.toString())
-        } else {
-            //musicService!!.getMusicsDetails()
-            musicService!!.songList = musicService!!.mainSongList
-        }
+
+        } else if(shared.getBoolean("onPlayList" , true)){
+
+            val playListName = shared.getString("playlistName" , "")
+            val currentPlayListMusic = ArrayList<SinglePlaylistInfo>()
+            val realm = RealmDAO()
+            val allResult = realm.singlePlaylistReadAll()
+            allResult.forEach {
+                if (it.playListName == playListName) {
+                    currentPlayListMusic.add(it)
+                }
+            }
+
+            val playListMusics = ArrayList<AudioModel>()
+            currentPlayListMusic.forEach {
+                val audioModel =
+                    AudioModel(it.musicPath, it.musicName, it.duration, it.imagePath, it.artist)
+                playListMusics.add(audioModel)
+            }
+
+            musicService!!.songList = playListMusics
+
+        }else{
+                musicService!!.songList = musicService!!.mainSongList
+            }
+
 
         if (musicService!!.musicPlayer == null) {
-            Toast.makeText(this, "erf", Toast.LENGTH_SHORT).show()
             musicService!!.musicPlayer = MediaPlayer()
-            binding.controlMusicImg.setImageResource(R.drawable.play2)
         }
-        /*if (shared.getBoolean("shuffle" , false) && shared.getBoolean("favorite", false)){
-            musicService!!.playShuffle()
-        }*/
         time()
 
-        try {
-            if (musicService!!.shuffleList.isNotEmpty()) {
-                //Toast.makeText(this,"1", Toast.LENGTH_SHORT).show()
-            } else {
-                //Toast.makeText(this, "2", Toast.LENGTH_SHORT).show()
-            }
-        } catch (E: Exception) {
-            musicService!!.playShuffle()
-            //Toast.makeText(this, "3", Toast.LENGTH_SHORT).show()
+        if (!musicService!!.musicPlayer!!.isPlaying){
+            binding.controlMusicImg.setImageResource(R.drawable.play2)
         }
+
 
 
         musicService!!.musicPlayer!!.setOnCompletionListener {
@@ -440,7 +456,7 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection,
     @RequiresApi(Build.VERSION_CODES.O)
     private fun onClickNextBtn() {
 
-        changeMusicFocus()
+        //changeMusicFocus()
         animation(binding.nextBtn)
 
         var pos = shared.getInt("position", 0)
@@ -691,6 +707,7 @@ class ShowMusicActivity : AppCompatActivity(), ServiceConnection,
                     val current = musicService!!.musicPlayer!!.currentPosition * 100
                     var position = (current.toDouble() / time.toDouble())
                     binding.audioWave.progress = position.toFloat()
+                    editor.putInt("current", current)
                     editor.putFloat("currentTime", position.toFloat())
                     editor.apply()
 

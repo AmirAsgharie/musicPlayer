@@ -18,7 +18,6 @@ import android.os.*
 import android.provider.MediaStore
 import android.support.v4.media.session.MediaSessionCompat
 import android.util.Log
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -28,7 +27,6 @@ import com.amirasghari.musicplayer.ApplicationClass
 import com.amirasghari.musicplayer.Broadcast.MusicNotificationBroadcastReceiver
 import com.amirasghari.musicplayer.Model.AudioModel
 import com.amirasghari.musicplayer.R
-import kotlinx.coroutines.delay
 
 
 class Service : Service() {
@@ -79,24 +77,7 @@ class Service : Service() {
 
     @RequiresApi(33)
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        /*position = shared.getInt("position" , 0)
-        shufflePosition = shared.getInt("shufflePosition" , 0)
-
-        if (shared.getBoolean("shuffle" , false)){
-            shuffleList = intent!!.getIntArrayExtra("shuffleList")!!
-            play(songList[shuffleList[shufflePosition]].Path)
-            Toast.makeText(this, "svcsvsfv", Toast.LENGTH_SHORT).show()
-
-        }else{
-            play(songList[position].Path)
-        }
-
-        notification()*/
-        //notification()
-
-
         return START_STICKY;
-
     }
 
     fun play() {
@@ -131,13 +112,12 @@ class Service : Service() {
             musicPlayer!!.start()
 
 
-
             //showNotification()
             startNotification()
         }
 
         Handler().postDelayed({
-            if (!musicPlayer!!.isPlaying){
+            if (!musicPlayer!!.isPlaying) {
                 musicPlayer!!.reset()
                 musicPlayer!!.setDataSource(songList[position].Path)
                 musicPlayer!!.prepare()
@@ -167,66 +147,6 @@ class Service : Service() {
         musicPlayer!!.start()
     }
 
-    private fun notification() {
-        notificationManager =
-            this?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val intent2 = Intent(this, ShowMusicActivity::class.java)
-        intent2.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        val pendingIntent =
-            PendingIntent.getActivity(this, 0, intent2, PendingIntent.FLAG_IMMUTABLE)
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-
-            notificationChannel =
-                NotificationChannel(channelId, description, NotificationManager.IMPORTANCE_HIGH)
-            notificationChannel.enableLights(true)
-            notificationChannel.lightColor = Color.GREEN
-            notificationChannel.enableVibration(false)
-            notificationManager.createNotificationChannel(notificationChannel)
-
-
-            if (shared.getBoolean("shuffle", false)) {
-                builder = Notification.Builder(this, channelId)
-                    //.setContent(contentView)
-                    .setSmallIcon(R.drawable.ic_launcher_foreground)
-                    .setContentIntent(pendingIntent)
-                    .setContentTitle(songList[shuffleList[shufflePosition]].Title)
-                    .setContentText(songList[shuffleList[shufflePosition]].Duration)
-            } else {
-                builder = Notification.Builder(this, channelId)
-                    //.setContent(contentView)
-                    .setSmallIcon(R.drawable.ic_launcher_foreground)
-                    .setContentIntent(pendingIntent)
-                    .setContentTitle(songList[position].Title)
-                    .setContentText(songList[position].Duration)
-            }
-
-
-        } else {
-
-            if (shared.getBoolean("shuffle", false)) {
-                builder = Notification.Builder(this)
-                    //.setContent(contentView)
-                    .setSmallIcon(R.drawable.ic_launcher_foreground)
-                    .setContentIntent(pendingIntent)
-                    .setContentTitle(songList[shuffleList[shufflePosition]].Title)
-                    .setContentText(songList[shuffleList[shufflePosition]].Duration)
-
-            } else {
-                builder = Notification.Builder(this)
-                    //.setContent(contentView)
-                    .setSmallIcon(R.drawable.ic_launcher_foreground)
-                    .setContentIntent(pendingIntent)
-                    .setContentTitle(songList[position].Title)
-                    .setContentText(songList[position].Duration)
-
-            }
-
-
-        }
-
-        startForeground(10, builder.build())
-    }
 
     fun getMusicsDetails() {
         val projection = arrayOf(
@@ -274,34 +194,13 @@ class Service : Service() {
     }
 
 
-    fun showNotification() {
-
-        val notification = NotificationCompat.Builder(baseContext, ApplicationClass.CHANNEL_ID)
-            .setContentTitle(shared.getString("musicName", ""))
-            .setContentText(shared.getString("musicArtist", ""))
-            .setSmallIcon(R.drawable.play)
-            .setLargeIcon(BitmapFactory.decodeResource(resources, R.drawable.shuffle))
-            .setStyle(
-                androidx.media.app.NotificationCompat.MediaStyle()
-                    .setMediaSession(mediaSession.sessionToken)
-            )
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-            .addAction(R.drawable.shuffle, "Previous", null)
-            .addAction(R.drawable.shuffle, "Next", null)
-            .addAction(R.drawable.shuffle, "Exit", null)
-            .build()
-
-        startForeground(13, notification)
-    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun playShuffle() {
-        val shuffle = shared.getBoolean("shuffle", false)
         val size = songList.size - 1
 
         shuffleList = (0..size).shuffled()
-        //Log.i("shuffle", shuffleList.toString())
+        Log.i("shuffle", songList.toString())
         val editor = shared.edit()
         /*if (shuffle){
 
@@ -333,6 +232,7 @@ class Service : Service() {
             val token = mediaSession.sessionToken
             val notificationBuilder = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
             val notification: Notification = notificationBuilder.setOngoing(false)
+                .setContentIntent(intentClick())
                 .setSmallIcon(R.drawable.play)
                 .setContentTitle(shared.getString("musicName", ""))
                 .setLargeIcon(largeIcon)
@@ -372,6 +272,19 @@ class Service : Service() {
         } else {
             startForeground(1, Notification())
         }
+    }
+
+    protected fun intentClick():PendingIntent?{
+        val activityIntent = Intent(this, MainActivity::class.java)
+
+        val pendingIntent = PendingIntent.getActivity(
+            this,  // calling from Activity
+            0,
+            activityIntent,
+            PendingIntent.FLAG_MUTABLE
+        )
+
+        return pendingIntent
     }
 
     protected fun getPendingIntentPrevious(): PendingIntent? {

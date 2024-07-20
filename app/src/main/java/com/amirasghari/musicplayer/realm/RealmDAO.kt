@@ -44,7 +44,7 @@ class RealmDAO {
 
     fun singlePlaylistReadAll():RealmResults<SinglePlaylistInfo> = realm.where(SinglePlaylistInfo::class.java).findAll()
 
-    fun singlePlaylistReadByName(path:String):SinglePlaylistInfo? = realm.where(SinglePlaylistInfo::class.java).equalTo("musicPath",path).findFirst()
+    fun singlePlaylistReadByName(musicName_PlayList:String):SinglePlaylistInfo? = realm.where(SinglePlaylistInfo::class.java).equalTo("musicName_PlayList",musicName_PlayList).findFirst()
 
     fun singlePlaylistUpdate(singlePlaylistInfo: SinglePlaylistInfo){
         realm.executeTransaction{
@@ -52,10 +52,10 @@ class RealmDAO {
         }
     }
 
-    fun singlePlaylistDelete(path: String){
+    fun singlePlaylistDelete(musicName_PlayList: String){
         realm.executeTransaction(){
-            val deleteCity=singlePlaylistReadByName(path)
-            deleteCity?.deleteFromRealm()
+            val deleteMusic=singlePlaylistReadByName(musicName_PlayList)
+            deleteMusic?.deleteFromRealm()
         }
     }
 

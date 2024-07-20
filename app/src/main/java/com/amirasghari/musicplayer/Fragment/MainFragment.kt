@@ -87,10 +87,7 @@ class MainFragment() : Fragment(), MusicListener, MusicMenuListener {
 
     }
 
-    override fun onResume() {
-        super.onResume()
 
-    }
 
     private fun recyclerView() {
 
@@ -102,10 +99,7 @@ class MainFragment() : Fragment(), MusicListener, MusicMenuListener {
     }
 
 
-    override fun onContextItemSelected(item: MenuItem): Boolean {
-        return super.onContextItemSelected(item)
-        return true
-    }
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onclickListener(data: AudioModel, position: Int) {
@@ -119,6 +113,7 @@ class MainFragment() : Fragment(), MusicListener, MusicMenuListener {
         editor.putString("musicArtist", data.Artist)
         editor.putBoolean("favorite", false)
         editor.putBoolean("recent", false)
+        editor.putBoolean("onPlayList" , false)
         editor.apply()
         viewModel.setCurrentMusicName(data.Title)
 
@@ -129,9 +124,7 @@ class MainFragment() : Fragment(), MusicListener, MusicMenuListener {
         val animation = AnimationUtils.loadAnimation(requireActivity(), R.anim.rotate)
         bindingActivity.currentMusicImg.startAnimation(animation)
 
-        /*val intent = Intent(requireActivity(), Service::class.java)
-        intent.putExtra("position", position)
-        startForegroundService(requireActivity(), intent)*/
+
 
         if (shared.getBoolean("first", true)) {
             (activity as MainActivity?)!!.startService()
@@ -228,9 +221,7 @@ class MainFragment() : Fragment(), MusicListener, MusicMenuListener {
 
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu) {
 
-    }
 
 
     override fun onMenuClickListener(data: AudioModel, position: Int, view: View) {

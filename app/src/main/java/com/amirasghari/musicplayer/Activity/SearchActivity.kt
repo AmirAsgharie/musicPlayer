@@ -121,7 +121,7 @@ class SearchActivity : AppCompatActivity(), ServiceConnection ,  MusicListener, 
         musicService!!.musicPlayer!!.setDataSource(data.Path)
         musicService!!.musicPlayer!!.prepare()
         musicService!!.musicPlayer!!.start()
-        musicService!!.showNotification()
+        musicService!!.startNotification()
 
         musicService!!.musicPlayer!!.setOnCompletionListener {
             musicService!!.repeat()

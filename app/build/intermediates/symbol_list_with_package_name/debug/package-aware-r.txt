@@ -3650,14 +3650,12 @@ drawable btn_radio_off_mtrl
 drawable btn_radio_off_to_on_mtrl_animation
 drawable btn_radio_on_mtrl
 drawable btn_radio_on_to_off_mtrl_animation
-drawable click
 drawable current_music_bg
 drawable design_fab_background
 drawable design_ic_visibility
 drawable design_ic_visibility_off
 drawable design_password_eye
 drawable design_snackbar_background
-drawable favorite
 drawable favorite_svgrepo_com__1_
 drawable favorite_svgrepo_com__2_
 drawable ic_arrow_back_black_24
@@ -3748,10 +3746,7 @@ drawable notification_template_icon_bg
 drawable notification_template_icon_low_bg
 drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
-drawable pause
-drawable pause1
 drawable pause2
-drawable pause_icon
 drawable pause_notice
 drawable play
 drawable play2
@@ -4177,6 +4172,7 @@ id rec
 id recentRec
 id rectangles
 id recycler
+id rename
 id repeatBtn
 id reverseSawtooth
 id right
@@ -4556,6 +4552,7 @@ layout select_dialog_singlechoice_material
 layout support_simple_spinner_dropdown_item
 menu options_menu
 menu playlist_menu
+menu single_playlist_menu
 mipmap ic_launcher
 mipmap ic_launcher_round
 navigation nav_graph

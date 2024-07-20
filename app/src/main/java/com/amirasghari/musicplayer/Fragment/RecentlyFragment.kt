@@ -90,6 +90,8 @@ class RecentlyFragment : Fragment(), MusicListener, MusicMenuListener ,ServiceCo
         editor.putString("musicName", data.Title)
         editor.putString("musicArtist", data.Artist)
         editor.putBoolean("favorite", false)
+        editor.putBoolean("onPlayList" , false)
+        editor.putBoolean("recent" , true)
         editor.apply()
         viewModel.setCurrentMusicName(data.Title)
 
@@ -102,13 +104,9 @@ class RecentlyFragment : Fragment(), MusicListener, MusicMenuListener ,ServiceCo
 
         if (shared.getBoolean("first", true)) {
             editor.putBoolean("first", false)
-            editor.putBoolean("favorite", false)
-            editor.putBoolean("recent" , true)
             editor.apply()
             (activity as MainActivity?)!!.startService()
         } else {
-            editor.putBoolean("favorite", false)
-            editor.putBoolean("recent" , true)
             editor.apply()
             (activity as MainActivity?)!!.play(data.Path , recentSongs , null)
         }
