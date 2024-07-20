@@ -89,6 +89,12 @@ class PlayListFragment : Fragment() , PlaylistListener , PlaylistMenuListener{
                 "delete" -> {
                     realm.playlistDelete(data.playListName)
                     recyclerView()
+                    val singlePlayList = realm.singlePlaylistReadAll()
+                    singlePlayList.forEach {
+                        if (it.playListName == data.playListName){
+                            realm.singlePlaylistDelete(it.musicName_PlayList)
+                        }
+                    }
                     true
                 }
 

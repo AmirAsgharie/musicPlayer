@@ -91,7 +91,6 @@ id playlistRec
 id rec
 id recentRec
 id recycler
-id rename
 id repeatBtn
 id searchCard
 id searchEdt

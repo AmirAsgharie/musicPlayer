@@ -4172,7 +4172,6 @@ id rec
 id recentRec
 id rectangles
 id recycler
-id rename
 id repeatBtn
 id reverseSawtooth
 id right
